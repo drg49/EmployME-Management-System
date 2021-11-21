@@ -1,0 +1,63 @@
+/* Home */
+body {
+    margin: 0px;
+    background-color: whitesmoke;
+}
+
+a {
+    text-decoration: none;
+    color: darkblue;
+}
+
+a:hover {
+    color: blue;
+}
+ 
+main {
+    display: flex;
+}
+#home-page {
+    text-align: center;
+    width: 100%;
+}
+
+/* Navbar */
+#logo {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 25px;
+    padding: 6px;
+    font-style: italic;
+    margin: 0px;
+    background: -webkit-linear-gradient(rgb(255, 8, 8), #333);
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#top-nav {
+    border-top: 1px solid blue;
+    border-bottom: 1px solid blue;
+    background-color: white;
+    display: flex;
+    align-content: space-around;
+    padding: 15px;
+}
+
+#top-nav li {
+    list-style: none;
+    padding: 0px 15px;
+}
+
+/* SideNav */
+#side-nav {
+    border: 1px solid blue;
+    background-color: white;
+    margin: 4px;
+    border-radius: 6px;
+    list-style: none;
+    padding: 10px;
+}
+
+#side-nav li {
+    margin: 15px 0px 15px 0px;
+}
