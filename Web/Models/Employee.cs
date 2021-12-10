@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Web.Models
 {
-    public partial class Employee
+    public class Employee
     {
         public int EmployeeKey { get; set; }
         public string FirstName { get; set; }

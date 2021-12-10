@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import counterReducer from "./counterStore";
+import userReducer from "./userStore";
 
 const mainStore = combineReducers({
-    counter: counterReducer,
+    user: userReducer,
 })
 
 export default mainStore

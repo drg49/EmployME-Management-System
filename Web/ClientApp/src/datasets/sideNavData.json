@@ -1,43 +1,46 @@
 [
     {
-        "title": "Accounting",
-        "link": ""
+        "title": "Attendance",
+        "link": "/attendance"
     },
     {
-        "title": "Development",
-        "link": ""
+        "title": "Contacts",
+        "link": "/contacts"
     },
     {
-        "title": "Finance",
-        "link": ""
+        "title": "Departments",
+        "link": "/departments"
     },
     {
-        "title": "Human Resources",
-        "link": ""
+        "title": "History",
+        "link": "/history"
     },
     {
-        "title": "Maintenence",
-        "link": ""
+        "title": "Payroll",
+        "link": "/payroll"
     },
     {
-        "title": "Management",
-        "link": ""
-    },
-    
-    {
-        "title": "Marketing",
-        "link": ""
+        "title": "Performance",
+        "link": "/performance"
     },
     {
-        "title": "Public Relations",
-        "link": ""
+        "title": "Project Management",
+        "link": "/project-management"
     },
     {
-        "title": "Sales",
-        "link": ""
+        "title": "Recruitment",
+        "link": "/recruitment"
     },
     {
-        "title": "Warehouse",
-        "link": ""
+        "title": "Reports",
+        "link": "/reports"
+    },
+    {
+        "title": "Resume Finder",
+        "link": "/resume-finder"
+    },
+    {
+        "title": "Training",
+        "link": "/training"
     }
 ]

@@ -1,0 +1,73 @@
+.em-input-auth {
+    margin: auto;
+    padding: 5px;
+    margin-bottom: 17px;
+}
+
+.em-input-auth:focus {
+    outline-color: lightblue;
+}
+
+#auth-main {
+    text-align: center;
+}
+
+#auth-form {
+    border: 1px solid lightblue;
+    background-color: blanchedalmond;
+    border-radius: 3px;
+    max-width: 400px;
+    margin: auto;
+}
+
+#name-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#input-wrapper {
+    padding: 20px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+#input-wrapper input {
+    width: 100%;
+}
+
+#input-wrapper input[type="submit"] {
+    width: 50%;
+    padding: 5px;
+    background-color: #0073CF;
+    color: white;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+#required-auth {
+    color: red;
+}
+
+#auth-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 19px;
+}
+
+#existing-user-flex {
+    display: flex;
+    align-items: center;
+}
+
+#existing-user-flex p {
+    padding: 0px 5px 0px 0px;
+}
+
+#signin-reg-links {
+    text-decoration: underline;
+}
+
+#auth-error-msg {
+    color: red;
+}

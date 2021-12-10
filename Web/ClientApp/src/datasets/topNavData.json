@@ -1,26 +1,30 @@
 [
     {
         "title": "Dashboard",
-        "link": ""
+        "link": "/"
     },
     {
         "title": "Search",
-        "link": ""
+        "link": "/search"
     },
     {
         "title": "Manage",
-        "link": ""
+        "link": "/manage"
     },
     {
         "title": "Calendar",
-        "link": ""
+        "link": "/calendar"
     },
     {
         "title": "Applications",
-        "link": ""
+        "link": "/applications"
+    },
+    {
+        "title": "My Profile",
+        "link": "/my-profile"
     },
     {
         "title": "Help",
-        "link": ""
+        "link": "/help"
     }
 ]

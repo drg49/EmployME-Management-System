@@ -6,16 +6,25 @@ body {
 
 a {
     text-decoration: none;
+}
+
+li a {
     color: darkblue;
 }
 
-a:hover {
+li a:hover {
     color: blue;
 }
  
 main {
     display: flex;
 }
+
+input {
+    display: block;
+    box-sizing:border-box
+}
+
 #home-page {
     text-align: center;
     width: 100%;
@@ -25,13 +34,20 @@ main {
 #logo {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 25px;
-    padding: 6px;
     font-style: italic;
     margin: 0px;
-    background: -webkit-linear-gradient(rgb(255, 8, 8), #333);
+    background: -webkit-linear-gradient(rgb(255, 8, 8), rgb(168, 27, 27));
     background-clip: border-box;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+#logo-wrapper {
+    background-color: darkslateblue;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
 }
 
 #top-nav {
@@ -56,8 +72,38 @@ main {
     border-radius: 6px;
     list-style: none;
     padding: 10px;
+    width: fit-content;
 }
 
 #side-nav li {
     margin: 15px 0px 15px 0px;
+    width: max-content;
+}
+
+/* Reusable */
+.employMe-div-box {
+    border: 1px solid grey;
+    padding: 5px 0px;
+    width: 100%;
+    height: fit-content;
+    border-radius: 4px;
+    background-color: white;
+    text-align: center;
+}
+
+.employMe-div-box.reminder #reminder-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 5px;
+    align-items: center;
+}
+
+.employMe-div-box-title {
+    margin: 0px;
+}
+
+.employMe-add-btn {
+    cursor: pointer;
+    background-color: #5bc236;
+    color: white;
 }
