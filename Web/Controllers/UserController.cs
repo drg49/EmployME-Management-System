@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Web.Security;
 using System.Linq;
+using Web.Security;
 using Web.Data;
 using Web.Models;
+using System;
 
 namespace Web.Controllers
 {
@@ -39,12 +40,13 @@ namespace Web.Controllers
             _newUser.LastName = newUser.LastName;
             _newUser.Username = newUser.Username;
             _newUser.Email = newUser.Email;
+            _newUser.UploadDate = DateTime.Now;
             _newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
             _newUser.CompanyName = newUser.CompanyName;
 
             try
             {
-                context.Add(_newUser);
+                context.Users.Add(_newUser);
                 context.SaveChanges();
                 return Created("New user successfully added", _newUser);
             }

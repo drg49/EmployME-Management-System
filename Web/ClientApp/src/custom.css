@@ -4,6 +4,14 @@ body {
     background-color: whitesmoke;
 }
 
+textarea {
+    resize: none;
+    display: block;
+    width: 300px;
+    height: 91px;
+    margin: 12px 0px;
+}
+
 a {
     text-decoration: none;
 }
@@ -23,6 +31,21 @@ main {
 input {
     display: block;
     box-sizing:border-box
+}
+
+.strip-btn {
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+.close-btn {
+    color: dimgray;
+    font-size: 18px;
 }
 
 #home-page {
@@ -83,7 +106,6 @@ input {
 /* Reusable */
 .employMe-div-box {
     border: 1px solid grey;
-    padding: 5px 0px;
     width: 100%;
     height: fit-content;
     border-radius: 4px;
@@ -94,12 +116,16 @@ input {
 .employMe-div-box.reminder #reminder-actions {
     display: flex;
     justify-content: space-between;
-    padding: 0px 5px;
+    padding: 10px 5px;
     align-items: center;
+    background-color: darkslateblue;
+    color: white;
 }
 
 .employMe-div-box-title {
     margin: 0px;
+    font-size: 21px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .employMe-add-btn {
@@ -107,3 +133,52 @@ input {
     background-color: #5bc236;
     color: white;
 }
+
+/* Modal */  
+.mymodal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #ccc;
+    background: rgb(255, 241, 222);
+    overflow: auto;
+    border-radius: 4px;
+    outline: none;
+    padding: 19px 16px;
+}
+
+#modal-action-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#modal-action-header h2 {
+    margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: maroon;
+}
+  
+.myoverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+  
+.ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 100ms ease-in-out;
+}
+  
+.ReactModal__Overlay--after-open {
+    opacity: 1;
+}
+  
+.ReactModal__Overlay--before-close {
+    opacity: 0;
+}
+  

@@ -4,8 +4,5 @@ export function GetEmployees() {
         headers: {
             Accept: "application/json"
         }
-    }).then(response => response.json())
-    .then(data => {
-        console.log(data)
-    });
+    }).then((response) => response.ok() ? response.json() : Promise.reject(response))
 }

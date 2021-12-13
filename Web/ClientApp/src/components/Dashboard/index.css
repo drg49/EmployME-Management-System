@@ -13,3 +13,40 @@
     margin: 12px 0px;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+#reminder-card-wrapper:nth-child(even) {
+    background-color: beige;
+}
+
+#reminder-card-wrapper:nth-child(odd) {
+    background-color: rgb(252, 252, 214);
+}
+
+#reminder-card {
+    border-top: 1px solid gray;
+    display: flex;
+    align-items: center;
+}
+
+#reminder-card p {
+    text-align: left;
+    padding: 6px 5px;
+    width: 100%;
+    cursor: pointer;
+    margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+}
+
+#reminder-card p:hover {
+    color: blue;
+}
+
+#dashboard-panel {
+    max-height: 240px;
+    overflow: auto;
+}
+
+#reminder-card-wrapper:first-of-type #reminder-card {
+    border-top: none;
+}
