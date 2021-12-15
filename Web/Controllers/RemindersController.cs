@@ -46,6 +46,7 @@ namespace Web.Controllers
                 Reminder reminder = new Reminder()
                 {
                     ReminderMessage = newReminder.ReminderMessage,
+                    CheckStatus = 0,
                     UploadDate = DateTime.Now,
                     UserId = authenticatedUser.UserId
                 };
@@ -55,7 +56,7 @@ namespace Web.Controllers
 
                 return Ok(reminder);
             }
-            catch(Exception e)
+            catch
             {
                 return Unauthorized();
             }
@@ -89,5 +90,49 @@ namespace Web.Controllers
             }
         }
 
+        [HttpPatch]
+        [Route("update-check/{reminderKey}/{updateStatus}")]
+        public IActionResult UpdateReminderCheckAsync([FromRoute] int reminderKey, [FromRoute] int updateStatus)
+        {
+            try
+            {
+                Reminder reminderToUpdate = context.Reminders.FirstOrDefault(r => r.ReminderKey == reminderKey);
+
+                if (reminderToUpdate is null)
+                {
+                    return NotFound();
+                }
+
+                reminderToUpdate.CheckStatus = updateStatus;
+                context.SaveChanges();
+                return Ok(reminderToUpdate);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("{reminderKey}")]
+        public IActionResult DeleteReminder([FromRoute] int reminderKey)
+        {
+            try
+            {
+                Reminder reminderToUpdate = context.Reminders.FirstOrDefault(r => r.ReminderKey == reminderKey);
+
+                if (reminderToUpdate is null)
+                {
+                    return NotFound();
+                }
+
+                context.Reminders.Remove(reminderToUpdate);
+                context.SaveChanges();
+                return Ok(reminderToUpdate);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
     }
 }

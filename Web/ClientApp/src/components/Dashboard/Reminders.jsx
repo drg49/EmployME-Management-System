@@ -1,72 +1,77 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faWindowClose, faExclamationTriangle, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faWindowClose, faSpinner, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import Modal from 'react-modal';
 import * as reminderApi from '../../api/reminders'
+import ReminderCards from "./ReminderCards";
+import useReminders from "../../hooks/useReminders";
+import ErrorComponent from "../ErrorComponent";
+import { useDispatch } from "react-redux";
+import { actions } from "../../store/reminderStore";
 import '../../custom.css';
 import './index.css';
-import ReminderCards from "./ReminderCards";
 
 const addIcon = <FontAwesomeIcon icon={faPlus} />
 const closeIcon = <FontAwesomeIcon icon ={faWindowClose} />
-const errorIcon = <FontAwesomeIcon icon={faExclamationTriangle} />
 const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" />
-const error = <div style={{color: 'red'}}>{errorIcon} Failed to add reminder</div>
+const trashIcon = <FontAwesomeIcon icon={faTrashAlt} />
 
 Modal.setAppElement('#root');
 
 export default function Reminders() {
+    const dispatch = useDispatch()
+    const state = useReminders();
+
     const [modalState, setModalState] = React.useState({
       isOpen: false,
       isUpdate: false,
     });
+
     const [remindState, setRemindState] = React.useState({
       message: '',
       key: 0,
     });
-    const [isLoading, setIsLoading] = React.useState(false);
 
-    const getReminders = () => {
-      reminderApi.getReminders()
-      .then((data) => setReminders(data.reverse().map((n, index) => {
-        return (
-          <div id="reminder-card-wrapper" key={index}>
-            <ReminderCards
-              id={n.reminderKey}
-              message={n.reminderMessage}
-              setModalState={setModalState}
-              setRemindState={setRemindState}
-            />
-          </div>
-        )
-      })))
-      .catch(() => setReminders(<p style={{color: 'red'}}>{errorIcon} Failed to load reminders</p>))
-    }
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const resetStates = () => {
       setModalState({ isOpen: false, isUpdate: false });
       setRemindState({ message: '', key: 0 });
       setIsLoading(false);
-      getReminders();
     }
+
+    const mapper = state.reminders.map((n, index) => {
+      return (
+        <div id="reminder-card-wrapper" key={index}>
+          <ReminderCards
+            id={n.reminderKey}
+            message={n.reminderMessage}
+            checkStatus={n.checkStatus}
+            setModalState={setModalState}
+            setRemindState={setRemindState}
+          />
+        </div>
+      )})
 
     const createReminder = () => {
       reminderApi.createReminder(remindState.message).then(() => {
-        resetStates();
-      }).catch(() => console.log('ERROR'))
+        resetReminders();
+      }).catch(() => console.log('ERROR'));
     }
 
     const updateReminder = () => {
       reminderApi.updateReminder(remindState.message, remindState.key).then(() => {
-        resetStates();
-      }).catch(() => console.log('ERROR'))
+        resetReminders();
+      }).catch(() => console.log('ERROR'));
     }
 
-    const [reminders, setReminders] = React.useState(null);
-
-    React.useEffect(() => {
-      getReminders();
-    }, [])
+    const resetReminders = () => {
+      reminderApi.getReminders()
+      .then((data) => {
+        dispatch(actions.resetReminders(data.reverse()));
+        resetStates();
+      });
+    }
 
     const handleChange = (e) => {
       setRemindState({ ...remindState, message: e.target.value })
@@ -76,17 +81,24 @@ export default function Reminders() {
         <>
             <div className="employMe-div-box reminder">
                 <div id="reminder-actions">
-                <p className="employMe-div-box-title">Reminders</p>
-                <button
-                  className="employMe-add-btn"
-                  onClick={() => setModalState({isOpen: true, isUpdate: false})}
-                >
-                  {addIcon}
-                </button>
+                  <p className="employMe-div-box-title">Reminders</p>
+                  <section>
+                    <button
+                      className="employMe-add-btn"
+                      onClick={() => setModalState({isOpen: true, isUpdate: false})}
+                    >
+                      {addIcon}
+                    </button>
+                    <button
+                      className="employMe-delete-btn"
+                      onClick={() => console.log('Alan is a bum')}
+                    >
+                      {trashIcon}
+                    </button>
+                  </section>
                 </div>
-                <div id="dashboard-panel">
-                  {reminders}
-                </div>
+                  {state.loadingStatus === 'started' ? spinner : <div id="dashboard-panel">{mapper}</div>}
+                  {state.loadingStatus === 'failed' && <ErrorComponent message="Failed to load reminders"/>}
             </div>
 
             <Modal
@@ -98,9 +110,7 @@ export default function Reminders() {
               <div id="modal-action-header">
                 <h2>New Reminder</h2>
                 <button
-                  onClick={() => {
-                    setModalState({isOpen: false, isUpdate: false});
-                  }}
+                  onClick={resetStates}
                   className="strip-btn close-btn"
                 >
                   {closeIcon}

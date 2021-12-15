@@ -33,6 +33,7 @@ input {
     box-sizing:border-box
 }
 
+/* Buttons */
 .strip-btn {
     background: none;
 	color: inherit;
@@ -47,6 +48,27 @@ input {
     color: dimgray;
     font-size: 18px;
 }
+
+.employMe-add-btn {
+    cursor: pointer;
+    background-color: #5bc236;
+    color: white;
+}
+
+.employMe-add-btn:hover {
+    opacity: 0.9;
+}
+
+.employMe-delete-btn {
+    cursor: pointer;
+    background-color: #d11a2a ;
+    color: white;
+}
+
+.employMe-delete-btn:hover {
+    opacity: 0.9;
+}
+/* ///////////// */
 
 #home-page {
     text-align: center;
@@ -126,12 +148,6 @@ input {
     margin: 0px;
     font-size: 21px;
     font-family: Arial, Helvetica, sans-serif;
-}
-
-.employMe-add-btn {
-    cursor: pointer;
-    background-color: #5bc236;
-    color: white;
 }
 
 /* Modal */  

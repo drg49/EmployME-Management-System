@@ -8,6 +8,7 @@ namespace Web.Models
         [Key]
         public int ReminderKey { get; set; }
         public string ReminderMessage { get; set; }
+        public int CheckStatus { get; set; } = 0;
         public DateTime? UploadDate { get; set; }
         public int UserId { get; set; }
     }

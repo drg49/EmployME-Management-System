@@ -8,7 +8,7 @@ export default function Dashboard() {
 
   return (
       <div id="dashboard-wrapper">
-        <h1 id="greeting">Hello {userData.firstName}</h1>
+        <h1 id="greeting">Hello {userData.firstName}!</h1>
         <div id="dasboard-main">
           <Reminders />
           <Notifications />

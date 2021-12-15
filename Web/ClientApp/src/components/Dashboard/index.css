@@ -50,3 +50,9 @@
 #reminder-card-wrapper:first-of-type #reminder-card {
     border-top: none;
 }
+
+.employMe-div-box.reminder section {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
