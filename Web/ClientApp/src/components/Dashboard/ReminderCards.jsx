@@ -5,14 +5,25 @@ import '../../custom.css'
 import './index.css'
 
 export default function ReminderCards({ 
-  id, message, setModalState, setRemindState 
+  id, message, checkStatus, setModalState, setRemindState, checkedReminders, setCheckedReminders 
 }) {
 
-  const [style, setStyle] = React.useState(null)
+  // const [style, setStyle] = React.useState(null)
+
+  React.useEffect(() => {
+    if (checkStatus === 1) {
+      setCheckedReminders((checkedReminders) => [...checkedReminders, id])
+    }
+  }, [])
 
   const handleCheck = (e) => {
-    console.log(e.target.value)
-    setStyle({ textDecoration: 'line-through' })
+    if (e.target.checked) {
+      api.updateReminderCheck(id, 1)
+      return setCheckedReminders((checkedReminders) => [...checkedReminders, id])
+    }
+    api.updateReminderCheck(id, 0)
+    const removedCheck = checkedReminders.filter((c) => c !== id)
+    return setCheckedReminders(removedCheck)
   }
 
     return (
@@ -20,6 +31,7 @@ export default function ReminderCards({
             <input 
               type="checkbox" 
               onChange={handleCheck}
+              checked={checkedReminders.includes(id) ? true : false}
             />
             <p 
               onClick={() => {
@@ -29,7 +41,7 @@ export default function ReminderCards({
                 });
                 setRemindState({ message, key: id });
               }}
-              style={style}
+              style={checkedReminders.includes(id) ? { textDecoration: 'line-through' } : { textDecoration: 'none' }}
             >
               {message}
             </p>

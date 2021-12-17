@@ -113,21 +113,24 @@ namespace Web.Controllers
             }
         }
 
-        [HttpDelete("{reminderKey}")]
-        public IActionResult DeleteReminder([FromRoute] int reminderKey)
+        [HttpDelete]
+        public IActionResult DeleteReminders([FromBody] ICollection<int> reminderKeys) //Add authentication to this
         {
             try
             {
-                Reminder reminderToUpdate = context.Reminders.FirstOrDefault(r => r.ReminderKey == reminderKey);
-
-                if (reminderToUpdate is null)
+                foreach (int key in reminderKeys)
                 {
-                    return NotFound();
-                }
+                    Reminder reminderToUpdate = context.Reminders.FirstOrDefault(r => r.ReminderKey == key);
 
-                context.Reminders.Remove(reminderToUpdate);
+                    if (reminderToUpdate is null)
+                    {
+                        return NotFound();
+                    }
+
+                    context.Reminders.Remove(reminderToUpdate);
+                }
                 context.SaveChanges();
-                return Ok(reminderToUpdate);
+                return Ok("Delete successful");
             }
             catch
             {

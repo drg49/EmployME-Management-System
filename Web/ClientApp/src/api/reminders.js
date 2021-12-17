@@ -30,7 +30,7 @@ export function updateReminder(updatedBody, reminderKey) {
 }
 
 export function updateReminderCheck(reminderKey, updateStatus) {
-    return fetch(`app/reminders/${reminderKey}/${updateStatus}`, {
+    return fetch(`app/reminders/update-check/${reminderKey}/${updateStatus}`, {
         method: "PATCH",
         headers: {
             Accept: "application/json"
@@ -38,11 +38,13 @@ export function updateReminderCheck(reminderKey, updateStatus) {
     }).then((response) => response.ok ? response.json() : Promise.reject(response))
 }
 
-export function deleteReminder(reminderKey) {
-    return fetch(`app/reminders/${reminderKey}`, {
+export function deleteReminders(reminderKeys) {
+    return fetch('app/reminders', {
         method: "DELETE",
         headers: {
-            Accept: "application/json"
+            Accept: "application/json",
+            'Content-Type': 'application/json'
         },
+        body: JSON.stringify(reminderKeys)
     }).then((response) => response.ok ? response.json() : Promise.reject(response))
 }

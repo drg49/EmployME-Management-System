@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 import { actions } from "../../store/reminderStore";
 import '../../custom.css';
 import './index.css';
+import Toast from "../toasts";
+import * as toastMethods from "../toastMethods"
 
 const addIcon = <FontAwesomeIcon icon={faPlus} />
 const closeIcon = <FontAwesomeIcon icon ={faWindowClose} />
@@ -26,6 +28,12 @@ export default function Reminders() {
       isOpen: false,
       isUpdate: false,
     });
+    
+    const [deleteModal, setDeleteModal] = React.useState({
+      isOpen: false,
+    })
+
+    const [checkedReminders, setCheckedReminders] = React.useState([])
 
     const [remindState, setRemindState] = React.useState({
       message: '',
@@ -36,6 +44,7 @@ export default function Reminders() {
 
     const resetStates = () => {
       setModalState({ isOpen: false, isUpdate: false });
+      setDeleteModal({ isOpen: false })
       setRemindState({ message: '', key: 0 });
       setIsLoading(false);
     }
@@ -49,6 +58,8 @@ export default function Reminders() {
             checkStatus={n.checkStatus}
             setModalState={setModalState}
             setRemindState={setRemindState}
+            checkedReminders={checkedReminders}
+            setCheckedReminders={setCheckedReminders}
           />
         </div>
       )})
@@ -56,13 +67,15 @@ export default function Reminders() {
     const createReminder = () => {
       reminderApi.createReminder(remindState.message).then(() => {
         resetReminders();
-      }).catch(() => console.log('ERROR'));
+        toastMethods.notifySuccess("Reminder added")
+      }).catch(() => toastMethods.notifyError("Failed to create reminder"));
     }
 
     const updateReminder = () => {
       reminderApi.updateReminder(remindState.message, remindState.key).then(() => {
         resetReminders();
-      }).catch(() => console.log('ERROR'));
+        toastMethods.notifySuccess("Reminder updated")
+      }).catch(() => toastMethods.notifyError("Failed to update reminder"));
     }
 
     const resetReminders = () => {
@@ -77,6 +90,15 @@ export default function Reminders() {
       setRemindState({ ...remindState, message: e.target.value })
     }
 
+    const deleteReminders = () => {
+      const remindersToDelete = [...new Set(checkedReminders)];
+      reminderApi.deleteReminders(remindersToDelete).then(() => {
+        setCheckedReminders([]);
+        resetReminders();
+        toastMethods.notifySuccess("Your completed reminders have been deleted")
+      }).catch(() => toastMethods.notifyError("Failed to delete reminders"))
+    }
+
     return (
         <>
             <div className="employMe-div-box reminder">
@@ -89,12 +111,12 @@ export default function Reminders() {
                     >
                       {addIcon}
                     </button>
-                    <button
+                    {state.reminders.length > 0 ? <button
                       className="employMe-delete-btn"
-                      onClick={() => console.log('Alan is a bum')}
+                      onClick={() => setDeleteModal({...deleteModal, isOpen: true})}
                     >
                       {trashIcon}
-                    </button>
+                    </button> : null}
                   </section>
                 </div>
                   {state.loadingStatus === 'started' ? spinner : <div id="dashboard-panel">{mapper}</div>}
@@ -103,12 +125,11 @@ export default function Reminders() {
 
             <Modal
               isOpen={modalState.isOpen}
-              contentLabel="My dialog"
               className="mymodal"
               overlayClassName="myoverlay"
             >
               <div id="modal-action-header">
-                <h2>New Reminder</h2>
+                <h2>{modalState.isUpdate ? 'Update Reminder' : 'New Reminder'}</h2>
                 <button
                   onClick={resetStates}
                   className="strip-btn close-btn"
@@ -137,6 +158,35 @@ export default function Reminders() {
                 Done
               </button>}
             </Modal>
+
+            <Modal
+              isOpen={deleteModal.isOpen}
+              className="mymodal"
+              overlayClassName="myoverlay"
+            >
+              <div id="modal-action-header">
+                <h2>Delete Reminders</h2>
+                <button
+                  onClick={() => setDeleteModal({...deleteModal, isOpen: false})}
+                  className="strip-btn close-btn"
+                >
+                  {closeIcon}
+                </button>
+              </div>
+              {checkedReminders.length > 0 ? 
+              <p>Are you sure you want to delete all completed reminders?</p>
+              :
+              <p>To delete reminders, you must check them off first</p>}
+              <section>
+                <button
+                  onClick={deleteReminders}
+                >
+                  Delete
+                </button>
+              </section>
+            </Modal>
+
+            <Toast />
         </>
     )
 }
