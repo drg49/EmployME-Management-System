@@ -20,7 +20,7 @@ const trashIcon = <FontAwesomeIcon icon={faTrashAlt} />
 
 Modal.setAppElement('#root');
 
-export default function Reminders() {
+export default function Reminders({ initLoad, setInitLoad }) {
     const dispatch = useDispatch()
     const state = useReminders();
     const reminderChecks = useSelector(state => state.reminders)
@@ -57,6 +57,8 @@ export default function Reminders() {
             checkStatus={n.checkStatus}
             setModalState={setModalState}
             setRemindState={setRemindState}
+            initLoad={initLoad}
+            setInitLoad={setInitLoad}
           />
         </div>
       )})
@@ -174,6 +176,7 @@ export default function Reminders() {
               <p>Are you sure you want to delete all completed reminders?</p>
               :
               <p>To delete reminders, you must check them off first</p>}
+              {reminderChecks.checked.length > 0 ?
               <section className="modal-action-btns">
                 <button
                   onClick={deleteReminders}
@@ -188,6 +191,13 @@ export default function Reminders() {
                   No
                 </button>
               </section>
+              :
+              <button
+                  onClick={resetStates}
+                  className="employMe-add-btn"
+                >
+                  Okay
+              </button>}
             </Modal>
 
             <Toast />

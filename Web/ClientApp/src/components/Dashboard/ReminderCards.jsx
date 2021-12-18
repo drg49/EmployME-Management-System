@@ -6,17 +6,18 @@ import { actions } from "../../store/reminderStore";
 import '../../custom.css'
 import './index.css'
 
-export default function ReminderCards({ id, message, checkStatus, setModalState, setRemindState }) {
+export default function ReminderCards({ 
+  id, message, checkStatus, setModalState, setRemindState, initLoad, setInitLoad 
+}) {
   const dispatch = useDispatch();
   const state = useSelector(state => state.reminders)
 
   React.useEffect(() => {
-    if (checkStatus === 1) {
+    if (checkStatus === 1 && initLoad === true) {
+      console.log(initLoad)
       dispatch(actions.addCheck(id))
     }
   }, [])
-
-  React.useEffect(() => console.log(state.checked))
 
   const handleCheck = (e) => {
     if (e.target.checked) {
@@ -24,6 +25,7 @@ export default function ReminderCards({ id, message, checkStatus, setModalState,
       return dispatch(actions.addCheck(id))
     }
     api.updateReminderCheck(id, 0)
+    setInitLoad(false)
     return dispatch(actions.removeCheck(id))
   }
 

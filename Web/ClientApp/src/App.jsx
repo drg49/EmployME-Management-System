@@ -13,6 +13,7 @@ import './custom.css'
 export default function App() {
   const dispatch = useDispatch();
   const [appState, setAppState] = React.useState("Loading")
+  const [initLoad, setInitLoad] = React.useState(false);
 
   const loginUser = (data) => {
     dispatch(actions.signInUser(data))
@@ -20,6 +21,7 @@ export default function App() {
   }
 
   React.useEffect(() => {
+    setInitLoad(true)
     api.validateUser().then(response => response.json())
     .then(data => {
       if (!data.title) {
@@ -38,7 +40,7 @@ export default function App() {
             <SideNav />
           <Switch>
             <Route exact path="/" 
-              render={(rp) =>  <Dashboard {...rp}/>} 
+              render={(rp) =>  <Dashboard initLoad={initLoad} setInitLoad={setInitLoad} {...rp}/>} 
             />
           </Switch>
           </main>
