@@ -4,6 +4,9 @@ const LOAD_STARTED = `${root}LOAD_STARTED`;
 const LOAD_COMPLETED = `${root}LOAD_COMPLETED`;
 const LOAD_FAILED = `${root}LOAD_FAILED`;
 const RESET_REMINDERS = `${root}RESET_REMINDERS`;
+const ADD_CHECK = `${root}ADD_CHECK`;
+const REMOVE_CHECK = `${root}REMOVE_CHECK`;
+const RESET_CHECKS = `${root}RESET_CHECKS`;
 
 const LOADING_STATUS = Object.freeze({
     NOT_STARTED: 'not_started',
@@ -14,7 +17,8 @@ const LOADING_STATUS = Object.freeze({
 
 const init = {
   loadingStatus: LOADING_STATUS.NOT_STARTED,
-  reminders: []
+  reminders: [],
+  checked: []
 }
 
 export const actions = {
@@ -35,6 +39,23 @@ export const actions = {
             type: RESET_REMINDERS,
             reminders
         }
+    },
+    addCheck: (id) => {
+        return {
+            type: ADD_CHECK,
+            id
+        }
+    },
+    removeCheck: (id) => {
+        return {
+            type: REMOVE_CHECK,
+            id
+        }
+    },
+    resetChecks: () =>  {
+        return {
+            type: RESET_CHECKS
+        }
     }
 }
 
@@ -53,6 +74,21 @@ const resetReminders = (state, action) => {
     return {
         ...state,
         reminders: action.reminders
+    }
+}
+
+const addCheck = (state, action) => {
+    return {
+        ...state,
+        checked: [...state.checked, action.id]
+    }
+}
+
+const removeCheck = (state, action) => {
+    const newArray = state.checked.filter((c) => c !== action.id)
+    return {
+        ...state,
+        checked: newArray
     }
 }
 
@@ -78,6 +114,18 @@ const reminderReducer = (state = init, action) => {
 
         case RESET_REMINDERS:
             return resetReminders(state, action)
+
+        case ADD_CHECK:
+            return addCheck(state, action)
+
+        case REMOVE_CHECK:
+            return removeCheck(state, action)
+
+        case RESET_CHECKS:
+            return {
+                ...state,
+                checked: []
+            }
         
         default:
             return state;

@@ -1,29 +1,30 @@
 import React from 'react';
 import * as api from '../../api/reminders'
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../store/reminderStore";
 
 import '../../custom.css'
 import './index.css'
 
-export default function ReminderCards({ 
-  id, message, checkStatus, setModalState, setRemindState, checkedReminders, setCheckedReminders 
-}) {
-
-  // const [style, setStyle] = React.useState(null)
+export default function ReminderCards({ id, message, checkStatus, setModalState, setRemindState }) {
+  const dispatch = useDispatch();
+  const state = useSelector(state => state.reminders)
 
   React.useEffect(() => {
     if (checkStatus === 1) {
-      setCheckedReminders((checkedReminders) => [...checkedReminders, id])
+      dispatch(actions.addCheck(id))
     }
   }, [])
+
+  React.useEffect(() => console.log(state.checked))
 
   const handleCheck = (e) => {
     if (e.target.checked) {
       api.updateReminderCheck(id, 1)
-      return setCheckedReminders((checkedReminders) => [...checkedReminders, id])
+      return dispatch(actions.addCheck(id))
     }
     api.updateReminderCheck(id, 0)
-    const removedCheck = checkedReminders.filter((c) => c !== id)
-    return setCheckedReminders(removedCheck)
+    return dispatch(actions.removeCheck(id))
   }
 
     return (
@@ -31,7 +32,7 @@ export default function ReminderCards({
             <input 
               type="checkbox" 
               onChange={handleCheck}
-              checked={checkedReminders.includes(id) ? true : false}
+              checked={state.checked.includes(id) ? true : false}
             />
             <p 
               onClick={() => {
@@ -41,7 +42,7 @@ export default function ReminderCards({
                 });
                 setRemindState({ message, key: id });
               }}
-              style={checkedReminders.includes(id) ? { textDecoration: 'line-through' } : { textDecoration: 'none' }}
+              style={state.checked.includes(id) ? { textDecoration: 'line-through' } : { textDecoration: 'none' }}
             >
               {message}
             </p>

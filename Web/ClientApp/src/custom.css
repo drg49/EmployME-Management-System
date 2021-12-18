@@ -4,6 +4,12 @@ body {
     background-color: whitesmoke;
 }
 
+button {
+    border: none;
+    padding: 4px 8px;
+    border-radius: 3px;
+}
+
 textarea {
     resize: none;
     display: block;
@@ -138,7 +144,7 @@ input {
 .employMe-div-box.reminder #reminder-actions {
     display: flex;
     justify-content: space-between;
-    padding: 10px 5px;
+    padding: 8px 5px;
     align-items: center;
     background-color: darkslateblue;
     color: white;
@@ -174,6 +180,11 @@ input {
     margin: 0px;
     font-family: Arial, Helvetica, sans-serif;
     color: maroon;
+}
+
+.modal-action-btns {
+    display: flex;
+    gap: 1rem;
 }
   
 .myoverlay {

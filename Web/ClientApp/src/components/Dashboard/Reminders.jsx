@@ -6,7 +6,7 @@ import * as reminderApi from '../../api/reminders'
 import ReminderCards from "./ReminderCards";
 import useReminders from "../../hooks/useReminders";
 import ErrorComponent from "../ErrorComponent";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../store/reminderStore";
 import '../../custom.css';
 import './index.css';
@@ -23,6 +23,7 @@ Modal.setAppElement('#root');
 export default function Reminders() {
     const dispatch = useDispatch()
     const state = useReminders();
+    const reminderChecks = useSelector(state => state.reminders)
 
     const [modalState, setModalState] = React.useState({
       isOpen: false,
@@ -32,8 +33,6 @@ export default function Reminders() {
     const [deleteModal, setDeleteModal] = React.useState({
       isOpen: false,
     })
-
-    const [checkedReminders, setCheckedReminders] = React.useState([])
 
     const [remindState, setRemindState] = React.useState({
       message: '',
@@ -58,8 +57,6 @@ export default function Reminders() {
             checkStatus={n.checkStatus}
             setModalState={setModalState}
             setRemindState={setRemindState}
-            checkedReminders={checkedReminders}
-            setCheckedReminders={setCheckedReminders}
           />
         </div>
       )})
@@ -91,9 +88,9 @@ export default function Reminders() {
     }
 
     const deleteReminders = () => {
-      const remindersToDelete = [...new Set(checkedReminders)];
+      const remindersToDelete = [...new Set(reminderChecks.checked)];
       reminderApi.deleteReminders(remindersToDelete).then(() => {
-        setCheckedReminders([]);
+        dispatch(actions.resetChecks())
         resetReminders();
         toastMethods.notifySuccess("Your completed reminders have been deleted")
       }).catch(() => toastMethods.notifyError("Failed to delete reminders"))
@@ -173,15 +170,22 @@ export default function Reminders() {
                   {closeIcon}
                 </button>
               </div>
-              {checkedReminders.length > 0 ? 
+              {reminderChecks.checked.length > 0 ? 
               <p>Are you sure you want to delete all completed reminders?</p>
               :
               <p>To delete reminders, you must check them off first</p>}
-              <section>
+              <section className="modal-action-btns">
                 <button
                   onClick={deleteReminders}
+                  className="employMe-add-btn"
                 >
-                  Delete
+                  Yes
+                </button>
+                <button
+                  onClick={resetStates}
+                  className="employMe-delete-btn"
+                >
+                  No
                 </button>
               </section>
             </Modal>
