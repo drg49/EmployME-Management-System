@@ -43,7 +43,7 @@ export default function Reminders({ initLoad, setInitLoad }) {
 
     const resetStates = () => {
       setModalState({ isOpen: false, isUpdate: false });
-      setDeleteModal({ isOpen: false })
+      setDeleteModal({ isOpen: false });
       setRemindState({ message: '', key: 0 });
       setIsLoading(false);
     }
@@ -66,7 +66,7 @@ export default function Reminders({ initLoad, setInitLoad }) {
     const createReminder = () => {
       reminderApi.createReminder(remindState.message).then(() => {
         resetReminders();
-        toastMethods.notifySuccess("Reminder added")
+        toastMethods.notifySuccess("Reminder added");
       }).catch(() => toastMethods.notifyError("Failed to create reminder"));
     }
 
@@ -90,35 +90,39 @@ export default function Reminders({ initLoad, setInitLoad }) {
     }
 
     const deleteReminders = () => {
+      setIsLoading(true);
       const remindersToDelete = [...new Set(reminderChecks.checked)];
       reminderApi.deleteReminders(remindersToDelete).then(() => {
-        dispatch(actions.resetChecks())
         resetReminders();
-        toastMethods.notifySuccess("Your completed reminders have been deleted")
-      }).catch(() => toastMethods.notifyError("Failed to delete reminders"))
+        dispatch(actions.resetChecks());
+        toastMethods.notifySuccess("Your completed reminders have been deleted");
+      }).catch(() => toastMethods.notifyError("Failed to delete reminders"));
     }
 
     return (
         <>
-            <div className="employMe-div-box reminder">
+            <div 
+              className="employMe-div-box reminder" 
+              style={state.reminders.length > 0 ? {"borderBottomLeftRadius": "0px", "borderBottomRightRadius": "0px"} : null}
+            >
                 <div id="reminder-actions">
                   <p className="employMe-div-box-title">Reminders</p>
                   <section>
                     <button
                       className="employMe-add-btn"
-                      onClick={() => setModalState({isOpen: true, isUpdate: false})}
+                      onClick={() => setModalState({ isOpen: true, isUpdate: false })}
                     >
                       {addIcon}
                     </button>
-                    {state.reminders.length > 0 ? <button
+                    {reminderChecks.checked.length > 0 ? <button
                       className="employMe-delete-btn"
-                      onClick={() => setDeleteModal({...deleteModal, isOpen: true})}
+                      onClick={() => setDeleteModal({ ...deleteModal, isOpen: true })}
                     >
                       {trashIcon}
                     </button> : null}
                   </section>
                 </div>
-                  {state.loadingStatus === 'started' ? spinner : <div id="dashboard-panel">{mapper}</div>}
+                  {state.loadingStatus === 'started' ? <FontAwesomeIcon icon={faSpinner} spin color="white" /> : <div id="dashboard-panel">{mapper}</div>}
                   {state.loadingStatus === 'failed' && <ErrorComponent message="Failed to load reminders"/>}
             </div>
 
@@ -166,18 +170,17 @@ export default function Reminders({ initLoad, setInitLoad }) {
               <div id="modal-action-header">
                 <h2>Delete Reminders</h2>
                 <button
-                  onClick={() => setDeleteModal({...deleteModal, isOpen: false})}
+                  onClick={() => setDeleteModal({ ...deleteModal, isOpen: false })}
                   className="strip-btn close-btn"
                 >
                   {closeIcon}
                 </button>
               </div>
-              {reminderChecks.checked.length > 0 ? 
               <p>Are you sure you want to delete all completed reminders?</p>
-              :
-              <p>To delete reminders, you must check them off first</p>}
-              {reminderChecks.checked.length > 0 ?
               <section className="modal-action-btns">
+                {isLoading ? spinner 
+                : 
+                <>
                 <button
                   onClick={deleteReminders}
                   className="employMe-add-btn"
@@ -190,14 +193,8 @@ export default function Reminders({ initLoad, setInitLoad }) {
                 >
                   No
                 </button>
+                </>}
               </section>
-              :
-              <button
-                  onClick={resetStates}
-                  className="employMe-add-btn"
-                >
-                  Okay
-              </button>}
             </Modal>
 
             <Toast />

@@ -13,7 +13,9 @@ import './custom.css'
 export default function App() {
   const dispatch = useDispatch();
   const [appState, setAppState] = React.useState("Loading")
-  const [initLoad, setInitLoad] = React.useState(false);
+  const [initLoad, setInitLoad] = React.useState({
+    reminders: false,
+  });
 
   const loginUser = (data) => {
     dispatch(actions.signInUser(data))
@@ -21,7 +23,9 @@ export default function App() {
   }
 
   React.useEffect(() => {
-    setInitLoad(true)
+    setInitLoad({
+      reminders: true
+    })
     api.validateUser().then(response => response.json())
     .then(data => {
       if (!data.title) {

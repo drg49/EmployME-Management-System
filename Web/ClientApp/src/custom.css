@@ -141,15 +141,6 @@ input {
     text-align: center;
 }
 
-.employMe-div-box.reminder #reminder-actions {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 5px;
-    align-items: center;
-    background-color: darkslateblue;
-    color: white;
-}
-
 .employMe-div-box-title {
     margin: 0px;
     font-size: 21px;

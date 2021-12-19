@@ -6,7 +6,7 @@
 #dasboard-main {
     display: flex;
     justify-content: space-around;
-    gap: 1rem;
+    gap: 6px;
 }
 
 #greeting {
@@ -51,8 +51,20 @@
     border-top: none;
 }
 
+.employMe-div-box.reminder {
+    background-color: darkslateblue;
+}
+
 .employMe-div-box.reminder section {
     display: flex;
     align-items: center;
     gap: 5px;
+}
+
+.employMe-div-box.reminder #reminder-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 5px;
+    align-items: center;
+    color: white;
 }

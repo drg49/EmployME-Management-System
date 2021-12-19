@@ -13,8 +13,7 @@ export default function ReminderCards({
   const state = useSelector(state => state.reminders)
 
   React.useEffect(() => {
-    if (checkStatus === 1 && initLoad === true) {
-      console.log(initLoad)
+    if (checkStatus === 1 && initLoad.reminders === true) {
       dispatch(actions.addCheck(id))
     }
   }, [])
@@ -25,7 +24,7 @@ export default function ReminderCards({
       return dispatch(actions.addCheck(id))
     }
     api.updateReminderCheck(id, 0)
-    setInitLoad(false)
+    setInitLoad({...initLoad, reminders: false})
     return dispatch(actions.removeCheck(id))
   }
 
