@@ -8,32 +8,42 @@ import SideNav from './components/SideNav';
 import Register from './auth/Register';
 import LogIn from './auth/Login';
 import { actions } from './store/userStore';
+import { useHistory } from 'react-router';
+
 import './custom.css'
 
 export default function App() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [appState, setAppState] = React.useState("Loading")
   const [initLoad, setInitLoad] = React.useState({
     reminders: false,
   });
 
   const loginUser = (data) => {
-    dispatch(actions.signInUser(data))
-    setAppState("Authorized")
+    dispatch(actions.signInUser(data));
+    setAppState("Authorized");
+  }
+
+  const validateUser = (initLogin = false) => {
+    api.validateUser().then(response => response.json())
+    .then(data => {
+      if (!data.title) {
+        loginUser(data);
+        if (initLogin) {
+          history.push("/");
+        }
+      } else if (data.title === "Unauthorized") {
+        setAppState("Unauthorized");
+      }
+    })
   }
 
   React.useEffect(() => {
     setInitLoad({
       reminders: true
-    })
-    api.validateUser().then(response => response.json())
-    .then(data => {
-      if (!data.title) {
-        loginUser(data)
-      } else if (data.title === "Unauthorized") {
-        setAppState("Unauthorized")
-      }
-    })
+    });
+    validateUser();
   }, []);
 
   if (appState === "Authorized") {
@@ -57,10 +67,10 @@ export default function App() {
       <div className="App">
         <Switch>
             <Route exact path="/" 
-              render={(rp) =>  <LogIn {...rp}/>} 
+              render={(rp) =>  <LogIn validateUser={validateUser} {...rp}/>} 
             />
             <Route path="/register"
-              render={(rp) => <Register {...rp}/>}
+              render={(rp) => <Register validateUser={validateUser} {...rp}/>}
             />
           </Switch>
       </div>

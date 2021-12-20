@@ -6,10 +6,8 @@ import Toast from '../components/toasts'
 import * as toastMethods from '../components/toastMethods'
 
 import './auth.css'
-import { useHistory } from 'react-router'
 
-export default function AuthTemplate({ title }) {
-    const history = useHistory();
+export default function AuthTemplate({ title, validateUser }) {
     const [disabledState, setDisabledState] = React.useState(false);
 
     const [errorMsg, setErrorMsg] = React.useState("");
@@ -48,6 +46,16 @@ export default function AuthTemplate({ title }) {
         }
     }
 
+    const loginUser = (login) => {
+      authApi.login(login).then((response) => {
+        if (response.ok) {
+          return validateUser(true);
+        } 
+        setErrorMsg("Username or password is incorrect");
+        return setDisabledState(false);
+      });
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (title === "User Registration") {
@@ -65,8 +73,7 @@ export default function AuthTemplate({ title }) {
               if (response.ok) {
                 authApi.login({ Username: regState.Username, Password: regState.Password , Email: "" })
                   .then(() => {
-                    history.push("/")
-                    window.location.reload()
+                    validateUser(true)
                   })
                   .catch(() => ("Error logging in"));
                 
@@ -93,17 +100,12 @@ export default function AuthTemplate({ title }) {
           login.Password = loginState.Password;
           if (loginState.SignIn.split("").includes("@")) {
             login.Email = loginState.SignIn;
-            return authApi.login(login);
+            setDisabledState(true)
+            return loginUser(login);
           }
           login.Username = loginState.SignIn;
           setDisabledState(true)
-          return authApi.login(login).then((response) => {
-            if (response.ok) {
-              return window.location.reload();
-            } 
-            setErrorMsg("Username or password is incorrect");
-            return setDisabledState(false);
-          });
+          return loginUser(login)
         }
     }
 
