@@ -4,13 +4,15 @@ import * as v from '../validations/authValidations'
 import * as authApi from '../api/authentication'
 import Toast from '../components/toasts'
 import * as toastMethods from '../components/toastMethods'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 import './auth.css'
 
+const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" />
+
 export default function AuthTemplate({ title, validateUser }) {
     const [disabledState, setDisabledState] = React.useState(false);
-
-    const [errorMsg, setErrorMsg] = React.useState("");
 
     const [regState, setRegState] = React.useState({
         FirstName: "",
@@ -51,13 +53,14 @@ export default function AuthTemplate({ title, validateUser }) {
         if (response.ok) {
           return validateUser(true);
         } 
-        setErrorMsg("Username or password is incorrect");
+        toastMethods.notifyError('Username or password is incorrect');
         return setDisabledState(false);
       });
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setDisabledState(true)
         if (title === "User Registration") {
           if (v.usernameValidation(regState.Username)) {
             return false;
@@ -75,8 +78,6 @@ export default function AuthTemplate({ title, validateUser }) {
                   .then(() => {
                     validateUser(true)
                   })
-                  .catch(() => ("Error logging in"));
-                
               } else {
                 response.text().then((message) => {
                   console.log(message)
@@ -92,6 +93,7 @@ export default function AuthTemplate({ title, validateUser }) {
                   else {
                     toastMethods.notifyError('There was an issue registering the user')
                   }
+                  setDisabledState(false)
                 });
               }
             })
@@ -189,7 +191,14 @@ export default function AuthTemplate({ title, validateUser }) {
                     required
                     onChange={handleRegister}
                   />
-                  <input type="submit" value="Enter" id="auth-submit-btn"/>
+                  {disabledState ? spinner 
+                  :
+                  <input 
+                    type="submit"
+                    value="Enter" 
+                    id="auth-submit-btn"
+                    disabled={disabledState}
+                  />}
                   <div id="existing-user-flex">
                     <p>Already have an account? </p>
                     <Link to="/" id="signin-reg-links">Sign in</Link>
@@ -221,18 +230,20 @@ export default function AuthTemplate({ title, validateUser }) {
                     onKeyDown={preventSpace}
                     onChange={handleLogin}
                   />
+                  {disabledState ? spinner
+                  :
                   <input 
                     type="submit" 
                     value="Enter"
                     id="auth-submit-btn"
                     disabled={disabledState}
-                  />
+                  />}
                   <p><Link to="/register" id="signin-reg-links">Register here</Link></p>
                 </>
                 }
                 </div>
             </form>
-            <p id="auth-error-msg">{errorMsg}</p>
+
         </section>
 
         <Toast />

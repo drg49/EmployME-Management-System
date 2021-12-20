@@ -3,7 +3,8 @@ import data from '../datasets/topNavData.json'
 import { Link } from 'react-router-dom'
 import * as api from '../api/authentication'
 
-export default function NavBar() {
+export default function NavBar({ validateUser }) {
+    const [disabled, setDisabled] = React.useState(false)
 
     const topNavLinks = data.map((item, index) => {
         return (
@@ -14,8 +15,10 @@ export default function NavBar() {
     })
 
     const handleLogout = () => {
+        setDisabled(true)
         api.logout().then(() => {
-            window.location.reload();
+            validateUser(true);
+            setDisabled(false)
         })
     }
 
@@ -26,6 +29,7 @@ export default function NavBar() {
                 <button 
                   onClick={handleLogout}
                   id="logout-btn"
+                  disabled={disabled}
                 >
                   Logout
                 </button>

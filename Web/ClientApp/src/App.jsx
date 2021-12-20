@@ -49,7 +49,7 @@ export default function App() {
   if (appState === "Authorized") {
     return (
       <div className="App">
-          <NavBar />
+          <NavBar validateUser={validateUser} />
           <main>
             <SideNav />
           <Switch>

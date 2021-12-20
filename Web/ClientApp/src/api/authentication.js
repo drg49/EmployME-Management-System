@@ -33,5 +33,5 @@ export function logout() {
         headers: {
             Accept: "application/json"
         }
-    })
+    }).then((response) => response.ok ? response.json() : Promise.reject(response))
 }
