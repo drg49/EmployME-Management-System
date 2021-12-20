@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as api from './api/authentication';
 import { Switch, Route } from 'react-router';
 import { useDispatch } from 'react-redux';
-import Dashboard from './components/Dashboard/index';
+import Dashboard from './components/Dashboard';
 import NavBar from './components/NavBar';
 import SideNav from './components/SideNav';
 import Register from './auth/Register';

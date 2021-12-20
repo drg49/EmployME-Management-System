@@ -24,7 +24,7 @@ export function register(registerInfo) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(registerInfo)
-    }).then((response) => response.json())
+    })
 }
 
 export function logout() {

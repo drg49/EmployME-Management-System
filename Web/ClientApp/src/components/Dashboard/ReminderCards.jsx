@@ -3,7 +3,6 @@ import * as api from '../../api/reminders'
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../store/reminderStore";
 
-import '../../custom.css'
 import './index.css'
 
 export default function ReminderCards({ 

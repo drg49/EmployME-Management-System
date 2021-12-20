@@ -26,11 +26,11 @@ namespace Web.Controllers
             {
                 return StatusCode(400, "Email already exists");
             }
-            if (existingUser != null)
+            else if (existingUser != null)
             {
                 return StatusCode(400, "Username already exists");
             }
-            if (!validator.ValidateEmail(newUser.Email))
+            else if (!validator.ValidateEmail(newUser.Email))
             {
                 return StatusCode(400, "Issue validating email");
             }

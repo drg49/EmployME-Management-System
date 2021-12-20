@@ -10,6 +10,10 @@ button {
     border-radius: 3px;
 }
 
+button:hover {
+    transition: 200ms;
+}
+
 textarea {
     resize: none;
     display: block;
@@ -99,6 +103,16 @@ input {
     align-items: center;
     justify-content: space-between;
     padding: 8px;
+}
+
+#logout-btn {
+    background-color: #f55925;
+    color: white;
+    cursor: pointer;
+}
+
+#logout-btn:hover {
+    opacity: 0.9;
 }
 
 #top-nav {

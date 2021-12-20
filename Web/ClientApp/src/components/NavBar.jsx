@@ -8,7 +8,7 @@ export default function NavBar() {
     const topNavLinks = data.map((item, index) => {
         return (
             <li key={index}>
-                <Link to="/">{item.title}</Link>
+                <Link to={item.link}>{item.title}</Link>
             </li>
         )
     })
@@ -23,7 +23,12 @@ export default function NavBar() {
         <>
             <div id="logo-wrapper">
                 <Link to="/" ><p id="logo">EmployME</p></Link>
-                <button onClick={handleLogout}>Logout</button>
+                <button 
+                  onClick={handleLogout}
+                  id="logout-btn"
+                >
+                  Logout
+                </button>
             </div>
             <nav id="top-nav">
                 {topNavLinks}

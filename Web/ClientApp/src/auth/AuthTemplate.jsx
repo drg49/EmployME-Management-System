@@ -2,11 +2,14 @@ import * as React from 'react'
 import { Link } from 'react-router-dom'
 import * as v from '../validations/authValidations'
 import * as authApi from '../api/authentication'
+import Toast from '../components/toasts'
+import * as toastMethods from '../components/toastMethods'
+
 import './auth.css'
-import { applyMiddleware } from 'redux'
+import { useHistory } from 'react-router'
 
 export default function AuthTemplate({ title }) {
-
+    const history = useHistory();
     const [disabledState, setDisabledState] = React.useState(false);
 
     const [errorMsg, setErrorMsg] = React.useState("");
@@ -57,7 +60,34 @@ export default function AuthTemplate({ title }) {
           if (v.nameValidation(regState.LastName)) {
             return false;
           }
-          return authApi.register(regState);
+          return authApi.register(regState)
+            .then((response) => {
+              if (response.ok) {
+                authApi.login({ Username: regState.Username, Password: regState.Password , Email: "" })
+                  .then(() => {
+                    history.push("/")
+                    window.location.reload()
+                  })
+                  .catch(() => ("Error logging in"));
+                
+              } else {
+                response.text().then((message) => {
+                  console.log(message)
+                  if (message === 'Email already exists') {
+                    toastMethods.notifyError('Email already exists');
+                  }
+                  else if (message === 'Username already exists') {
+                    toastMethods.notifyError('Username already exists');
+                  } 
+                  else if (message === 'Issue validating email') {
+                    toastMethods.notifyError('There was an issue validating your email')
+                  } 
+                  else {
+                    toastMethods.notifyError('There was an issue registering the user')
+                  }
+                });
+              }
+            })
         }
         else if (title === "Login") {
           login.Password = loginState.Password;
@@ -68,7 +98,7 @@ export default function AuthTemplate({ title }) {
           login.Username = loginState.SignIn;
           setDisabledState(true)
           return authApi.login(login).then((response) => {
-            if(response.ok) {
+            if (response.ok) {
               return window.location.reload();
             } 
             setErrorMsg("Username or password is incorrect");
@@ -78,6 +108,7 @@ export default function AuthTemplate({ title }) {
     }
 
     return (
+      <>
         <section id="auth-main">
             <p id="logo">EmployME</p>
             <form id="auth-form" onSubmit={handleSubmit}>
@@ -147,12 +178,13 @@ export default function AuthTemplate({ title }) {
                     onKeyDown={preventSpace}
                     onChange={handleRegister}
                   />
-                  <label htmlFor="c-auth">Company</label>
+                  <label htmlFor="c-auth">Company</label><span id="required-auth">*</span>
                   <input className="em-input-auth"
                     type="text"
                     name="CompanyName"
                     id="c-auth"
                     maxLength="150"
+                    required
                     onChange={handleRegister}
                   />
                   <input type="submit" value="Enter" id="auth-submit-btn"/>
@@ -200,5 +232,8 @@ export default function AuthTemplate({ title }) {
             </form>
             <p id="auth-error-msg">{errorMsg}</p>
         </section>
+
+        <Toast />
+      </>
     )
 };

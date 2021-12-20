@@ -1,17 +1,17 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../store/reminderStore";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faWindowClose, faSpinner, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import Modal from 'react-modal';
-import * as reminderApi from '../../api/reminders'
+import Toast from "../toasts";
+import * as toastMethods from "../toastMethods";
+import * as reminderApi from '../../api/reminders';
 import ReminderCards from "./ReminderCards";
 import useReminders from "../../hooks/useReminders";
 import ErrorComponent from "../ErrorComponent";
-import { useDispatch, useSelector } from "react-redux";
-import { actions } from "../../store/reminderStore";
-import '../../custom.css';
+
 import './index.css';
-import Toast from "../toasts";
-import * as toastMethods from "../toastMethods"
 
 const addIcon = <FontAwesomeIcon icon={faPlus} />
 const closeIcon = <FontAwesomeIcon icon ={faWindowClose} />
