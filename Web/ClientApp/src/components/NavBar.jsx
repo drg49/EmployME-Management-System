@@ -17,8 +17,8 @@ export default function NavBar({ validateUser }) {
     const handleLogout = () => {
         setDisabled(true)
         api.logout().then(() => {
-            validateUser(true);
-            setDisabled(false)
+            validateUser();
+            setDisabled(false);
         })
     }
 

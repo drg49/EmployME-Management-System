@@ -11,7 +11,7 @@ import ReminderCards from "./ReminderCards";
 import useReminders from "../../hooks/useReminders";
 import ErrorComponent from "../ErrorComponent";
 
-import './index.css';
+import './index.scss';
 
 const addIcon = <FontAwesomeIcon icon={faPlus} />
 const closeIcon = <FontAwesomeIcon icon ={faWindowClose} />

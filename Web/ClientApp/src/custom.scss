@@ -1,3 +1,7 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 /* Home */
 body {
     margin: 0px;
@@ -8,6 +12,7 @@ button {
     border: none;
     padding: 4px 8px;
     border-radius: 3px;
+    cursor: pointer;
 }
 
 button:hover {
@@ -50,7 +55,6 @@ input {
 	border: none;
 	padding: 0;
 	font: inherit;
-	cursor: pointer;
 	outline: inherit;
 }
 
@@ -60,7 +64,6 @@ input {
 }
 
 .employMe-add-btn {
-    cursor: pointer;
     background-color: #5bc236;
     color: white;
 }
@@ -70,7 +73,6 @@ input {
 }
 
 .employMe-delete-btn {
-    cursor: pointer;
     background-color: #d11a2a ;
     color: white;
 }
@@ -108,7 +110,6 @@ input {
 #logout-btn {
     background-color: #f55925;
     color: white;
-    cursor: pointer;
 }
 
 #logout-btn:hover {
@@ -122,11 +123,11 @@ input {
     display: flex;
     align-content: space-around;
     padding: 15px;
-}
 
-#top-nav li {
-    list-style: none;
-    padding: 0px 15px;
+    li {
+        list-style: none;
+        padding: 0px 15px;
+    }
 }
 
 /* SideNav */
@@ -138,11 +139,11 @@ input {
     list-style: none;
     padding: 10px;
     width: fit-content;
-}
 
-#side-nav li {
-    margin: 15px 0px 15px 0px;
-    width: max-content;
+    li {
+        margin: 15px 0px 15px 0px;
+        width: max-content;
+    }
 }
 
 /* Reusable */
@@ -158,7 +159,6 @@ input {
 .employMe-div-box-title {
     margin: 0px;
     font-size: 21px;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Modal */  
@@ -179,12 +179,11 @@ input {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
 
-#modal-action-header h2 {
-    margin: 0px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: maroon;
+    h2 {
+        margin: 0px;
+        color: maroon;
+    }
 }
 
 .modal-action-btns {
@@ -213,4 +212,3 @@ input {
 .ReactModal__Overlay--before-close {
     opacity: 0;
 }
-  

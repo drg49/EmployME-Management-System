@@ -3,6 +3,7 @@ const root = "EmployME/User/"
 const SIGNED_IN = `${root}SIGNED_IN`
 
 const init = {
+    userId: 0,
     firstName: "",
     lastName: "",
     username: "",
@@ -23,6 +24,7 @@ export const actions = {
 const handleSignIn = (state, action) => {
     return {
         ...state,
+        userId: action.userId,
         firstName: action.firstName,
         lastName: action.lastName,
         username: action.username,

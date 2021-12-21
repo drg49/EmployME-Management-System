@@ -1,9 +1,7 @@
 import React from 'react';
-import * as api from '../../api/reminders'
+import * as api from '../../api/reminders';
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../store/reminderStore";
-
-import './index.css'
 
 export default function ReminderCards({ 
   id, message, checkStatus, setModalState, setRemindState, initLoad, setInitLoad 

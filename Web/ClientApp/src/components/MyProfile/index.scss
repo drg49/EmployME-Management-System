@@ -1,0 +1,24 @@
+#my-profile-container {
+    padding-left: 15px;
+
+    div {
+        display: flex;
+        gap: 1rem;
+
+        button {
+            color: #24a0ed;
+            :hover {
+                opacity: 0.85;
+            }
+        }
+    }
+    p {
+        font-weight: bold;
+        span {
+            font-weight: lighter;
+        }
+    }
+    p:first-of-type {
+        margin-top: 0px;
+    }
+}

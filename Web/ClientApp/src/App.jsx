@@ -1,8 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import * as api from './api/authentication';
 import { Switch, Route } from 'react-router';
 import { useDispatch } from 'react-redux';
 import Dashboard from './components/Dashboard';
+import MyProfile from './components/MyProfile'
 import NavBar from './components/NavBar';
 import SideNav from './components/SideNav';
 import Register from './auth/Register';
@@ -10,7 +11,7 @@ import LogIn from './auth/Login';
 import { actions } from './store/userStore';
 import { useHistory } from 'react-router';
 
-import './custom.css'
+import './custom.scss'
 
 export default function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ export default function App() {
         }
       } else if (data.title === "Unauthorized") {
         setAppState("Unauthorized");
+        history.push("/")
       }
     })
   }
@@ -55,6 +57,9 @@ export default function App() {
           <Switch>
             <Route exact path="/" 
               render={(rp) =>  <Dashboard initLoad={initLoad} setInitLoad={setInitLoad} {...rp}/>} 
+            />
+            <Route path="/my-profile"
+              render={(rp) => <MyProfile {...rp}/>}
             />
           </Switch>
           </main>
