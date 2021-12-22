@@ -90,8 +90,7 @@ namespace Web.Controllers
             }
         }
 
-        [HttpPatch]
-        [Route("update-check/{reminderKey}/{updateStatus}")]
+        [HttpPatch("update-check/{reminderKey}/{updateStatus}")]
         public IActionResult UpdateReminderCheckAsync([FromRoute] int reminderKey, [FromRoute] int updateStatus)
         {
             try

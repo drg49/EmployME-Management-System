@@ -30,19 +30,18 @@
     padding: 20px;
     margin: 0 auto;
     text-align: left;
-}
 
-#input-wrapper input {
-    width: 100%;
-}
-
-#input-wrapper input[type="submit"] {
-    width: 50%;
-    padding: 5px;
-    background-color: #0073CF;
-    color: white;
-    border-radius: 2px;
-    cursor: pointer;
+    input {
+        width: 100%;
+    }
+    input[type="submit"] {
+        width: 50%;
+        padding: 5px;
+        background-color: #0073CF;
+        color: white;
+        border-radius: 2px;
+        cursor: pointer;
+    }
 }
 
 #required-auth {
@@ -57,10 +56,10 @@
 #existing-user-flex {
     display: flex;
     align-items: center;
-}
 
-#existing-user-flex p {
-    padding: 0px 5px 0px 0px;
+    p {
+        padding: 0px 5px 0px 0px;
+    }
 }
 
 #signin-reg-links {

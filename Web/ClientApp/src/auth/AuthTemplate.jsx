@@ -7,7 +7,7 @@ import * as toastMethods from '../components/toastMethods'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
-import './auth.css'
+import './auth.scss'
 
 const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" />
 
