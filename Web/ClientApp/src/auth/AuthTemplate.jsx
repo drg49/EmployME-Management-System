@@ -114,7 +114,7 @@ export default function AuthTemplate({ title, validateUser }) {
     return (
       <>
         <section id="auth-main">
-            <p id="logo">EmployME</p>
+            <p id="logo" style={{margin: '17px'}}>EmployME</p>
             <form id="auth-form" onSubmit={handleSubmit}>
                 <p id="auth-title">{title}</p>
                 <div id="input-wrapper">

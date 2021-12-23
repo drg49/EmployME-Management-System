@@ -4,13 +4,14 @@ import Toast from "../toasts";
 import * as toastMethods from "../toastMethods";
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPencilAlt, faWindowClose } from '@fortawesome/free-solid-svg-icons'
+import { faPencilAlt, faWindowClose, faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 import '../../auth/auth.scss'
 import './index.scss'
 const moment = require('moment')
 const editIcon = <FontAwesomeIcon icon={faPencilAlt} />
 const closeIcon = <FontAwesomeIcon icon ={faWindowClose} />
+const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" size="lg" />
 
 export default function MyProfile () {
     const state = useSelector(state => state.user);
@@ -21,16 +22,35 @@ export default function MyProfile () {
       isPasswordChange: false,
     })
 
+    const [isLoading, setIsLoading] = React.useState(false)
+
+    const [userState, setUserState] = React.useState({
+      firstName: state.firstName,
+      lastName: state.lastName,
+      email: state.email,
+      companyName: state.companyName,
+    })
+
+    const handleChange = (e) => {
+      setUserState({ ...userState, [e.target.name]: e.target.value })
+    }
+
     const handleUpdate = () => {
       setModalState({ isOpen: true, isUserUpdate: true });
     }
 
-    React.useEffect(() => console.log(modalState))
+    React.useEffect(() => console.log(userState), [])
 
     const preventSpace = (e) => {
       if (e.key === " ") {
           e.preventDefault();
       }
+    }
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      setIsLoading(true)
+      console.log(userState)
     }
 
     return (
@@ -51,12 +71,12 @@ export default function MyProfile () {
           <p>Joined: <span>{moment(state.joinedDate).format('MMMM DD, YYYY')}</span></p>
         </div>
 
-        <Modal 
+        <Modal
           isOpen={modalState.isOpen}
           className="mymodal"
           overlayClassName="myoverlay"
         >
-          <div id="modal-action-header">
+          <div id="modal-action-header" style={{marginBottom: "21px"}}>
             <h2>{modalState.isUserUpdate ? 'Update User' : 'Change Password'}</h2>
             <button
               onClick={() => setModalState({ isOpen: false })}
@@ -66,53 +86,85 @@ export default function MyProfile () {
             </button>
           </div>
           {modalState.isUserUpdate ? 
-          <form>
-            <div id="name-wrapper">
+          <form onSubmit={handleSubmit}>
+            <div id="name-wrapper" style={{gap: "1rem"}}>
               <div className="auth-input-field">
                 <label htmlFor="fn-auth">First Name</label><span id="required-auth">*</span>
                 <input
-                  className="em-input-auth"
+                  className="em-input-update"
                   type="text" 
-                  name="FirstName"
+                  name="firstName"
                   id="fn-auth"
                   maxLength="35"
                   required
+                  defaultValue={state.firstName}
+                  onChange={handleChange}
                 />
               </div>
               <div className="auth-input-field">
                 <label htmlFor="ln-auth">Last Name</label><span id="required-auth">*</span>
                 <input
-                  className="em-input-auth"
+                  className="em-input-update"
                   type="text"
-                  name="LastName"
+                  name="lastName"
                   id="ln-auth"
                   maxLength="35"
                   required
+                  defaultValue={state.lastName}
+                  onChange={handleChange}
                 />
               </div>
             </div>
-            <label htmlFor="un-auth">Username</label><span id="required-auth">*</span>
-            <input
-              className="em-input-auth"
+            <div id="name-wrapper" style={{gap: "1rem"}}>
+              <div>
+                <label htmlFor="un-auth">Username</label><span id="required-auth">*</span>
+                <input
+                  className="em-input-update"
+                  type="text"
+                  name="username"
+                  id="un-auth"
+                  minLength="3"
+                  maxLength="20"
+                  required
+                  onKeyDown={preventSpace}
+                  defaultValue={state.username}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="ea-auth">Email Address</label><span id="required-auth">*</span>
+                <input
+                  className="em-input-update"
+                  type="email"
+                  name="email"
+                  id="ea-auth"
+                  minLength="3"
+                  maxLength="100"
+                  required
+                  onKeyDown={preventSpace}
+                  defaultValue={state.email}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <label htmlFor="c-auth">Company</label><span id="required-auth">*</span>
+            <input className="em-input-update"
               type="text"
-              name="Username"
-              id="un-auth"
-              minLength="3"
-              maxLength="20"
+              name="companyName"
+              id="c-auth"
+              maxLength="150"
               required
-              onKeyDown={preventSpace}
+              defaultValue={state.companyName}
+              onChange={handleChange}
             />
-            <label htmlFor="ea-auth">Email Address</label><span id="required-auth">*</span>
-            <input
-              className="em-input-auth"
-              type="email"
-              name="Email"
-              id="ea-auth"
-              minLength="3"
-              maxLength="100"
-              required
-              onKeyDown={preventSpace}
-            />
+            {isLoading ? 
+            <div id="auth-update-spinner">{spinner}</div>
+            :
+            <input 
+              type="submit" 
+              value="Update"
+              id="auth-update-submit-btn"
+            />}
           </form>
           :
           null}

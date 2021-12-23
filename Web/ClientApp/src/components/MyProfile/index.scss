@@ -22,3 +22,21 @@
         margin-top: 0px;
     }
 }
+
+.em-input-update {
+    margin: 0px;
+    padding: 5px;
+    margin-bottom: 17px;
+}
+
+.em-input-update:focus {
+    outline-color: lightblue;
+}
+
+#auth-update-submit-btn {
+    width: 100%;
+    padding: 6px;
+    background-color: #0073CF;
+    color: white;
+    cursor: pointer;
+}

@@ -3,13 +3,18 @@ import data from '../datasets/topNavData.json'
 import { Link } from 'react-router-dom'
 import * as api from '../api/authentication'
 
-export default function NavBar({ validateUser }) {
+export default function NavBar({ validateUser, setPageTitle, pageTitle }) {
     const [disabled, setDisabled] = React.useState(false)
 
     const topNavLinks = data.map((item, index) => {
         return (
-            <li key={index}>
-                <Link to={item.link}>{item.title}</Link>
+            <li key={index} style={pageTitle === item.title ? {fontWeight: "bold"} : null}>
+                <Link 
+                  to={item.link}
+                  onClick={() => setPageTitle(item.title)}
+                >
+                  {item.title}
+                </Link>
             </li>
         )
     })
@@ -19,6 +24,7 @@ export default function NavBar({ validateUser }) {
         api.logout().then(() => {
             validateUser();
             setDisabled(false);
+            setPageTitle('Dashboard')
         })
     }
 

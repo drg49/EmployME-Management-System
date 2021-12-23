@@ -10,13 +10,18 @@ import Register from './auth/Register';
 import LogIn from './auth/Login';
 import { actions } from './store/userStore';
 import { useHistory } from 'react-router';
+import topNavData from './datasets/topNavData.json'
 
 import './custom.scss'
+import './responsive.css'
+
+const initPath = topNavData.find(e => e.link === window.location.pathname)
 
 export default function App() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [appState, setAppState] = React.useState("Loading")
+  const [pageTitle, setPageTitle] = React.useState(initPath.title)
   const [initLoad, setInitLoad] = React.useState({
     reminders: false,
   });
@@ -51,7 +56,11 @@ export default function App() {
   if (appState === "Authorized") {
     return (
       <div className="App">
-          <NavBar validateUser={validateUser} />
+          <NavBar 
+            validateUser={validateUser}
+            setPageTitle={setPageTitle}
+            pageTitle={pageTitle}
+          />
           <main>
             <SideNav />
           <Switch>
