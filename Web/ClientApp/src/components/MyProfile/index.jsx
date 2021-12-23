@@ -2,9 +2,12 @@ import React from 'react'
 import Modal from 'react-modal'
 import Toast from "../toasts";
 import * as toastMethods from "../toastMethods";
+import * as api from '../../api/authentication'
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencilAlt, faWindowClose, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { useDispatch } from 'react-redux';
+import { actions } from '../../store/userStore';
 
 import '../../auth/auth.scss'
 import './index.scss'
@@ -15,6 +18,7 @@ const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" size="lg"
 
 export default function MyProfile () {
     const state = useSelector(state => state.user);
+    const dispatch = useDispatch();
 
     const [modalState, setModalState] = React.useState({
       isOpen: false,
@@ -25,8 +29,10 @@ export default function MyProfile () {
     const [isLoading, setIsLoading] = React.useState(false)
 
     const [userState, setUserState] = React.useState({
+      userId: state.userId,
       firstName: state.firstName,
       lastName: state.lastName,
+      username: state.username,
       email: state.email,
       companyName: state.companyName,
     })
@@ -39,8 +45,6 @@ export default function MyProfile () {
       setModalState({ isOpen: true, isUserUpdate: true });
     }
 
-    React.useEffect(() => console.log(userState), [])
-
     const preventSpace = (e) => {
       if (e.key === " ") {
           e.preventDefault();
@@ -50,7 +54,14 @@ export default function MyProfile () {
     const handleSubmit = (e) => {
       e.preventDefault();
       setIsLoading(true)
-      console.log(userState)
+      api.updateUser(userState)
+      .then(() => {
+        dispatch(actions.signInUser(userState))
+        setModalState({ ...modalState, isOpen: false });
+        toastMethods.notifySuccess("Your profile has been updated")
+        setIsLoading(false)
+      })
+      .catch(() => console.log('ERROR!'))
     }
 
     return (

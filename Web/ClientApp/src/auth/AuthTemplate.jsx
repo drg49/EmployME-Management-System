@@ -9,7 +9,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 import './auth.scss'
 
-const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" />
+const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" size="lg"/>
 
 export default function AuthTemplate({ title, validateUser }) {
     const [disabledState, setDisabledState] = React.useState(false);

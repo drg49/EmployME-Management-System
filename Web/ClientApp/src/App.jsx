@@ -61,16 +61,17 @@ export default function App() {
             setPageTitle={setPageTitle}
             pageTitle={pageTitle}
           />
+          <h2 id="mobile-page-title">{pageTitle}</h2>
           <main>
             <SideNav />
-          <Switch>
-            <Route exact path="/" 
-              render={(rp) =>  <Dashboard initLoad={initLoad} setInitLoad={setInitLoad} {...rp}/>} 
-            />
-            <Route path="/my-profile"
-              render={(rp) => <MyProfile {...rp}/>}
-            />
-          </Switch>
+            <Switch>
+              <Route exact path="/" 
+                render={(rp) =>  <Dashboard initLoad={initLoad} setInitLoad={setInitLoad} {...rp}/>} 
+              />
+              <Route path="/my-profile"
+                render={(rp) => <MyProfile {...rp}/>}
+              />
+            </Switch>
           </main>
         </div>
     )

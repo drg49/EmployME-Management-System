@@ -20,6 +20,12 @@
     }
 }
 
+@media screen and (min-width: 769px){
+    #mobile-page-title {
+        display: none;
+    }
+}
+
 /* Dashboard */
 
 /* @media screen and (max-width: 1025px){

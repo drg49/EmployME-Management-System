@@ -35,3 +35,14 @@ export function logout() {
         }
     }).then((response) => response.ok ? response.json() : Promise.reject(response))
 }
+
+export function updateUser(updatedUser) {
+    return fetch("app/users/update-user", {
+        method: "PATCH",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updatedUser)
+    }).then((response) => response.ok ? response.json() : Promise.reject(response))
+}
