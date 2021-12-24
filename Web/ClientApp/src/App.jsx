@@ -13,7 +13,7 @@ import { useHistory } from 'react-router';
 import topNavData from './datasets/topNavData.json'
 
 import './custom.scss'
-import './responsive.css'
+import './responsive.scss'
 
 const initPath = topNavData.find(e => e.link === window.location.pathname)
 

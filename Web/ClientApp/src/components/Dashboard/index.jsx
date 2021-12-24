@@ -9,7 +9,7 @@ export default function Dashboard({ initLoad, setInitLoad }) {
   return (
       <div id="dashboard-wrapper">
         <h1 id="greeting">Hello {userData.firstName}!</h1>
-        <div id="dasboard-main">
+        <div id="dashboard-main">
           <Reminders initLoad={initLoad} setInitLoad={setInitLoad} />
           <Notifications />
         </div>
