@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 import * as api from '../api/authentication'
 import Drawer from "rc-drawer"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faWindowClose } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons'
 
 const menuIcon = <FontAwesomeIcon icon={faBars} color="white" size="lg" />
-const closeIcon = <FontAwesomeIcon icon ={faWindowClose} color="white" size="lg" />
+const closeIcon = <FontAwesomeIcon icon ={faArrowAltCircleRight} color="white" size="lg" />
 
 export default function NavBar({ validateUser, setPageTitle, pageTitle }) {
     const [disabled, setDisabled] = React.useState(false)
@@ -71,7 +71,8 @@ export default function NavBar({ validateUser, setPageTitle, pageTitle }) {
                 onClose={() => setOpenDrawer(false)}
                 placement="right"
                 contentWrapperStyle={{
-                    backgroundColor: "darkslateblue"
+                    background: 'rgb(85,73,154)',
+                    background: 'radial-gradient(circle, rgba(85,73,154,1) 0%, rgba(57,48,110,1) 100%)',
                 }}
                 maskStyle={{
                     opacity: "0.5"
@@ -81,6 +82,7 @@ export default function NavBar({ validateUser, setPageTitle, pageTitle }) {
                 <button 
                     onClick={() => setOpenDrawer(false)}
                     className="strip-btn"
+                    id="mobile-menu-close-btn"
                 >
                     {closeIcon}
                 </button>

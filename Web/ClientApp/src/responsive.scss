@@ -32,7 +32,8 @@
         border-top: 1px solid white;
         list-style: none;
         display: flex;
-        
+        background-color: rgb(83, 71, 161);
+
         a {
             flex-grow: 1;
             text-align: center;
@@ -43,6 +44,20 @@
     li:last-of-type {
         border-bottom: 1px solid white;
     }
+    li:hover {
+        background-color: blue;
+    }
+}
+
+#mobile-menu-close-btn {
+    margin: 12px;
+    font-size: 45px;
+    // -webkit-touch-callout: none; 
+    // -webkit-user-select: none; 
+    // -khtml-user-select: none; 
+    // -moz-user-select: none; 
+    // -ms-user-select: none; 
+    // user-select: none;
 }
 
 #mobile-page-title {
