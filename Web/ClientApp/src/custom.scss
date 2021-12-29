@@ -351,3 +351,14 @@ input {
     transition: opacity 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
   }
   
+  /* Cards and Dashes */
+  #main-page-wrapper {
+    padding: 10px;
+    width: 100%;
+}
+
+#landing-pg-main {
+    display: flex;
+    justify-content: space-around;
+    gap: 6px;
+}

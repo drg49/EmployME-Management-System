@@ -37,12 +37,27 @@ export default function MyProfile () {
       companyName: state.companyName,
     })
 
+    const [passwordState, setPasswordState] = React.useState({
+      userId: state.userId,
+      oldPassword: '',
+      newPassword: '',
+      retypePassword: '',
+    })
+
     const handleChange = (e) => {
       setUserState({ ...userState, [e.target.name]: e.target.value })
     }
 
+    const updatePasswordState = (e) => {
+      setPasswordState({ ...passwordState, [e.target.name]: e.target.value })
+    }
+
     const handleUpdate = () => {
-      setModalState({ isOpen: true, isUserUpdate: true });
+      setModalState({ isOpen: true, isUserUpdate: true, isPasswordChange: false });
+    }
+
+    const handlePasswordChange = () => {
+      setModalState({ isOpen: true, isPasswordChange: true, isUserUpdate: false })
     }
 
     const preventSpace = (e) => {
@@ -51,17 +66,31 @@ export default function MyProfile () {
       }
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e, option) => {
       e.preventDefault();
       setIsLoading(true)
-      api.updateUser(userState)
-      .then(() => {
-        dispatch(actions.signInUser(userState))
-        setModalState({ ...modalState, isOpen: false });
-        toastMethods.notifySuccess("Your profile has been updated")
-        setIsLoading(false)
-      })
-      .catch(() => console.log('ERROR!'))
+
+      if (option === 'Update') {
+        api.updateUser(userState)
+        .then(() => {
+          dispatch(actions.signInUser(userState))
+          setModalState({ ...modalState, isOpen: false });
+          toastMethods.notifySuccess("Your profile has been updated")
+          setIsLoading(false)
+        })
+        .catch(() => console.log('ERROR!'))
+      }
+      else if (option === 'Password') {
+        if (passwordState.newPassword !== passwordState.retypePassword) {
+          return toastMethods.notifyError("Passwords do not match")
+        }
+        api.changePassword(passwordState)
+          .then(() => {
+            setModalState({ ...modalState, isOpen: false });
+            toastMethods.notifySuccess("Your password has been changed");
+            setIsLoading(false)
+          })
+      }
     }
 
     return (
@@ -80,6 +109,12 @@ export default function MyProfile () {
           <p>Username: <span>{state.username}</span></p>
           <p>Email: <span>{state.email}</span></p>
           <p>Joined: <span>{moment(state.joinedDate).format('MMMM DD, YYYY')}</span></p>
+          <span
+            id="auth-update-pass-change"
+            onClick={handlePasswordChange}
+          >
+            Change password
+          </span>
         </div>
 
         <Modal
@@ -97,7 +132,7 @@ export default function MyProfile () {
             </button>
           </div>
           {modalState.isUserUpdate ? 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={(e) => handleSubmit(e, 'Update')}>
             <div id="name-wrapper" style={{gap: "1rem"}}>
               <div className="auth-input-field">
                 <label htmlFor="fn-auth">First Name</label><span id="required-auth">*</span>
@@ -178,8 +213,49 @@ export default function MyProfile () {
             />}
           </form>
           :
-          null}
+          <form onSubmit={(e) => handleSubmit(e, 'Password')}>
+            <label htmlFor="old-pass">Old Password</label><span id="required-auth">*</span>
+            <input className="em-input-update"
+              type="password"
+              name="oldPassword"
+              id="old-pass"
+              minLength="3"
+              maxLength="20"
+              required
+              onChange={updatePasswordState}
+            />
+            <label htmlFor="new-pass">New Password</label><span id="required-auth">*</span>
+            <input className="em-input-update"
+              type="password"
+              name="newPassword"
+              id="new-pass"
+              minLength="3"
+              maxLength="20"
+              required
+              onChange={updatePasswordState}
+            />
+            <label htmlFor="retype-pass">Retype Password</label><span id="required-auth">*</span>
+            <input className="em-input-update"
+              type="password"
+              name="retypePassword"
+              id="retype-pass"
+              minLength="3"
+              maxLength="20"
+              required
+              onChange={updatePasswordState}
+            />
+            {isLoading ? 
+            <div id="auth-update-spinner">{spinner}</div>
+            : 
+            <input 
+              type="submit" 
+              value="Update"
+              id="auth-update-submit-btn"
+            />}
+          </form>
+          }
         </Modal>
+        <Toast />
       </>
     )
 }

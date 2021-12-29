@@ -172,5 +172,34 @@ namespace Web.Controllers
             }
         }
 
+        [HttpPatch("change-password")]
+        public IActionResult ChangePassword ([FromBody] ChangePasswordRequest request)
+        {
+            try
+            {
+                User existingUser = context.Users.FirstOrDefault(u => u.UserId == request.UserId);
+
+                if (existingUser is null)
+                {
+                    return NotFound();
+                }
+
+                if (!BCrypt.Net.BCrypt.Verify(request.OldPassword, existingUser.Password))
+                {
+                    return BadRequest("Old password does not match");
+                }
+
+                existingUser.Password = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
+                context.SaveChanges();
+
+                return Ok("Password was updated successfully");
+            }
+            catch
+            {
+                return BadRequest("Failed to change password");
+            }
+        }
+
+
     }
 }

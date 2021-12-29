@@ -1,17 +1,21 @@
 import React from 'react'
 import data from '../datasets/topNavData.json'
+import subMenuData from '../datasets/sideNavData.json'
 import { Link } from 'react-router-dom'
 import * as api from '../api/authentication'
 import Drawer from "rc-drawer"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faClipboard, faArrowAltCircleRight, faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons'
 
 const menuIcon = <FontAwesomeIcon icon={faBars} color="white" size="lg" />
-const closeIcon = <FontAwesomeIcon icon ={faArrowAltCircleRight} color="white" size="lg" />
+const subMenuIcon = <FontAwesomeIcon icon={faClipboard} color="white" size="lg" />
+const closeRightIcon = <FontAwesomeIcon icon ={faArrowAltCircleRight} color="white" size="lg" />
+const closeLeftIcon = <FontAwesomeIcon icon ={faArrowAltCircleLeft} color="white" size="lg" />
 
 export default function NavBar({ validateUser, setPageTitle, pageTitle }) {
     const [disabled, setDisabled] = React.useState(false)
-    const [openDrawer, setOpenDrawer] = React.useState(false);
+    const [openRightDrawer, setOpenRightDrawer] = React.useState(false);
+    const [openLeftDrawer, setOpenLeftDrawer] = React.useState(false);
 
     const topNavLinks = data.map((item, index) => {
         return (
@@ -20,7 +24,23 @@ export default function NavBar({ validateUser, setPageTitle, pageTitle }) {
                   to={item.link}
                   onClick={() => {
                       setPageTitle(item.title);
-                      setOpenDrawer(false);
+                      setOpenRightDrawer(false);
+                  }}
+                >
+                  {item.title}
+                </Link>
+            </li>
+        )
+    })
+
+    const subNavLinks = subMenuData.map((item, index) => {
+        return (
+            <li key={index} style={pageTitle === item.title ? {fontWeight: "bold"} : null}>
+                <Link 
+                  to={item.link}
+                  onClick={() => {
+                      setPageTitle(item.title);
+                      setOpenLeftDrawer(false);
                   }}
                 >
                   {item.title}
@@ -41,7 +61,16 @@ export default function NavBar({ validateUser, setPageTitle, pageTitle }) {
     return (
         <>
             <div id="logo-wrapper">
-                <Link to="/" ><p id="logo">EmployME</p></Link>
+                <button
+                  onClick={() => setOpenLeftDrawer(true)}
+                  className="strip-btn"
+                  id="mobile-menu-btn"
+                >
+                  {subMenuIcon}
+                </button>
+                <Link to="/"  onClick={() => setPageTitle('Dashboard')}>
+                    <p id="logo">EmployME</p>
+                </Link>
                 <button 
                   onClick={handleLogout}
                   id="logout-btn"
@@ -50,7 +79,7 @@ export default function NavBar({ validateUser, setPageTitle, pageTitle }) {
                   Logout
                 </button>
                 <button
-                  onClick={() => setOpenDrawer(true)}
+                  onClick={() => setOpenRightDrawer(true)}
                   className="strip-btn"
                   id="mobile-menu-btn"
                 >
@@ -61,14 +90,14 @@ export default function NavBar({ validateUser, setPageTitle, pageTitle }) {
                 {topNavLinks}
             </nav>
             <Drawer
-                open={openDrawer}
+                open={openRightDrawer}
                 width="50vw"
                 handler={false}
                 level={null}
                 autoFocus={false}
                 showMask={true}
                 maskClosable={true}
-                onClose={() => setOpenDrawer(false)}
+                onClose={() => setOpenRightDrawer(false)}
                 placement="right"
                 contentWrapperStyle={{
                     background: 'rgb(85,73,154)',
@@ -80,14 +109,45 @@ export default function NavBar({ validateUser, setPageTitle, pageTitle }) {
                 width="64vw"
             >
                 <button 
-                    onClick={() => setOpenDrawer(false)}
+                    onClick={() => setOpenRightDrawer(false)}
                     className="strip-btn"
                     id="mobile-menu-close-btn"
                 >
-                    {closeIcon}
+                    {closeRightIcon}
                 </button>
                 <nav id="mobile-drawer-menu">
                     {topNavLinks}
+                </nav>
+            </Drawer>
+            <Drawer
+                open={openLeftDrawer}
+                width="50vw"
+                handler={false}
+                level={null}
+                autoFocus={false}
+                showMask={true}
+                maskClosable={true}
+                onClose={() => setOpenLeftDrawer(false)}
+                placement="left"
+                contentWrapperStyle={{
+                    background: 'rgb(85,73,154)',
+                    background: 'radial-gradient(circle, rgba(85,73,154,1) 0%, rgba(57,48,110,1) 100%)',
+                    textAlign: "right"
+                }}
+                maskStyle={{
+                    opacity: "0.5"
+                }}
+                width="64vw"
+            >
+                <button 
+                    onClick={() => setOpenLeftDrawer(false)}
+                    className="strip-btn"
+                    id="mobile-menu-close-btn"
+                >
+                    {closeLeftIcon}
+                </button>
+                <nav id="mobile-drawer-menu">
+                    {subNavLinks}
                 </nav>
             </Drawer>
         </>

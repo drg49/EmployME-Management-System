@@ -46,3 +46,14 @@ export function updateUser(updatedUser) {
         body: JSON.stringify(updatedUser)
     }).then((response) => response.ok ? response.json() : Promise.reject(response))
 }
+
+export function changePassword(updatedPassword) {
+    return fetch("app/users/change-password", {
+        method: "PATCH",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updatedPassword)
+    }).then((response) => response.ok ? response.json() : Promise.reject(response))
+}

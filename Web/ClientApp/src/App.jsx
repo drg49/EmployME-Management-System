@@ -11,11 +11,13 @@ import LogIn from './auth/Login';
 import { actions } from './store/userStore';
 import { useHistory } from 'react-router';
 import topNavData from './datasets/topNavData.json'
+import sideNavData from './datasets/sideNavData.json'
 
 import './custom.scss'
 import './responsive.scss'
+import Applications from './components/Applications';
 
-const initPath = topNavData.find(e => e.link === window.location.pathname)
+const initPath = topNavData.find(e => e.link === window.location.pathname) || sideNavData.find(e => e.link === window.location.pathname)
 
 export default function App() {
   const dispatch = useDispatch();
@@ -63,13 +65,16 @@ export default function App() {
           />
           <h2 id="mobile-page-title">{pageTitle}</h2>
           <main>
-            <SideNav />
+            <SideNav setPageTitle={setPageTitle} pageTitle={pageTitle} />
             <Switch>
               <Route exact path="/" 
                 render={(rp) =>  <Dashboard initLoad={initLoad} setInitLoad={setInitLoad} {...rp}/>} 
               />
               <Route path="/my-profile"
                 render={(rp) => <MyProfile {...rp}/>}
+              />
+              <Route path="/applications"
+                render={(rp) => <Applications {...rp}/>}
               />
             </Switch>
           </main>
