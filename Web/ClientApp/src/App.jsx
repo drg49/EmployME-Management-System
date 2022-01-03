@@ -12,10 +12,11 @@ import { actions } from './store/userStore';
 import { useHistory } from 'react-router';
 import topNavData from './datasets/topNavData.json'
 import sideNavData from './datasets/sideNavData.json'
+import Applications from './components/Applications';
+import CreateApplication from './components/Applications/CreateApplication';
 
 import './custom.scss'
 import './responsive.scss'
-import Applications from './components/Applications';
 
 const initPath = topNavData.find(e => e.link === window.location.pathname) || sideNavData.find(e => e.link === window.location.pathname)
 

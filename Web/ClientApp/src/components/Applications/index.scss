@@ -1,3 +1,62 @@
+
+input:focus {
+    outline: none;
+}
+
 #app-dashboard-select {
     display: block;
+}
+
+#create-app-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    button {
+        font-size: 20px;
+    }
+
+    button:hover {
+        opacity: 0.9;
+    }
+}
+
+#create-app-main {
+    padding: 0px 12px;
+
+    section {
+        label {
+            margin-right: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            display: inline
+        }
+
+        li {
+            list-style: none;
+        }
+    }
+}
+
+table {
+    margin: 10px 0px;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 55%;
+}
+
+.create-app-cb {
+    text-align: center;
+}
+  
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+  
+tr:nth-child(even) {
+    background-color: whitesmoke;
 }

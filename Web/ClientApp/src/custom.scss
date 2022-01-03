@@ -158,13 +158,21 @@ input {
     width: 100%;
     height: fit-content;
     border-radius: 4px;
-    background-color: white;
+    background-color: darkslateblue;
     text-align: center;
 }
 
 .employMe-div-box-title {
     margin: 0px;
     font-size: 21px;
+    color: white;
+}
+
+.employMe-div-box-action {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 5px;
+  align-items: center;
 }
 
 /* Modal */  

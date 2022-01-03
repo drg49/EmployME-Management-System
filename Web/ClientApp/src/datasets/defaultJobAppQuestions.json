@@ -1,0 +1,112 @@
+[
+  {
+    "askFor": true,
+    "required": true,
+    "label": "First Name"
+  },
+  {
+    "askFor": true,
+    "required": false,
+    "label": "Middle Name"
+  },
+  {
+    "askFor": true,
+    "required": true,
+    "label": "Last Name"
+  },
+  {
+    "askFor": true,
+    "required": true,
+    "label": "Email Address"
+  },
+  {
+    "askFor": true,
+    "required": true,
+    "label": "Telephone Number"
+  },
+  {
+    "askFor": true,
+    "required": true,
+    "label": "Address (1)"
+  },
+  {
+    "askFor": false,
+    "required": false,
+    "label": "Address (2)"
+  },
+  {
+    "askFor": true,
+    "required": true,
+    "label": "Age"
+  },
+  {
+    "askFor": true,
+    "required": true,
+    "label": "Social Security Number"
+  },
+  {
+    "askFor": true,
+    "required": true,
+    "label": "U.S. Citizenship"
+  },
+  {
+    "askFor": true,
+    "required": true,
+    "label": "Drivers License"
+  },
+  {
+    "askFor": true,
+    "required": true,
+    "label": "Resume"
+  },
+  {
+    "askFor": true,
+    "required": false,
+    "label": "Cover Letter"
+  },
+  {
+    "askFor": true,
+    "required": false,
+    "label": "Certifications"
+  },
+  {
+    "askFor": true,
+    "required": false,
+    "label": "Military / Veteran Status"
+  },
+  {
+    "askFor": true,
+    "required": true,
+    "label": "Desired Salary Range"
+  },
+  {
+    "askFor": true,
+    "required": true,
+    "label": "Previous Experience"
+  },
+  {
+    "askFor": true,
+    "required": true,
+    "label": "Permission to contact previous employer"
+  },
+  {
+    "askFor": true,
+    "required": false,
+    "label": "Skills"
+  },
+  {
+    "askFor": true,
+    "required": true,
+    "label": "References"
+  },
+  {
+    "askFor": true,
+    "required": false,
+    "label": "How did you hear about this position?"
+  },
+  {
+    "askFor": true,
+    "required": true,
+    "label": "What date are you available to start work?"
+  }
+]

@@ -105,7 +105,7 @@ export default function Reminders({ initLoad, setInitLoad }) {
               className="employMe-div-box reminder"
               style={state.reminders.length > 0 ? {"borderBottomLeftRadius": "0px", "borderBottomRightRadius": "0px"} : null}
             >
-                <div id="reminder-actions">
+                <div className="employMe-div-box-action">
                   <p className="employMe-div-box-title">Reminders</p>
                   <section>
                     <button

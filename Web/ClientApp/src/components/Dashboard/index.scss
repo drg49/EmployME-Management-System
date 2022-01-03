@@ -39,20 +39,11 @@
 }
 
 .employMe-div-box.reminder {
-    background-color: darkslateblue;
 
     section {
         display: flex;
         align-items: center;
         gap: 5px;
-    }
-
-    #reminder-actions {
-        display: flex;
-        justify-content: space-between;
-        padding: 8px 5px;
-        align-items: center;
-        color: white;
     }
 }
 
