@@ -1,23 +1,56 @@
 import React from 'react';
 import questions from '../../datasets/defaultJobAppQuestions.json'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
-const defaultQuestions = questions.map((q) => {
-  return (
-    <tr>
-      <td className="create-app-cb">
-       <input type="checkbox" name="switch" class="check" checked={q.askFor}/>
-      </td>
-      <td className="create-app-cb">
-       <input type="checkbox" name="switch" class="check" checked={q.required}/>   
-      </td>
-      <td>
-        <p>{q.label}</p>
-      </td>
-    </tr>
-  )
-})
+const removeIcon = <FontAwesomeIcon icon ={faTimes} color="gray" size="lg" />
 
 export default function CreateApplication({close}) {
+    const [defaultQuestions, setDefaultQuestions] = React.useState(questions)
+    const [table, setTable] = React.useState(null);
+    const [check, setCheck] = React.useState(questions.map(i => {
+      return {name: i.name, checked: i.required}
+    }))
+
+    const handleChange = (e) => {
+      if(e.target.checked) {
+        return setCheck(check.map((c) => c.name === e.target.name ? { ...c, checked: true } : c));
+      }
+      return setCheck(check.map((c) => c.name === e.target.name ? { ...c, checked: false }: c));
+    }
+
+    React.useEffect(() => {
+      setTable(defaultQuestions.map((q) => {
+        return (
+          <tr>
+            <td className="create-app-cb">
+            <input
+              type="checkbox"
+              name={q.name}
+              class="check"
+              checked={check.filter(c => c.name === q.name)[0].checked}
+              onChange={(e) => handleChange(e)}
+              />
+            </td>
+            <td>
+              <p>{q.label}</p>
+            </td>
+            <td style={{ border: "none", backgroundColor: "white", paddingLeft: "20px", paddingTop:"17px" }}>
+              <button
+                className='strip-btn'
+                onClick={() => {
+                  setDefaultQuestions(defaultQuestions.filter((item) => item !== q));
+                  setCheck(check.filter((item) => item.name !== q.name));
+                }}
+              >
+                {removeIcon}
+              </button>
+            </td>
+          </tr>
+        )
+      }))
+    }, [defaultQuestions, check]);
+
     return(
       <div id="create-app-main">
         <div id="create-app-title">
@@ -29,11 +62,10 @@ export default function CreateApplication({close}) {
           <input type="text" id="job-title" />
           <table>
             <tr>
-              <th>Ask For</th>
               <th>Required</th>
               <th>Label / Question</th>
             </tr>
-            {defaultQuestions}
+            {table}
           </table>
         </section>
         <button className="employMe-add-btn">Post Application</button>

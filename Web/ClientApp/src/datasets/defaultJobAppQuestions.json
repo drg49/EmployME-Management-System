@@ -1,112 +1,112 @@
 [
   {
-    "askFor": true,
     "required": true,
-    "label": "First Name"
+    "label": "First Name",
+    "name": "firstName"
   },
   {
-    "askFor": true,
     "required": false,
-    "label": "Middle Name"
+    "label": "Middle Name",
+    "name": "middleName"
   },
   {
-    "askFor": true,
     "required": true,
-    "label": "Last Name"
+    "label": "Last Name",
+    "name": "lastName"
   },
   {
-    "askFor": true,
     "required": true,
-    "label": "Email Address"
+    "label": "Email Address",
+    "name": "emailAddress"
   },
   {
-    "askFor": true,
     "required": true,
-    "label": "Telephone Number"
+    "label": "Telephone Number",
+    "name": "telephoneNumber"
   },
   {
-    "askFor": true,
     "required": true,
-    "label": "Address (1)"
+    "label": "Address (1)",
+    "name": "addressOne"
   },
   {
-    "askFor": false,
     "required": false,
-    "label": "Address (2)"
+    "label": "Address (2)",
+    "name": "addressTwo"
   },
   {
-    "askFor": true,
     "required": true,
-    "label": "Age"
+    "label": "Age",
+    "name": "age"
   },
   {
-    "askFor": true,
     "required": true,
-    "label": "Social Security Number"
+    "label": "Social Security Number",
+    "name": "ssn"
   },
   {
-    "askFor": true,
     "required": true,
-    "label": "U.S. Citizenship"
+    "label": "U.S. Citizenship",
+    "name": "usCitizenship"
   },
   {
-    "askFor": true,
     "required": true,
-    "label": "Drivers License"
+    "label": "Drivers License",
+    "name": "driversLicense"
   },
   {
-    "askFor": true,
     "required": true,
-    "label": "Resume"
+    "label": "Resume",
+    "name": "resume"
   },
   {
-    "askFor": true,
     "required": false,
-    "label": "Cover Letter"
+    "label": "Cover Letter",
+    "name": "coverLetter"
   },
   {
-    "askFor": true,
     "required": false,
-    "label": "Certifications"
+    "label": "Certifications",
+    "name": "certifications"
   },
   {
-    "askFor": true,
     "required": false,
-    "label": "Military / Veteran Status"
+    "label": "Military / Veteran Status",
+    "name": "militaryVeteranStatus"
   },
   {
-    "askFor": true,
     "required": true,
-    "label": "Desired Salary Range"
+    "label": "Desired Salary Range",
+    "name": "desiredSalaryRange"
   },
   {
-    "askFor": true,
     "required": true,
-    "label": "Previous Experience"
+    "label": "Previous Experience",
+    "name": "previousExperience"
   },
   {
-    "askFor": true,
     "required": true,
-    "label": "Permission to contact previous employer"
+    "label": "Permission to contact previous employer",
+    "name": "contactPreviousEmployer"
   },
   {
-    "askFor": true,
     "required": false,
-    "label": "Skills"
+    "label": "Skills",
+    "name": "skills"
   },
   {
-    "askFor": true,
     "required": true,
-    "label": "References"
+    "label": "References",
+    "name": "references"
   },
   {
-    "askFor": true,
     "required": false,
-    "label": "How did you hear about this position?"
+    "label": "How did you hear about this position?",
+    "name": "hearAboutPosition"
   },
   {
-    "askFor": true,
     "required": true,
-    "label": "What date are you available to start work?"
+    "label": "What date are you available to start work?",
+    "name": "availableStartDate"
   }
 ]
