@@ -65,3 +65,10 @@ td, th {
 tr:nth-child(even) {
     background-color: whitesmoke;
 }
+
+#create-app-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 49.5%;
+}

@@ -12,11 +12,26 @@ export default function CreateApplication({close}) {
       return {name: i.name, checked: i.required}
     }))
 
+    const jobTitle = React.useRef();
+
     const handleChange = (e) => {
       if(e.target.checked) {
         return setCheck(check.map((c) => c.name === e.target.name ? { ...c, checked: true } : c));
       }
       return setCheck(check.map((c) => c.name === e.target.name ? { ...c, checked: false }: c));
+    }
+
+    const refresh = () => {
+      setDefaultQuestions(questions);
+      setCheck(questions.map(i => {
+        return {name: i.name, checked: i.required}
+      }))
+    }
+
+    const postApplication = () => {
+      //send both of these to server
+      console.log(check);
+      console.log(jobTitle.current.value);
     }
 
     React.useEffect(() => {
@@ -58,8 +73,13 @@ export default function CreateApplication({close}) {
           {close}
         </div>
         <section>
-          <label htmlFor="job-title">Job Title</label>
-          <input type="text" id="job-title" />
+          <div id="create-app-header-flex">
+            <div>
+              <label htmlFor="job-title">Job Title</label>
+              <input type="text" id="job-title" ref={jobTitle} />
+            </div>
+            <button onClick={refresh}>Refresh</button>
+          </div>
           <table>
             <tr>
               <th>Required</th>
@@ -68,7 +88,12 @@ export default function CreateApplication({close}) {
             {table}
           </table>
         </section>
-        <button className="employMe-add-btn">Post Application</button>
+        <button
+          className="employMe-add-btn"
+          onClick={postApplication}
+        >
+          Post Application
+        </button>
       </div>
     )
 }
