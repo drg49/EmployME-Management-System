@@ -1,8 +1,8 @@
 import React from 'react';
 import Drawer from 'rc-drawer';
 import CreateApplication from './CreateApplication';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWindowClose } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 
 const closeIcon = <FontAwesomeIcon icon ={faWindowClose} color="gray" size="lg" />
 
@@ -24,22 +24,22 @@ export default function CurrentApplications() {
                 </div>
             </div>
             <Drawer
-                    open={isOpen}
-                    width="50vw"
-                    handler={false}
-                    level={null}
-                    autoFocus={false}
-                    showMask={true}
-                    maskClosable={true}
-                    onClose={() => setIsOpen(false)}
-                    placement="right"
-                    contentWrapperStyle={{
-                        background: 'white'
-                    }}
-                    maskStyle={{
-                        opacity: "0.5"
-                    }}
-                    width="64vw"
+                open={isOpen}
+                width="50vw"
+                handler={false}
+                level={null}
+                autoFocus={false}
+                showMask={true}
+                maskClosable={true}
+                onClose={() => setIsOpen(false)}
+                placement="right"
+                contentWrapperStyle={{
+                    background: 'white'
+                }}
+                maskStyle={{
+                    opacity: "0.5"
+                }}
+                width="64vw"
             >
                 <CreateApplication close={<button 
                     onClick={() => setIsOpen(false)}

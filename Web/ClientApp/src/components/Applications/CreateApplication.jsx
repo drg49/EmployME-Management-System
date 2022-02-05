@@ -1,14 +1,15 @@
 import React from 'react';
-import questions from '../../datasets/defaultJobAppQuestions.json'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import dataset from '../../datasets/defaultJobAppQuestions.json';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import * as api from '../../api/jobApplications';
 
 const removeIcon = <FontAwesomeIcon icon ={faTimes} color="gray" size="lg" />
 
 export default function CreateApplication({close}) {
-    const [defaultQuestions, setDefaultQuestions] = React.useState(questions)
+    const [defaultQuestions, setDefaultQuestions] = React.useState(dataset)
     const [table, setTable] = React.useState(null);
-    const [check, setCheck] = React.useState(questions.map(i => {
+    const [questions, setQuestions] = React.useState(dataset.map(i => {
       return {name: i.name, checked: i.required}
     }))
 
@@ -16,34 +17,34 @@ export default function CreateApplication({close}) {
 
     const handleChange = (e) => {
       if(e.target.checked) {
-        return setCheck(check.map((c) => c.name === e.target.name ? { ...c, checked: true } : c));
+        return setQuestions(questions.map((c) => c.name === e.target.name ? { ...c, checked: true } : c));
       }
-      return setCheck(check.map((c) => c.name === e.target.name ? { ...c, checked: false }: c));
+      return setQuestions(questions.map((c) => c.name === e.target.name ? { ...c, checked: false }: c));
     }
 
     const refresh = () => {
-      setDefaultQuestions(questions);
-      setCheck(questions.map(i => {
+      setDefaultQuestions(dataset);
+      setQuestions(dataset.map(i => {
         return {name: i.name, checked: i.required}
       }))
     }
 
     const postApplication = () => {
       //send both of these to server
-      console.log(check);
+      console.log(questions);
       console.log(jobTitle.current.value);
     }
 
     React.useEffect(() => {
-      setTable(defaultQuestions.map((q) => {
+      setTable(defaultQuestions.map((q, i) => {
         return (
-          <tr>
+          <tr key={i}>
             <td className="create-app-cb">
             <input
               type="checkbox"
               name={q.name}
-              class="check"
-              checked={check.filter(c => c.name === q.name)[0].checked}
+              className="check"
+              checked={questions.filter(c => c.name === q.name)[0].checked}
               onChange={(e) => handleChange(e)}
               />
             </td>
@@ -55,7 +56,7 @@ export default function CreateApplication({close}) {
                 className='strip-btn'
                 onClick={() => {
                   setDefaultQuestions(defaultQuestions.filter((item) => item !== q));
-                  setCheck(check.filter((item) => item.name !== q.name));
+                  setQuestions(questions.filter((item) => item.name !== q.name));
                 }}
               >
                 {removeIcon}
@@ -64,7 +65,7 @@ export default function CreateApplication({close}) {
           </tr>
         )
       }))
-    }, [defaultQuestions, check]);
+    }, [defaultQuestions, questions]);
 
     return(
       <div id="create-app-main">
@@ -81,11 +82,13 @@ export default function CreateApplication({close}) {
             <button onClick={refresh}>Refresh</button>
           </div>
           <table>
-            <tr>
-              <th>Required</th>
-              <th>Label / Question</th>
-            </tr>
-            {table}
+            <tbody>
+              <tr>
+                <th>Required</th>
+                <th>Label / Question</th>
+              </tr>
+              {table}
+            </tbody>
           </table>
         </section>
         <button

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.Data;
+using Web.Models.ApplicationModels;
 
 namespace Web.Controllers
 {
@@ -14,8 +15,8 @@ namespace Web.Controllers
     {
         readonly EmployMeDBContext context = new EmployMeDBContext();
 
-        [HttpPost]
-        public ActionResult CreateApplication()
+        [HttpPost("create-application")]
+        public ActionResult CreateApplication(JobApplication request)
         {
             try
             {
