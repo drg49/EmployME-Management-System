@@ -13,8 +13,8 @@ namespace Web.Controllers
     [ApiController]
     public class RemindersController : ControllerBase
     {
-        readonly EmployMeDBContext context = new EmployMeDBContext();
-        readonly Jwtservice jwtService = new Jwtservice();
+        private readonly EmployMeDBContext context = new EmployMeDBContext();
+        private readonly Jwtservice jwtService = new Jwtservice();
 
         [HttpGet]
         public ActionResult<IEnumerable<Reminder>> GetReminder()

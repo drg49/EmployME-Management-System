@@ -11,9 +11,9 @@ namespace Web.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        readonly EmployMeDBContext context = new EmployMeDBContext();
-        readonly Validator validator = new Validator();
-        readonly Jwtservice jwtService = new Jwtservice();
+        private readonly EmployMeDBContext context = new EmployMeDBContext();
+        private readonly Validator validator = new Validator();
+        private readonly Jwtservice jwtService = new Jwtservice();
 
         [HttpPost("register")]
         public IActionResult Register([FromBody] User newUser)

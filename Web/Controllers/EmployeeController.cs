@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Web.Data;
@@ -12,7 +10,7 @@ namespace Web.Controllers
     [Route("app/employees")]
     public class EmployeeController : ControllerBase
     {
-        readonly EmployMeDBContext context = new EmployMeDBContext();
+        private readonly EmployMeDBContext context = new EmployMeDBContext();
 
         [HttpGet]
         public IEnumerable<Employee> Get()

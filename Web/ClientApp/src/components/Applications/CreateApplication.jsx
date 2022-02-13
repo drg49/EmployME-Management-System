@@ -14,6 +14,7 @@ export default function CreateApplication({close}) {
     }))
 
     const jobTitle = React.useRef();
+    const jobLocation = React.useRef();
 
     const handleChange = (e) => {
       if(e.target.checked) {
@@ -30,9 +31,10 @@ export default function CreateApplication({close}) {
     }
 
     const postApplication = () => {
-      //send both of these to server
-      console.log(questions);
-      console.log(jobTitle.current.value);
+      const questionString = JSON.stringify(questions)
+      const jobTitleVal = jobTitle.current.value
+      const jobLocationVal = jobLocation.current.value
+      api.createJobApplication(jobTitleVal, jobLocationVal, questionString);
     }
 
     React.useEffect(() => {
@@ -76,8 +78,14 @@ export default function CreateApplication({close}) {
         <section>
           <div id="create-app-header-flex">
             <div>
-              <label htmlFor="job-title">Job Title</label>
-              <input type="text" id="job-title" ref={jobTitle} />
+              <span>
+                <label htmlFor="job-title">Job Title</label>
+                <input type="text" id="job-title" ref={jobTitle} maxLength="150" />
+              </span>
+              <span>
+                <label htmlFor="job-location">Location</label>
+                <input type="text" id="job-location" ref={jobLocation} maxLength="150" />
+              </span>
             </div>
             <button onClick={refresh}>Refresh</button>
           </div>

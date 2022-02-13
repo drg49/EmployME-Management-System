@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Web.Data;
 using Web.Models.ApplicationModels;
+using Web.Security;
 
 namespace Web.Controllers
 {
@@ -13,7 +10,8 @@ namespace Web.Controllers
     [ApiController]
     public class ApplicationController : ControllerBase
     {
-        readonly EmployMeDBContext context = new EmployMeDBContext();
+        private readonly EmployMeDBContext context = new EmployMeDBContext();
+        private readonly Jwtservice jwtservice = new Jwtservice();
 
         [HttpPost("create-application")]
         public ActionResult CreateApplication(JobApplication request)

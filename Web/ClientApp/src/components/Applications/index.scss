@@ -71,4 +71,9 @@ tr:nth-child(even) {
     justify-content: space-between;
     align-items: baseline;
     width: 49.5%;
+
+    div span:first-of-type{
+        display: block;
+        margin-bottom: 10px;
+    }
 }

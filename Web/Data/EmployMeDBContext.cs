@@ -30,7 +30,7 @@ namespace Web.Data
             .Build();
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(configuration.GetConnectionString("employMeDb"));
+                optionsBuilder.UseSqlServer(configuration.GetConnectionString("EmployMeDb"));
             }
         }
 
