@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using Web.Data.EF;
 using EF6 = System.Data.Entity;
+using Web.Models.ApplicationModels;
 
 namespace Web.Data
 {
@@ -21,6 +22,7 @@ namespace Web.Data
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Reminder> Reminders { get; set; }
+        public virtual DbSet<JobApplication> JobApplications { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -34,11 +36,12 @@ namespace Web.Data
             }
         }
 
-        protected void OnModelCreating(EF6.DbModelBuilder modelBuilder) //Learn how to export these models to their own class
+        protected void OnModelCreating(EF6.DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new EmployeeConfig());
             modelBuilder.Configurations.Add(new UserConfig());
             modelBuilder.Configurations.Add(new ReminderConfig());
+            modelBuilder.Configurations.Add(new JobApplicationConfig());
         }
     }
 }
