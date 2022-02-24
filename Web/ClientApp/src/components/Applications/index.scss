@@ -81,9 +81,20 @@ tr:nth-child(even) {
 .job-app-card {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 0px 5px;
+    transition: 150ms;
 
     section {
         text-align: left;
+
+        p:first-of-type {
+            margin-bottom: 2px;
+        }
+        p:last-of-type {
+            margin-top: 0px;
+            font-size: 12px;
+        }
     }
 }
 
