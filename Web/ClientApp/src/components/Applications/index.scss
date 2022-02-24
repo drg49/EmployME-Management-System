@@ -77,3 +77,20 @@ tr:nth-child(even) {
         margin-bottom: 10px;
     }
 }
+
+.job-app-card {
+    display: flex;
+    justify-content: space-between;
+
+    section {
+        text-align: left;
+    }
+}
+
+.job-app-card:nth-child(even) {
+    background-color: #fcfcd6;
+}
+
+.job-app-card:nth-child(odd) {
+    background-color: beige;
+}

@@ -3,12 +3,40 @@ import Drawer from 'rc-drawer';
 import CreateApplication from './CreateApplication';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
+import * as jobApi from '../../api/jobApplications';
+import JobAppCards from './JobAppCards';
 
 const closeIcon = <FontAwesomeIcon icon ={faWindowClose} color="gray" size="lg" />
 
 export default function CurrentApplications() {
-
     const [isOpen, setIsOpen] = React.useState(false);
+    const [loadState, setLoadState] = React.useState(null);
+    const [jobAppData, setJobAppData] = React.useState([]);
+
+    React.useEffect(() => {
+        setLoadState("Start")
+        jobApi.getCompanyJobApps()
+            .then((data) => {
+                setLoadState("Success")
+                console.log(data)
+                setJobAppData(data)
+            })
+            .catch((e) => {
+                setLoadState("Failed")
+                console.log(e)
+            })
+    }, [])
+    React.useEffect(() => console.log(666, loadState), [loadState]);
+
+    const mapper = jobAppData.map((j, i) => {
+        return (
+            <JobAppCards
+              jobTitle={j.jobTitle}
+              jobLocation={j.jobLocation}
+              uploadDate={j.uploadDate}
+            />
+        )
+    })
 
     return (
         <>
@@ -22,6 +50,7 @@ export default function CurrentApplications() {
                       Create
                     </button>
                 </div>
+                {mapper}
             </div>
             <Drawer
                 open={isOpen}

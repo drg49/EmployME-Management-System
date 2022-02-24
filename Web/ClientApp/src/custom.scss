@@ -133,6 +133,12 @@ input {
     li {
         list-style: none;
         padding: 0px 15px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+         -khtml-user-select: none;
+           -moz-user-select: none;
+            -ms-user-select: none;
+                user-select: none;
     }
 }
 
@@ -149,6 +155,12 @@ input {
     li {
         margin: 15px 0px 15px 0px;
         width: max-content;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+         -khtml-user-select: none;
+           -moz-user-select: none;
+            -ms-user-select: none;
+                user-select: none;
     }
 }
 
