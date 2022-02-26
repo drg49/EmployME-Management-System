@@ -1,5 +1,5 @@
 import React from 'react'
-import CurrentApplications from './CurrentApplications'
+import LiveApplications from './LiveApplications'
 
 import './index.scss'
 import PausedApplications from './PausedApplications'
@@ -9,7 +9,7 @@ export default function Applications() {
     return (
       <div id="main-page-wrapper">
         <div id="landing-pg-main">
-          <CurrentApplications />
+          <LiveApplications />
           <ViewApplicants />
           <PausedApplications />
         </div>

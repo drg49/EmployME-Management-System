@@ -1,17 +1,48 @@
 import React from 'react';
 import dataset from '../../datasets/defaultJobAppQuestions.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import Toast from '../../components/toasts';
+import * as toastMethods from '../../components/toastMethods';
 import * as api from '../../api/jobApplications';
 
-const removeIcon = <FontAwesomeIcon icon ={faTimes} color="gray" size="lg" />
+const removeIcon = <FontAwesomeIcon icon ={faTimes} color="gray" size="lg" />;
+const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" size="lg"/>;
 
-export default function CreateApplication({close}) {
-    const [defaultQuestions, setDefaultQuestions] = React.useState(dataset)
+export default function CreateApplication({ close, closeFunc }) {
+    const postApplication = () => {
+      const questionString = JSON.stringify(questions);
+      const jobTitleVal = jobTitle.current.value;
+      const jobLocationVal = jobLocation.current.value;
+      if (jobTitleVal.trim() === "") {
+        toastMethods.notifyError('Please fill out the job title');
+        return false;
+      }
+      if (jobLocationVal.trim() === "") {
+        toastMethods.notifyError('Please fill out the job location');
+        return false;
+      } 
+      setButton(spinner);
+      api.createJobApplication(jobTitleVal, jobLocationVal, questionString)
+        .then(() => {
+          setButton(defaultButton);
+          closeFunc();
+          return toastMethods.notifySuccess('Your job application is now posted online');
+        })
+        .catch((e) => {
+          e.text().then((message) => {
+            setButton(defaultButton)
+            return toastMethods.notifyError(message);
+          })
+        })
+    };
+    const defaultButton = <button className="employMe-add-btn" onClick={postApplication}>Post Application</button>;
+    const [defaultQuestions, setDefaultQuestions] = React.useState(dataset);
     const [table, setTable] = React.useState(null);
     const [questions, setQuestions] = React.useState(dataset.map(i => {
       return {name: i.name, checked: i.required}
-    }))
+    }));
+    const [button, setButton] = React.useState(defaultButton);
 
     const jobTitle = React.useRef();
     const jobLocation = React.useRef();
@@ -24,17 +55,12 @@ export default function CreateApplication({close}) {
     }
 
     const refresh = () => {
+      jobTitle.current.value = "";
+      jobLocation.current.value = "";
       setDefaultQuestions(dataset);
       setQuestions(dataset.map(i => {
         return {name: i.name, checked: i.required}
-      }))
-    }
-
-    const postApplication = () => {
-      const questionString = JSON.stringify(questions)
-      const jobTitleVal = jobTitle.current.value
-      const jobLocationVal = jobLocation.current.value
-      api.createJobApplication(jobTitleVal, jobLocationVal, questionString);
+      }));
     }
 
     React.useEffect(() => {
@@ -70,41 +96,39 @@ export default function CreateApplication({close}) {
     }, [defaultQuestions, questions]);
 
     return(
-      <div id="create-app-main">
-        <div id="create-app-title">
-          <h1>Create Application</h1>
-          {close}
-        </div>
-        <section>
-          <div id="create-app-header-flex">
-            <div>
-              <span>
-                <label htmlFor="job-title">Job Title</label>
-                <input type="text" id="job-title" ref={jobTitle} maxLength="150" />
-              </span>
-              <span>
-                <label htmlFor="job-location">Location</label>
-                <input type="text" id="job-location" ref={jobLocation} maxLength="150" />
-              </span>
-            </div>
-            <button onClick={refresh}>Refresh</button>
+      <>
+        <div id="create-app-main">
+          <div id="create-app-title">
+            <h1>Create Application</h1>
+            {close}
           </div>
-          <table>
-            <tbody>
-              <tr>
-                <th>Required</th>
-                <th>Label / Question</th>
-              </tr>
-              {table}
-            </tbody>
-          </table>
-        </section>
-        <button
-          className="employMe-add-btn"
-          onClick={postApplication}
-        >
-          Post Application
-        </button>
-      </div>
+          <section>
+            <div id="create-app-header-flex">
+              <div>
+                <span>
+                  <label htmlFor="job-title">Job Title</label>
+                  <input type="text" id="job-title" ref={jobTitle} maxLength="150" />
+                </span>
+                <span>
+                  <label htmlFor="job-location">Location</label>
+                  <input type="text" id="job-location" ref={jobLocation} maxLength="150" />
+                </span>
+              </div>
+              <button onClick={refresh}>Refresh</button>
+            </div>
+            <table>
+              <tbody>
+                <tr>
+                  <th>Required</th>
+                  <th>Label / Question</th>
+                </tr>
+                {table}
+              </tbody>
+            </table>
+          </section>
+          {button}
+        </div>
+        <Toast />
+      </>
     )
 }

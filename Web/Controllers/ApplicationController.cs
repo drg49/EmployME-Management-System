@@ -36,7 +36,7 @@ namespace Web.Controllers
         }
 
         [HttpPost("create-application")]
-        public ActionResult CreateApplication(JobApplication request)
+        public IActionResult CreateApplication(JobApplication request)
         {
             try
             {
@@ -45,17 +45,19 @@ namespace Web.Controllers
                 request.UserId = user.UserId;
                 request.CompanyName = user.CompanyName;
                 request.UploadDate = DateTime.Now;
-                JobApplication existingJobTitle = context.JobApplications.FirstOrDefault(j => j.JobTitle.ToUpper() == request.JobTitle.ToUpper());
-                JobApplication existingLocation = context.JobApplications.FirstOrDefault(j => j.JobLocation.ToUpper() == request.JobLocation.ToUpper());
-
-                if (existingJobTitle != null && existingLocation != null)
+                var existingJob = from jobApps in context.JobApplications
+                                    where jobApps.JobLocation == request.JobLocation &&
+                                    jobApps.JobTitle == request.JobTitle
+                                    select jobApps;
+                var existingJobList = existingJob.ToList();
+                if (existingJobList.Count > 0)
                 {
-                    return BadRequest($"There is already an application for {existingJobTitle.JobTitle} in {existingLocation.JobLocation}");
+                    return BadRequest($"There is already an application for {request.JobTitle} in {request.JobLocation}");
                 }
 
                 context.JobApplications.Add(request);
                 context.SaveChanges();
-                return Ok();
+                return Ok("Application created");
             } catch (Exception e)
             {
                 return BadRequest("There was an error posting the job application. Please contact customer support.");

@@ -5,10 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import * as jobApi from '../../api/jobApplications';
 import JobAppCards from './JobAppCards';
+import Toast from '../../components/toasts';
+import * as toastMethods from '../../components/toastMethods';
 
 const closeIcon = <FontAwesomeIcon icon ={faWindowClose} color="gray" size="lg" />
 
-export default function CurrentApplications() {
+export default function LiveApplications() {
     const [isOpen, setIsOpen] = React.useState(false);
     const [loadState, setLoadState] = React.useState(null);
     const [jobAppData, setJobAppData] = React.useState([]);
@@ -18,12 +20,11 @@ export default function CurrentApplications() {
         jobApi.getCompanyJobApps()
             .then((data) => {
                 setLoadState("Success")
-                console.log(data)
                 setJobAppData(data)
             })
             .catch((e) => {
                 setLoadState("Failed")
-                console.log(e)
+                toastMethods.notifyError("Failed to load job applications");
             })
     }, [])
     React.useEffect(() => console.log(666, loadState), [loadState]);
@@ -31,6 +32,7 @@ export default function CurrentApplications() {
     const mapper = jobAppData.map((j, i) => {
         return (
             <JobAppCards
+              key={i}
               jobTitle={j.jobTitle}
               jobLocation={j.jobLocation}
               uploadDate={j.uploadDate}
@@ -42,7 +44,7 @@ export default function CurrentApplications() {
         <>
             <div className="employMe-div-box" >
                 <div className="employMe-div-box-action">
-                    <p className="employMe-div-box-title">Current Applications</p>
+                    <p className="employMe-div-box-title">Live Applications</p>
                     <button
                       className="employMe-add-btn"
                       onClick={() => setIsOpen(true)}
@@ -70,12 +72,16 @@ export default function CurrentApplications() {
                 }}
                 width="64vw"
             >
-                <CreateApplication close={<button 
+                <CreateApplication 
+                  close={<button 
                     onClick={() => setIsOpen(false)}
-                >
+                  >
                     {closeIcon}
-                </button>}/>
+                  </button>}
+                  closeFunc={() => setIsOpen(false)}  
+                />
             </Drawer>
+            <Toast/>
         </>
     )
 }
