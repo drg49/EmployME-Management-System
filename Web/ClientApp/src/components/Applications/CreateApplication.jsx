@@ -9,7 +9,7 @@ import * as api from '../../api/jobApplications';
 const removeIcon = <FontAwesomeIcon icon ={faTimes} color="gray" size="lg" />;
 const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" size="lg"/>;
 
-export default function CreateApplication({ close, closeFunc }) {
+export default function CreateApplication({ close, closeFunc, setTriggerRefresh }) {
     const postApplication = () => {
       const questionString = JSON.stringify(questions);
       const jobTitleVal = jobTitle.current.value;
@@ -28,7 +28,7 @@ export default function CreateApplication({ close, closeFunc }) {
           setButton(defaultButton);
           closeFunc();
           return toastMethods.notifySuccess('Your job application is now posted online');
-        })
+        }).then(() => setTriggerRefresh(true))
         .catch((e) => {
           e.text().then((message) => {
             setButton(defaultButton)

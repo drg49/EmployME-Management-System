@@ -14,6 +14,7 @@ export default function LiveApplications() {
     const [isOpen, setIsOpen] = React.useState(false);
     const [loadState, setLoadState] = React.useState(null);
     const [jobAppData, setJobAppData] = React.useState([]);
+    const [triggerRefresh, setTriggerRefresh] = React.useState(false);
 
     React.useEffect(() => {
         setLoadState("Start")
@@ -26,7 +27,8 @@ export default function LiveApplications() {
                 setLoadState("Failed")
                 toastMethods.notifyError("Failed to load job applications");
             })
-    }, [])
+    }, [triggerRefresh]) /* Remember, this useEffect block will be called every time the value in the array changes. 
+    Therefore, this code will be called everytime the state changes for triggerRefresh */
     React.useEffect(() => console.log(666, loadState), [loadState]);
 
     const mapper = jobAppData.map((j, i) => {
@@ -78,7 +80,8 @@ export default function LiveApplications() {
                   >
                     {closeIcon}
                   </button>}
-                  closeFunc={() => setIsOpen(false)}  
+                  closeFunc={() => setIsOpen(false)}
+                  setTriggerRefresh={setTriggerRefresh}
                 />
             </Drawer>
             <Toast/>
