@@ -9,8 +9,8 @@ import Toast from '../../components/toasts';
 import * as toastMethods from '../../components/toastMethods';
 import ErrorComponent from '../../components/ErrorComponent';
 
-const closeIcon = <FontAwesomeIcon icon ={faWindowClose} color="gray" size="lg" />
-const spinnerIcon = <FontAwesomeIcon icon={faSpinner} spin color="white" />
+const closeIcon = <FontAwesomeIcon icon ={faWindowClose} color="gray" size="lg" />;
+const spinnerIcon = <FontAwesomeIcon icon={faSpinner} spin color="white" />;
 
 export default function LiveApplications() {
     const [isOpen, setIsOpen] = React.useState(false);
@@ -45,7 +45,7 @@ export default function LiveApplications() {
                 />
             </span>
         )
-    })
+    });
 
     return (
         <>

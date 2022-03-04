@@ -20,7 +20,7 @@ import './custom.scss'
 import './responsive.scss'
 
 const initPath = topNavData.find(e => e.link === window.location.pathname) || sideNavData.find(e => e.link === window.location.pathname);
-const spinner = <FontAwesomeIcon icon={faSpinner} spin color="gray" size='10x'/>
+const spinner = <FontAwesomeIcon icon={faSpinner} spin color="gray" size='10x'/>;
 
 export default function App() {
   const dispatch = useDispatch();
