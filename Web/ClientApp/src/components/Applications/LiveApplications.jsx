@@ -2,21 +2,25 @@ import React from 'react';
 import Drawer from 'rc-drawer';
 import CreateApplication from './CreateApplication';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
+import { faWindowClose, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import * as jobApi from '../../api/jobApplications';
 import JobAppCards from './JobAppCards';
 import Toast from '../../components/toasts';
 import * as toastMethods from '../../components/toastMethods';
+import ErrorComponent from '../../components/ErrorComponent';
 
 const closeIcon = <FontAwesomeIcon icon ={faWindowClose} color="gray" size="lg" />
+const spinnerIcon = <FontAwesomeIcon icon={faSpinner} spin color="white" />
 
 export default function LiveApplications() {
     const [isOpen, setIsOpen] = React.useState(false);
     const [loadState, setLoadState] = React.useState(null);
     const [jobAppData, setJobAppData] = React.useState([]);
     const [triggerRefresh, setTriggerRefresh] = React.useState(false);
+    const [spinner, setSpinner] = React.useState(spinnerIcon);
 
     React.useEffect(() => {
+        setTriggerRefresh(false);
         setLoadState("Start")
         jobApi.getCompanyJobApps()
             .then((data) => {
@@ -25,26 +29,30 @@ export default function LiveApplications() {
             })
             .catch((e) => {
                 setLoadState("Failed")
+                setSpinner(<></>)
                 toastMethods.notifyError("Failed to load job applications");
             })
     }, [triggerRefresh]) /* Remember, this useEffect block will be called every time the value in the array changes. 
     Therefore, this code will be called everytime the state changes for triggerRefresh */
-    React.useEffect(() => console.log(666, loadState), [loadState]);
 
     const mapper = jobAppData.map((j, i) => {
         return (
-            <JobAppCards
-              key={i}
-              jobTitle={j.jobTitle}
-              jobLocation={j.jobLocation}
-              uploadDate={j.uploadDate}
-            />
+            <span id="job-app-span" onClick={() => console.log(j.jobTitle, j.appId)} key={i}>
+                <JobAppCards
+                jobTitle={j.jobTitle}
+                jobLocation={j.jobLocation}
+                uploadDate={j.uploadDate}
+                />
+            </span>
         )
     })
 
     return (
         <>
-            <div className="employMe-div-box" >
+            <div
+              className="employMe-div-box"
+              style={jobAppData.length > 0 ? {"borderBottomLeftRadius": "0px", "borderBottomRightRadius": "0px"} : null}
+            >
                 <div className="employMe-div-box-action">
                     <p className="employMe-div-box-title">Live Applications</p>
                     <button
@@ -54,7 +62,8 @@ export default function LiveApplications() {
                       Create
                     </button>
                 </div>
-                {mapper}
+                  {loadState === 'Success' ? <div id="live-application-wrapper">{mapper}</div> : spinner}
+                  {loadState === 'Failed' && <ErrorComponent message="Failed to load reminders"/>}
             </div>
             <Drawer
                 open={isOpen}
@@ -72,7 +81,6 @@ export default function LiveApplications() {
                 maskStyle={{
                     opacity: "0.5"
                 }}
-                width="64vw"
             >
                 <CreateApplication 
                   close={<button 

@@ -27,6 +27,7 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
         .then(() => {
           setButton(defaultButton);
           closeFunc();
+          refresh();
           return toastMethods.notifySuccess('Your job application is now posted online');
         }).then(() => setTriggerRefresh(true))
         .catch((e) => {

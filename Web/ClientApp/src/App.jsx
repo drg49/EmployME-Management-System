@@ -13,12 +13,14 @@ import { useHistory } from 'react-router';
 import topNavData from './datasets/topNavData.json'
 import sideNavData from './datasets/sideNavData.json'
 import Applications from './components/Applications';
-import CreateApplication from './components/Applications/CreateApplication';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 import './custom.scss'
 import './responsive.scss'
 
-const initPath = topNavData.find(e => e.link === window.location.pathname) || sideNavData.find(e => e.link === window.location.pathname)
+const initPath = topNavData.find(e => e.link === window.location.pathname) || sideNavData.find(e => e.link === window.location.pathname);
+const spinner = <FontAwesomeIcon icon={faSpinner} spin color="gray" size='10x'/>
 
 export default function App() {
   const dispatch = useDispatch();
@@ -100,7 +102,9 @@ export default function App() {
 
   if (appState === "Loading") {
     return (
-      <p>Loading</p>
+      <div id="main-auth-loading-spinner">
+        {spinner}
+      </div>
     )
   }
   

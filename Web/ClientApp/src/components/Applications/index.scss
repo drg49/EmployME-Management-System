@@ -98,10 +98,27 @@ tr:nth-child(even) {
     }
 }
 
-.job-app-card:nth-child(even) {
-    background-color: #fcfcd6;
+#job-app-span:nth-child(even) {
+    .job-app-card {
+      background-color: #fcfcd6;
+    }
 }
 
-.job-app-card:nth-child(odd) {
-    background-color: beige;
+#job-app-span:nth-child(odd) {
+    .job-app-card {
+      background-color: beige;
+    }
+}
+
+#job-app-span:hover {
+    cursor: pointer;
+
+    .job-app-card {
+        opacity: 0.85;
+    }
+}
+
+#live-application-wrapper {
+    max-height: 336px;
+    overflow: auto;
 }

@@ -93,6 +93,14 @@ input {
     width: 100%;
 }
 
+#main-auth-loading-spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
 /* Navbar */
 #logo {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
