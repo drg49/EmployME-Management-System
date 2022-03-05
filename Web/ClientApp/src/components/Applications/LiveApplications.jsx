@@ -8,6 +8,7 @@ import JobAppCards from './JobAppCards';
 import Toast from '../../components/toasts';
 import * as toastMethods from '../../components/toastMethods';
 import ErrorComponent from '../../components/ErrorComponent';
+import Modal from 'react-modal';
 
 const closeIcon = <FontAwesomeIcon icon ={faWindowClose} color="gray" size="lg" />;
 const spinnerIcon = <FontAwesomeIcon icon={faSpinner} spin color="white" />;
