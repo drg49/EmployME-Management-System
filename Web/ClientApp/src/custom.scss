@@ -1,3 +1,12 @@
+@mixin disableSelect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 * {
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -56,7 +65,7 @@ input {
 
 /* Buttons */
 .strip-btn {
-    background: none;
+  background: none;
 	color: inherit;
 	border: none;
 	padding: 0;
@@ -141,12 +150,7 @@ input {
     li {
         list-style: none;
         padding: 0px 15px;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-         -khtml-user-select: none;
-           -moz-user-select: none;
-            -ms-user-select: none;
-                user-select: none;
+        @include disableSelect;
     }
 }
 
@@ -163,12 +167,14 @@ input {
     li {
         margin: 15px 0px 15px 0px;
         width: max-content;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-         -khtml-user-select: none;
-           -moz-user-select: none;
-            -ms-user-select: none;
-                user-select: none;
+        @include disableSelect;
+    }
+
+    h2 {
+      font-size: 17px;
+      text-decoration: underline;
+      margin: 3px 0px;
+      @include disableSelect;
     }
 }
 

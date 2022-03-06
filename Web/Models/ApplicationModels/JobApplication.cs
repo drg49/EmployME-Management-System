@@ -11,7 +11,7 @@ namespace Web.Models.ApplicationModels
         public string JobLocation { get; set; }
         public string CompanyName { get; set; }
         public int UserId { get; set; }
-        public string JobQuestions { get; set; }
+        public string DefaultQuestions { get; set; }
         public DateTime? UploadDate { get; set; }
     }
 }

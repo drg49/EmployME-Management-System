@@ -8,10 +8,6 @@
         "link": "/search"
     },
     {
-        "title": "Manage",
-        "link": "/manage"
-    },
-    {
         "title": "Calendar",
         "link": "/calendar"
     },

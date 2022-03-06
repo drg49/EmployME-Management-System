@@ -11,8 +11,8 @@ namespace Web.Data.EF
 
             this.HasKey<int>(e => e.AppId);
 
-            this.Property(e => e.JobQuestions)
-                    .HasColumnName("JobQuestions");
+            this.Property(e => e.DefaultQuestions)
+                    .HasColumnName("DefaultQuestions");
 
             this.Property(e => e.CompanyName)
                     .HasColumnName("CompanyName")

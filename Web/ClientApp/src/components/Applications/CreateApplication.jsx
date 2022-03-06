@@ -11,7 +11,7 @@ const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" size="lg"
 
 export default function CreateApplication({ close, closeFunc, setTriggerRefresh }) {
     const postApplication = () => {
-      const questionString = JSON.stringify(questions);
+      const defaultQuestionString = JSON.stringify(questions);
       const jobTitleVal = jobTitle.current.value;
       const jobLocationVal = jobLocation.current.value;
       if (jobTitleVal.trim() === "") {
@@ -23,7 +23,7 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
         return false;
       } 
       setButton(spinner);
-      api.createJobApplication(jobTitleVal, jobLocationVal, questionString)
+      api.createJobApplication(jobTitleVal, jobLocationVal, defaultQuestionString)
         .then(() => {
           setButton(defaultButton);
           closeFunc();

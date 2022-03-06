@@ -9,6 +9,7 @@ import Toast from '../../components/toasts';
 import * as toastMethods from '../../components/toastMethods';
 import ErrorComponent from '../../components/ErrorComponent';
 import Modal from 'react-modal';
+import ModalApplicationViewer from './ModalApplicationViewer';
 
 const closeIcon = <FontAwesomeIcon icon ={faWindowClose} color="gray" size="lg" />;
 const spinnerIcon = <FontAwesomeIcon icon={faSpinner} spin color="white" />;
@@ -19,6 +20,10 @@ export default function LiveApplications() {
     const [jobAppData, setJobAppData] = React.useState([]);
     const [triggerRefresh, setTriggerRefresh] = React.useState(false);
     const [spinner, setSpinner] = React.useState(spinnerIcon);
+    const [jobAppModal, setJobAppModal] = React.useState({
+        isOpen: false,
+        jobData: {},
+    });
 
     React.useEffect(() => {
         setTriggerRefresh(false);
@@ -38,7 +43,17 @@ export default function LiveApplications() {
 
     const mapper = jobAppData.map((j, i) => {
         return (
-            <span id="job-app-span" onClick={() => console.log(j.jobTitle, j.appId)} key={i}>
+            <span 
+              key={i}
+              id="job-app-span"
+              onClick={() => {
+                setJobAppModal({
+                    isOpen: true,
+                    jobData: j,
+                });
+                console.log(j);
+              }}
+            >
                 <JobAppCards
                 jobTitle={j.jobTitle}
                 jobLocation={j.jobLocation}
@@ -93,6 +108,16 @@ export default function LiveApplications() {
                   setTriggerRefresh={setTriggerRefresh}
                 />
             </Drawer>
+            <Modal
+              isOpen={jobAppModal.isOpen}
+              className="mymodal"
+              overlayClassName="myoverlay"
+            >
+                <ModalApplicationViewer
+                    jobAppModal={jobAppModal}
+                    setJobAppModal={setJobAppModal}
+                />
+            </Modal>
             <Toast/>
         </>
     )

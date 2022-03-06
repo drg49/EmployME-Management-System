@@ -20,8 +20,11 @@ export default function SideNav({ setPageTitle, pageTitle }) {
     })
 
     return (
-        <nav id="side-nav">
+        <>
+          <nav id="side-nav">
+            <h2>HR Management</h2>
             {sideNavLinks}
-        </nav>
+          </nav>
+        </>
     )
 };
