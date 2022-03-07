@@ -1,6 +1,12 @@
 import React from 'react'
 
-export default function CustomQuestionForm() {
+export default function CustomQuestionForm({ setCustomQuestionState }) {
+
+    const addCustomQuestion = () => {
+      console.log("Adding the question")
+    }
+
+    const closeForm = () => setCustomQuestionState({ isDisabled: false, component: null })
 
     return (
         <div id="custom-question-form">
@@ -74,8 +80,18 @@ export default function CustomQuestionForm() {
 
             <br />
             <div id="custom-question-form-action">
-                <button className="employMe-add-btn">Add</button>
-                <button className="employMe-delete-btn">Cancel</button>
+                <button
+                  className="employMe-add-btn"
+                  onClick={addCustomQuestion}
+                >
+                  Add
+                </button>
+                <button
+                  className="employMe-delete-btn"
+                  onClick={closeForm}
+                >
+                  Cancel
+                </button>
             </div>
         </div>
     )

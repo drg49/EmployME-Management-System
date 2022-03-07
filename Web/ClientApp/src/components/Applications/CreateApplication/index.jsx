@@ -45,7 +45,10 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
       return {name: i.name, checked: i.required}
     }));
     const [button, setButton] = React.useState(defaultButton);
-    const [customQuestionForm, setCustomQuestionForm] = React.useState(null)
+    const [customQuestionState, setCustomQuestionState] = React.useState({
+      component: null,
+      isDisabled: false,
+    })
 
     const jobTitle = React.useRef();
     const jobLocation = React.useRef();
@@ -129,9 +132,13 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
               </tbody>
             </table>
           </section>
-          {customQuestionForm}
+          {customQuestionState.component}
           <button
-            onClick={() => setCustomQuestionForm(<CustomQuestionForm />)}
+            onClick={() => setCustomQuestionState({
+              isDisabled: true,
+              component: <CustomQuestionForm setCustomQuestionState={setCustomQuestionState} />
+            })}
+            disabled={customQuestionState.isDisabled}
           >
             Add a Custom Question
           </button>
