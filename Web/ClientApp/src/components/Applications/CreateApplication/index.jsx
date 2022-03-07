@@ -5,6 +5,7 @@ import { faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import Toast from '../../toasts';
 import * as toastMethods from '../../toastMethods';
 import * as api from '../../../api/jobApplications';
+import CustomQuestionForm from './CustomQuestionForm';
 
 const removeIcon = <FontAwesomeIcon icon ={faTimes} color="gray" size="lg" />;
 const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" size="lg"/>;
@@ -44,6 +45,7 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
       return {name: i.name, checked: i.required}
     }));
     const [button, setButton] = React.useState(defaultButton);
+    const [customQuestionForm, setCustomQuestionForm] = React.useState(null)
 
     const jobTitle = React.useRef();
     const jobLocation = React.useRef();
@@ -127,8 +129,10 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
               </tbody>
             </table>
           </section>
-          
-          <button>
+          {customQuestionForm}
+          <button
+            onClick={() => setCustomQuestionForm(<CustomQuestionForm />)}
+          >
             Add a Custom Question
           </button>
           <br />

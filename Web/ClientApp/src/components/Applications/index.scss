@@ -1,3 +1,11 @@
+@mixin disableSelect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
 input:focus {
     outline: none;
@@ -121,4 +129,38 @@ tr:nth-child(even) {
 #live-application-wrapper {
     max-height: 336px;
     overflow: auto;
+}
+
+input[name="answerType"] {
+    display: inline;
+}
+
+input[name="required"] {
+    display: inline;
+}
+
+#custom-question-form {
+    border: 1px solid gray;
+    padding: 10px;
+    width: 47%;
+    margin: 12px 0px;
+
+    label {
+        @include disableSelect;
+    }
+}
+
+#custom-question {
+    width: 90%;
+}
+
+#custom-question-form-action {
+    margin: 12px 0px 0px 0px;
+    display: flex;
+    justify-content: space-between;
+
+    button {
+        font-size: 14px;
+        margin: 0px;
+    }
 }
