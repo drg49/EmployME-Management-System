@@ -1,9 +1,9 @@
 import React from 'react'
 import LiveApplications from './LiveApplications'
-
-import './index.scss'
 import PausedApplications from './PausedApplications'
 import ViewApplicants from './ViewApplicants'
+
+import './index.scss'
 
 export default function Applications() {
     return (

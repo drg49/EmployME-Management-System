@@ -1,10 +1,10 @@
 import React from 'react';
-import dataset from '../../datasets/defaultJobAppQuestions.json';
+import dataset from '../../../datasets/defaultJobAppQuestions.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import Toast from '../../components/toasts';
-import * as toastMethods from '../../components/toastMethods';
-import * as api from '../../api/jobApplications';
+import Toast from '../../toasts';
+import * as toastMethods from '../../toastMethods';
+import * as api from '../../../api/jobApplications';
 
 const removeIcon = <FontAwesomeIcon icon ={faTimes} color="gray" size="lg" />;
 const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" size="lg"/>;
@@ -127,6 +127,11 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
               </tbody>
             </table>
           </section>
+          
+          <button>
+            Add a Custom Question
+          </button>
+          <br />
           {button}
         </div>
         <Toast />

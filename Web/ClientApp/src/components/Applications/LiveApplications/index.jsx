@@ -1,13 +1,13 @@
 import React from 'react';
 import Drawer from 'rc-drawer';
-import CreateApplication from './CreateApplication';
+import CreateApplication from '../CreateApplication';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import * as jobApi from '../../api/jobApplications';
+import * as jobApi from '../../../api/jobApplications';
 import JobAppCards from './JobAppCards';
-import Toast from '../../components/toasts';
-import * as toastMethods from '../../components/toastMethods';
-import ErrorComponent from '../../components/ErrorComponent';
+import Toast from '../../toasts';
+import * as toastMethods from '../../toastMethods';
+import ErrorComponent from '../../ErrorComponent';
 import Modal from 'react-modal';
 import ModalApplicationViewer from './ModalApplicationViewer';
 
