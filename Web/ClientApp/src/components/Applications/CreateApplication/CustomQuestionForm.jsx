@@ -1,12 +1,29 @@
 import React from 'react'
 
-export default function CustomQuestionForm({ setCustomQuestionState }) {
+export default function CustomQuestionForm({ setCustomQuestions, customQuestions }) {
+    const [answerType, setAnswerType] = React.useState();
+    const [isRequired, setIsRequired] = React.useState();
+
+    React.useEffect(() => {
+      console.log(customQuestions);
+    }, [customQuestions]);
+
+    const questionRef = React.useRef();
 
     const addCustomQuestion = () => {
-      console.log("Adding the question")
-    }
+      console.log(typeof isRequired, isRequired)
+      const newCustomQuestion = {
+        question: questionRef.current.value,
+        inputFieldType: answerType,
+        required: isRequired === "1" ? true : false,
+      };
+      setCustomQuestions({
+        ...customQuestions,
+        questions: [...customQuestions.questions, newCustomQuestion]
+      })
+    };
 
-    const closeForm = () => setCustomQuestionState({ isDisabled: false, component: null })
+    const closeForm = () => setCustomQuestions({ ...customQuestions, isDisabled: false, component: null });
 
     return (
         <div id="custom-question-form">
@@ -15,6 +32,7 @@ export default function CustomQuestionForm({ setCustomQuestionState }) {
               type="text"
               id="custom-question"
               maxLength="200"
+              ref={questionRef}
             />
             <br />
 
@@ -24,6 +42,7 @@ export default function CustomQuestionForm({ setCustomQuestionState }) {
               id="shortText"
               name="answerType"
               value="shortText"
+              onClick={(e) => setAnswerType(e.target.value)}
             />
             <label htmlFor="shortText">Text (short)</label>
             <br />
@@ -32,6 +51,7 @@ export default function CustomQuestionForm({ setCustomQuestionState }) {
               id="longText"
               name="answerType"
               value="longText"
+              onClick={(e) => setAnswerType(e.target.value)}
             />
             <label htmlFor="longText">Text (long)</label>
             <br />
@@ -40,6 +60,7 @@ export default function CustomQuestionForm({ setCustomQuestionState }) {
               id="yesNo"
               name="answerType"
               value="yesNo"
+              onClick={(e) => setAnswerType(e.target.value)}
             />
             <label htmlFor="yesNo">Yes/No</label>
             <br />
@@ -48,6 +69,7 @@ export default function CustomQuestionForm({ setCustomQuestionState }) {
               id="number"
               name="answerType"
               value="number"
+              onClick={(e) => setAnswerType(e.target.value)}
             />
             <label htmlFor="number">Number</label>
             <br />
@@ -56,6 +78,7 @@ export default function CustomQuestionForm({ setCustomQuestionState }) {
               id="date"
               name="answerType"
               value="date"
+              onClick={(e) => setAnswerType(e.target.value)}
             />
             <label htmlFor="date">Date</label>
             <br /><br />
@@ -66,7 +89,8 @@ export default function CustomQuestionForm({ setCustomQuestionState }) {
               type="radio"
               id="yes"
               name="required"
-              value="yes"
+              value={1}
+              onClick={(e) => setIsRequired(e.target.value)}
             />
             <label htmlFor="yes">Yes</label>
             <br />
@@ -74,7 +98,8 @@ export default function CustomQuestionForm({ setCustomQuestionState }) {
               type="radio"
               id="no"
               name="required"
-              value="no"
+              value={0}
+              onClick={(e) => setIsRequired(e.target.value)}
             />
             <label htmlFor="no">No</label>
 

@@ -9,7 +9,7 @@ namespace Web.Data.EF
         {
             this.ToTable("JobApplications");
 
-            this.HasKey<int>(e => e.AppId);
+            this.HasKey<string>(e => e.AppId);
 
             this.Property(e => e.DefaultQuestions)
                     .HasColumnName("DefaultQuestions");

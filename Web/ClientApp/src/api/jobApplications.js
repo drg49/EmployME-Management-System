@@ -7,13 +7,14 @@ export function getCompanyJobApps() {
     }).then((response) => response.ok ? response.json() : Promise.reject(response))
 }
 
-export function createJobApplication(jobTitle, jobLocation, defaultQuestions) {
+export function createJobApplication(jobTitle, jobLocation, defaultQuestions, customJobAppQuestions) {
+    console.log(customJobAppQuestions)
     return fetch("app/applications/create-application", {
         method: "POST",
         headers: {
             Accept: "application/json",
             'Content-Type': "application/json"
         },
-        body: JSON.stringify({ jobTitle, jobLocation, defaultQuestions })
+        body: JSON.stringify({ jobTitle, jobLocation, defaultQuestions, customJobAppQuestions })
     }).then((response) => response.ok ? response.json() : Promise.reject(response))
 }

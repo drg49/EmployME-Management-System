@@ -23,6 +23,7 @@ namespace Web.Data
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Reminder> Reminders { get; set; }
         public virtual DbSet<JobApplication> JobApplications { get; set; }
+        public virtual DbSet<CustomJobAppQuestion> CustomJobAppQuestions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -42,6 +43,7 @@ namespace Web.Data
             modelBuilder.Configurations.Add(new UserConfig());
             modelBuilder.Configurations.Add(new ReminderConfig());
             modelBuilder.Configurations.Add(new JobApplicationConfig());
+            modelBuilder.Configurations.Add(new CustomJobAppConfig());
         }
     }
 }

@@ -36,15 +36,13 @@ namespace Web.Controllers
         }
 
         [HttpPost("create-application")]
-        public IActionResult CreateApplication(JobApplication request)
+        public IActionResult CreateApplication([FromBody] JobAppRequest request)
         {
             try
             {
                 string jwt = Request.Cookies["jwt"];
                 User user = jwtService.Verify(jwt);
-                request.UserId = user.UserId;
-                request.CompanyName = user.CompanyName;
-                request.UploadDate = DateTime.Now;
+
                 var existingJob = from jobApps in context.JobApplications
                                     where jobApps.JobLocation == request.JobLocation &&
                                     jobApps.JobTitle == request.JobTitle
@@ -54,8 +52,30 @@ namespace Web.Controllers
                 {
                     return BadRequest($"There is already an application for {request.JobTitle} in {request.JobLocation}");
                 }
+                string appId = Guid.NewGuid().ToString();
+                JobApplication jobApp = new JobApplication() 
+                {
+                    UserId = user.UserId,
+                    CompanyName = user.CompanyName,
+                    JobTitle = request.JobTitle,
+                    JobLocation = request.JobLocation,
+                    DefaultQuestions = request.DefaultQuestions,
+                    UploadDate = DateTime.Now,
+                    AppId = appId,
+                };
 
-                context.JobApplications.Add(request);
+                List<CustomJobAppQuestion> customJobAppQuestions = request.CustomJobAppQuestions;
+
+                context.JobApplications.Add(jobApp);
+                context.SaveChanges();
+
+                foreach (CustomJobAppQuestion q in customJobAppQuestions)
+                {
+                    q.AppId = appId;
+                    q.UploadDate = DateTime.Now;
+                    context.CustomJobAppQuestions.Add(q);
+                }
+
                 context.SaveChanges();
                 return Ok("Application created");
             } catch (Exception e)

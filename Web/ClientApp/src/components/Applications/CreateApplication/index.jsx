@@ -23,31 +23,32 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
         toastMethods.notifyError('Please fill out the job location');
         return false;
       } 
-      setButton(spinner);
-      api.createJobApplication(jobTitleVal, jobLocationVal, defaultQuestionString)
+      setButtonText(spinner);
+      api.createJobApplication(jobTitleVal, jobLocationVal, defaultQuestionString, customQuestions.questions)
         .then(() => {
-          setButton(defaultButton);
+          setButtonText("Post Application");
           closeFunc();
           refresh();
           return toastMethods.notifySuccess('Your job application is now posted online');
         }).then(() => setTriggerRefresh(true))
         .catch((e) => {
           e.text().then((message) => {
-            setButton(defaultButton)
+            setButtonText("Post Application")
             return toastMethods.notifyError(message);
           })
         })
     };
-    const defaultButton = <button className="employMe-add-btn" onClick={postApplication}>Post Application</button>;
+
     const [defaultQuestions, setDefaultQuestions] = React.useState(dataset);
     const [table, setTable] = React.useState(null);
     const [questions, setQuestions] = React.useState(dataset.map(i => {
       return {name: i.name, checked: i.required}
     }));
-    const [button, setButton] = React.useState(defaultButton);
-    const [customQuestionState, setCustomQuestionState] = React.useState({
+    const [buttonText, setButtonText] = React.useState("Post Application");
+    const [customQuestions, setCustomQuestions] = React.useState({
       component: null,
       isDisabled: false,
+      questions: [],
     })
 
     const jobTitle = React.useRef();
@@ -132,18 +133,27 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
               </tbody>
             </table>
           </section>
-          {customQuestionState.component}
+          {customQuestions.component}
           <button
-            onClick={() => setCustomQuestionState({
+            onClick={() => setCustomQuestions({
+              ...customQuestions,
               isDisabled: true,
-              component: <CustomQuestionForm setCustomQuestionState={setCustomQuestionState} />
+              component: <CustomQuestionForm
+                            setCustomQuestions={setCustomQuestions}
+                            customQuestions={customQuestions} 
+                          />
             })}
-            disabled={customQuestionState.isDisabled}
+            disabled={customQuestions.isDisabled}
           >
             Add a Custom Question
           </button>
           <br />
-          {button}
+          <button
+            className="employMe-add-btn"
+            onClick={postApplication}
+          >
+            {buttonText}
+          </button>
         </div>
         <Toast />
       </>
