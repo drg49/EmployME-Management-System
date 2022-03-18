@@ -80,7 +80,6 @@ export default function AuthTemplate({ title, validateUser }) {
                   })
               } else {
                 response.text().then((message) => {
-                  console.log(message)
                   if (message === 'Email already exists') {
                     toastMethods.notifyError('Email already exists');
                   }

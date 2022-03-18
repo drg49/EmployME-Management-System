@@ -8,7 +8,6 @@ export function getCompanyJobApps() {
 }
 
 export function createJobApplication(jobTitle, jobLocation, defaultQuestions, customJobAppQuestions) {
-    console.log(customJobAppQuestions)
     return fetch("app/applications/create-application", {
         method: "POST",
         headers: {
@@ -16,5 +15,14 @@ export function createJobApplication(jobTitle, jobLocation, defaultQuestions, cu
             'Content-Type': "application/json"
         },
         body: JSON.stringify({ jobTitle, jobLocation, defaultQuestions, customJobAppQuestions })
+    }).then((response) => response.ok ? response.json() : Promise.reject(response))
+}
+
+export function getCustomJobAppQuestions(appId) {
+    return fetch(`app/applications/get-custom-job-questions/${appId}`, {
+        method: "GET",
+        headers: {
+            Accept: "application/json"
+        },
     }).then((response) => response.ok ? response.json() : Promise.reject(response))
 }

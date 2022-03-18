@@ -4,14 +4,9 @@ export default function CustomQuestionForm({ setCustomQuestions, customQuestions
     const [answerType, setAnswerType] = React.useState();
     const [isRequired, setIsRequired] = React.useState();
 
-    React.useEffect(() => {
-      console.log(customQuestions);
-    }, [customQuestions]);
-
     const questionRef = React.useRef();
 
     const addCustomQuestion = () => {
-      console.log(typeof isRequired, isRequired)
       const newCustomQuestion = {
         question: questionRef.current.value,
         inputFieldType: answerType,

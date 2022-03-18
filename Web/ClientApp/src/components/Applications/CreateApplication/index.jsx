@@ -8,7 +8,7 @@ import * as api from '../../../api/jobApplications';
 import CustomQuestionForm from './CustomQuestionForm';
 
 const removeIcon = <FontAwesomeIcon icon ={faTimes} color="gray" size="lg" />;
-const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" size="lg"/>;
+const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" />;
 
 export default function CreateApplication({ close, closeFunc, setTriggerRefresh }) {
     const postApplication = () => {
@@ -50,6 +50,7 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
       isDisabled: false,
       questions: [],
     })
+    const [customQuestionRow, setCustomQuestionRow] = React.useState(null);
 
     const jobTitle = React.useRef();
     const jobLocation = React.useRef();
@@ -75,12 +76,12 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
         return (
           <tr key={i}>
             <td className="create-app-cb">
-            <input
-              type="checkbox"
-              name={q.name}
-              className="check"
-              checked={questions.filter(c => c.name === q.name)[0].checked}
-              onChange={(e) => handleChange(e)}
+              <input
+                type="checkbox"
+                name={q.name}
+                className="check"
+                checked={questions.filter(c => c.name === q.name)[0].checked}
+                onChange={(e) => handleChange(e)}
               />
             </td>
             <td>
@@ -101,6 +102,50 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
         )
       }))
     }, [defaultQuestions, questions]);
+
+    const parseInputType = (inputType) => {
+      switch (inputType) {
+        case 'shortText': return 'Short Text';
+        case 'longText': return 'Long Text';
+        case 'yesNo': return 'Yes/No';
+        case 'number': return 'Number';
+        case 'date': return 'Date';
+        default: return '';
+      }
+    }
+
+    React.useEffect(() => {
+      setCustomQuestionRow(customQuestions.questions.map((q, i) => {
+        return (
+          <tr key={i}>
+            <td className="create-app-cb">
+              <input
+                type="checkbox"
+                name={q.name}
+                className="check"
+                checked={q.required}
+                onChange={(e) => console.log(q)}
+              />
+            </td>
+            <td className="custom-question-row">
+              <p>{q.question}</p>
+              <p id="answer-type-table-row">
+                {`Answer Type: ${parseInputType(q.inputFieldType)}`}
+              </p>
+            </td>
+            
+            <td style={{ border: "none", backgroundColor: "white", paddingLeft: "20px", paddingTop:"17px" }}>
+            <button
+                className='strip-btn'
+                onClick={() => console.log("Delete row")}
+              >
+                {removeIcon}
+              </button>
+            </td>
+          </tr>
+        )
+      }))
+    }, [customQuestions]);
 
     return(
       <>
@@ -130,6 +175,7 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
                   <th>Label / Question</th>
                 </tr>
                 {table}
+                {customQuestionRow}
               </tbody>
             </table>
           </section>
@@ -151,6 +197,10 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
           <button
             className="employMe-add-btn"
             onClick={postApplication}
+            style={{
+              backgroundColor: buttonText !== "Post Application" ? "transparent" : "#5bc236"
+            }}
+            disabled={buttonText === "Post Application" ? false : true}
           >
             {buttonText}
           </button>

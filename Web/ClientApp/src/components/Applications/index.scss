@@ -62,6 +62,10 @@ table {
 
 .create-app-cb {
     text-align: center;
+
+    .check {
+        cursor: pointer;
+    }
 }
   
 td, th {
@@ -163,4 +167,18 @@ input[name="required"] {
         font-size: 14px;
         margin: 0px;
     }
+}
+
+#answer-type-table-row {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.custom-question-row {
+    cursor: pointer;
+}
+
+.custom-question-row:hover {
+    background-color: gainsboro;
 }

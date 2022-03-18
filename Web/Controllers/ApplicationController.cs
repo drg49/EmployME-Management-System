@@ -83,5 +83,24 @@ namespace Web.Controllers
                 return BadRequest("There was an error posting the job application. Please contact customer support.");
             }
         }
+
+        [HttpGet("app/applications/get-custom-job-questions/{appId}")]
+        public ActionResult<IEnumerable<CustomJobAppQuestion>> GetCustomJobAppQuestions([FromRoute] string appId)
+        {
+            try
+            {
+                string jwt = Request.Cookies["jwt"];
+                User user = jwtService.Verify(jwt);
+                var results = from customQuestions in context.CustomJobAppQuestions
+                              where customQuestions.AppId == appId
+                              select customQuestions;
+
+                return Ok(results.ToList());
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Could not retrieve custom job questions");
+            }
+        }
     }
 }
