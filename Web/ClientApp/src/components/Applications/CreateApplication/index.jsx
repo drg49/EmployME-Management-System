@@ -127,7 +127,20 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
                 onChange={(e) => console.log(q)}
               />
             </td>
-            <td className="custom-question-row">
+            <td
+              className="custom-question-row"
+              onClick={() => {
+                setCustomQuestions({
+                  ...customQuestions,
+                  isDisabled: true,
+                  component: <CustomQuestionForm
+                                setCustomQuestions={setCustomQuestions}
+                                customQuestions={customQuestions}
+                                defaultValues={q}
+                              />
+                })
+              }}
+            >
               <p>{q.question}</p>
               <p id="answer-type-table-row">
                 {`Answer Type: ${parseInputType(q.inputFieldType)}`}
@@ -135,7 +148,7 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
             </td>
             
             <td style={{ border: "none", backgroundColor: "white", paddingLeft: "20px", paddingTop:"17px" }}>
-            <button
+              <button
                 className='strip-btn'
                 onClick={() => console.log("Delete row")}
               >
@@ -152,21 +165,21 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
         <div id="create-app-main">
           <div id="create-app-title">
             <h1>Create Application</h1>
-            {close}
+            <span>
+              <button onClick={refresh}>Refresh</button>
+              {close}
+            </span>
           </div>
           <section>
-            <div id="create-app-header-flex">
-              <div>
-                <span>
-                  <label htmlFor="job-title">Job Title</label>
-                  <input type="text" id="job-title" ref={jobTitle} maxLength="150" />
-                </span>
-                <span>
-                  <label htmlFor="job-location">Location</label>
-                  <input type="text" id="job-location" ref={jobLocation} maxLength="150" />
-                </span>
-              </div>
-              <button onClick={refresh}>Refresh</button>
+            <div id="create-app-form">
+              <span>
+                <label htmlFor="job-title">Job Title</label>
+                <input type="text" id="job-title" ref={jobTitle} maxLength="150" />
+              </span>
+              <span>
+                <label htmlFor="job-location">Location</label>
+                <input type="text" id="job-location" ref={jobLocation} maxLength="150" />
+              </span>
             </div>
             <table>
               <tbody>
@@ -186,7 +199,8 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
               isDisabled: true,
               component: <CustomQuestionForm
                             setCustomQuestions={setCustomQuestions}
-                            customQuestions={customQuestions} 
+                            customQuestions={customQuestions}
+                            defaultValues={null}
                           />
             })}
             disabled={customQuestions.isDisabled}

@@ -19,13 +19,15 @@ input:focus {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
-    button {
-        font-size: 20px;
-    }
 
-    button:hover {
-        opacity: 0.9;
+    span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        button:first-of-type {
+            font-size: 20px;
+        }
     }
 }
 
@@ -78,17 +80,13 @@ tr:nth-child(even) {
     background-color: whitesmoke;
 }
 
-#create-app-header-flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    width: 49.5%;
 
-    div span:first-of-type{
-        display: block;
-        margin-bottom: 10px;
-    }
+
+#create-app-form span:first-of-type{
+    display: block;
+    margin-bottom: 10px;
 }
+
 
 .job-app-card {
     display: flex;
