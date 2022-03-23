@@ -1,8 +1,8 @@
 import React from 'react'
 
 export default function CustomQuestionForm({ setCustomQuestions, customQuestions, defaultValues }) {
-    const [answerType, setAnswerType] = React.useState();
-    const [isRequired, setIsRequired] = React.useState();
+    const [answerType, setAnswerType] = React.useState(null);
+    const [isRequired, setIsRequired] = React.useState(null);
 
     const questionRef = React.useRef();
 
@@ -10,7 +10,7 @@ export default function CustomQuestionForm({ setCustomQuestions, customQuestions
       const newCustomQuestion = {
         question: questionRef.current.value,
         inputFieldType: answerType,
-        required: isRequired === "1" ? true : false,
+        required: checkRequiredValue(),
       };
       setCustomQuestions({
         ...customQuestions,
@@ -19,6 +19,17 @@ export default function CustomQuestionForm({ setCustomQuestions, customQuestions
     };
 
     React.useEffect(() => console.log(defaultValues), [defaultValues]);
+
+    const updateQuestion = () => {
+      const updatedQuestion = {
+        question: questionRef.current.value,
+        inputFieldType: answerType || defaultValues.inputFieldType,
+        required: isRequired === null ? defaultValues.required : checkRequiredValue(),
+      };
+      console.log(updatedQuestion, 'update')
+    }
+
+    const checkRequiredValue = () => isRequired === "1" ? true : false
 
     const closeForm = () => setCustomQuestions({ ...customQuestions, isDisabled: false, component: null });
 
@@ -112,9 +123,9 @@ export default function CustomQuestionForm({ setCustomQuestions, customQuestions
             <div id="custom-question-form-action">
                 <button
                   className="employMe-add-btn"
-                  onClick={addCustomQuestion}
+                  onClick={defaultValues ? updateQuestion : addCustomQuestion}
                 >
-                  Add
+                  {defaultValues ? 'Update' : 'Add'}
                 </button>
                 <button
                   className="employMe-delete-btn"

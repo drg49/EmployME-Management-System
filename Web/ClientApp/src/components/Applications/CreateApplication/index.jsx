@@ -121,10 +121,13 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
             <td className="create-app-cb">
               <input
                 type="checkbox"
-                name={q.name}
                 className="check"
                 checked={q.required}
-                onChange={(e) => console.log(q)}
+                onChange={(e) => {
+                  e.target.checked ? q.required = true : q.required = false
+                  const newQuestionArray = customQuestions.questions.splice(i, 1, q);
+                  setCustomQuestions({...customQuestions, questions: newQuestionArray});
+                }}
               />
             </td>
             <td
