@@ -78,7 +78,7 @@ export default function MyProfile () {
           toastMethods.notifySuccess("Your profile has been updated")
           setIsLoading(false)
         })
-        .catch(() => console.log('ERROR!'))
+        .catch(() => toastMethods.notifyError("There was an error updating your profile"))
       }
       else if (option === 'Password') {
         if (passwordState.newPassword !== passwordState.retypePassword) {

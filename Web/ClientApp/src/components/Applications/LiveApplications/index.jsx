@@ -51,7 +51,6 @@ export default function LiveApplications() {
                     isOpen: true,
                     jobData: j,
                 });
-                console.log(j);
               }}
             >
                 <JobAppCards

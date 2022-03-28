@@ -101,7 +101,7 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
           </tr>
         )
       }))
-    }, [defaultQuestions, questions]);
+    }, [questions]);
 
     const parseInputType = (inputType) => {
       switch (inputType) {
@@ -125,8 +125,7 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
                 checked={q.required}
                 onChange={(e) => {
                   e.target.checked ? q.required = true : q.required = false
-                  const newQuestionArray = customQuestions.questions.splice(i, 1, q);
-                  setCustomQuestions({...customQuestions, questions: newQuestionArray});
+                  setCustomQuestions({ ...customQuestions });
                 }}
               />
             </td>
@@ -153,7 +152,15 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
             <td style={{ border: "none", backgroundColor: "white", paddingLeft: "20px", paddingTop:"17px" }}>
               <button
                 className='strip-btn'
-                onClick={() => console.log("Delete row")}
+                onClick={() => {
+                  if (!customQuestions.component) {
+                    return setCustomQuestions({ 
+                      ...customQuestions, 
+                      questions: customQuestions.questions.filter((item, index) => index !== i),
+                    })
+                  }
+                  return false;
+                }}
               >
                 {removeIcon}
               </button>

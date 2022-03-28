@@ -15,10 +15,8 @@ export default function CustomQuestionForm({ setCustomQuestions, customQuestions
       setCustomQuestions({
         ...customQuestions,
         questions: [...customQuestions.questions, newCustomQuestion]
-      })
+      });
     };
-
-    React.useEffect(() => console.log(defaultValues), [defaultValues]);
 
     const updateQuestion = () => {
       const updatedQuestion = {
@@ -26,7 +24,12 @@ export default function CustomQuestionForm({ setCustomQuestions, customQuestions
         inputFieldType: answerType || defaultValues.inputFieldType,
         required: isRequired === null ? defaultValues.required : checkRequiredValue(),
       };
-      console.log(updatedQuestion, 'update')
+      const indexToUpdate = customQuestions.questions.findIndex(e => e === defaultValues);
+      customQuestions.questions.splice(indexToUpdate, 1, updatedQuestion);
+      setCustomQuestions({
+        ...customQuestions,
+        questions: customQuestions.questions
+      });
     }
 
     const checkRequiredValue = () => isRequired === "1" ? true : false
