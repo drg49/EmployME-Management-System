@@ -84,7 +84,7 @@ namespace Web.Controllers
             }
         }
 
-        [HttpGet("app/applications/get-custom-job-questions/{appId}")]
+        [HttpGet("get-custom-job-questions/{appId}")]
         public ActionResult<IEnumerable<CustomJobAppQuestion>> GetCustomJobAppQuestions([FromRoute] string appId)
         {
             try

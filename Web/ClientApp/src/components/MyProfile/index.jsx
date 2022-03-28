@@ -122,7 +122,7 @@ export default function MyProfile () {
           className="mymodal"
           overlayClassName="myoverlay"
         >
-          <div id="modal-action-header" style={{marginBottom: "21px"}}>
+          <div className="modal-action-header" style={{marginBottom: "21px"}}>
             <h2>{modalState.isUserUpdate ? 'Update User' : 'Change Password'}</h2>
             <button
               onClick={() => setModalState({ isOpen: false })}

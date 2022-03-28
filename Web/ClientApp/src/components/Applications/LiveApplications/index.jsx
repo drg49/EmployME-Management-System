@@ -12,18 +12,20 @@ import Modal from 'react-modal';
 import ModalApplicationViewer from './ModalApplicationViewer';
 
 const closeIcon = <FontAwesomeIcon icon ={faWindowClose} color="gray" size="lg" />;
-const spinnerIcon = <FontAwesomeIcon icon={faSpinner} spin color="white" />;
+const spinnerIcon = (size) => <FontAwesomeIcon icon={faSpinner} spin color="white" size={size} />;
 
 export default function LiveApplications() {
     const [isOpen, setIsOpen] = React.useState(false);
     const [loadState, setLoadState] = React.useState(null);
     const [jobAppData, setJobAppData] = React.useState([]);
     const [triggerRefresh, setTriggerRefresh] = React.useState(false);
-    const [spinner, setSpinner] = React.useState(spinnerIcon);
+    const [spinner, setSpinner] = React.useState(spinnerIcon("lg"));
     const [jobAppModal, setJobAppModal] = React.useState({
         isOpen: false,
         jobData: {},
+        customAppQuestions: []
     });
+    const [isLoading, setIsLoading] = React.useState(false);
 
     React.useEffect(() => {
         setTriggerRefresh(false);
@@ -41,22 +43,28 @@ export default function LiveApplications() {
     }, [triggerRefresh]) /* Remember, this useEffect block will be called every time the value in the array changes. 
     Therefore, this code will be called everytime the state changes for triggerRefresh */
 
+    const openLiveApplication = (jobData) => {
+      setJobAppModal({ ...jobAppModal, isOpen: true })
+      setIsLoading(true)
+      jobApi.getCustomJobAppQuestions(jobData.appId)
+        .then((customAppQuestions) => {
+          setJobAppModal({ isOpen: true, jobData, customAppQuestions })
+          setIsLoading(false);
+        })
+        .catch(() => toastMethods.notifyError("Failed to load live application"));
+    }
+
     const mapper = jobAppData.map((j, i) => {
         return (
             <span 
               key={i}
               id="job-app-span"
-              onClick={() => {
-                setJobAppModal({
-                    isOpen: true,
-                    jobData: j,
-                });
-              }}
+              onClick={() => openLiveApplication(j)}
             >
                 <JobAppCards
-                jobTitle={j.jobTitle}
-                jobLocation={j.jobLocation}
-                uploadDate={j.uploadDate}
+                  jobTitle={j.jobTitle}
+                  jobLocation={j.jobLocation}
+                  uploadDate={j.uploadDate}
                 />
             </span>
         )
@@ -109,13 +117,15 @@ export default function LiveApplications() {
             </Drawer>
             <Modal
               isOpen={jobAppModal.isOpen}
-              className="mymodal"
+              className={isLoading ? "loadingModal" : "mymodal largeModal"}
               overlayClassName="myoverlay"
             >
+              {isLoading ? spinnerIcon("7x") : 
                 <ModalApplicationViewer
                     jobAppModal={jobAppModal}
                     setJobAppModal={setJobAppModal}
-                />
+                    statusText="Live"
+                />}
             </Modal>
             <Toast/>
         </>

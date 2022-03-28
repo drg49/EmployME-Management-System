@@ -131,7 +131,7 @@ export default function Reminders({ initLoad, setInitLoad }) {
               className="mymodal"
               overlayClassName="myoverlay"
             >
-              <div id="modal-action-header">
+              <div className="modal-action-header">
                 <h2>{modalState.isUpdate ? 'Update Reminder' : 'New Reminder'}</h2>
                 <button
                   onClick={resetStates}
@@ -167,7 +167,7 @@ export default function Reminders({ initLoad, setInitLoad }) {
               className="mymodal"
               overlayClassName="myoverlay"
             >
-              <div id="modal-action-header">
+              <div className="modal-action-header">
                 <h2>Delete Reminders</h2>
                 <button
                   onClick={() => setDeleteModal({ ...deleteModal, isOpen: false })}

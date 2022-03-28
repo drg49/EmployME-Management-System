@@ -220,7 +220,20 @@ input {
     padding: 19px 16px;
 }
 
-#modal-action-header {
+.largeModal {
+  min-width: 80%;
+}
+
+.loadingModal {
+  min-width: 300px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.modal-action-header {
     display: flex;
     justify-content: space-between;
     align-items: center;

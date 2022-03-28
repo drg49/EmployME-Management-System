@@ -180,3 +180,11 @@ input[name="required"] {
 .custom-question-row:hover {
     background-color: gainsboro;
 }
+
+#modal-application-viewer {
+    section {
+        display: flex;
+        align-items: center;
+        gap: 21px;
+    }
+}
