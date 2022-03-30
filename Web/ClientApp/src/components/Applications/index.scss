@@ -188,3 +188,9 @@ input[name="required"] {
         gap: 21px;
     }
 }
+
+#yesNo-input-field {
+    input {
+        display: inline;
+    }
+}
