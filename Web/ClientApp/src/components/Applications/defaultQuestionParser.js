@@ -66,14 +66,18 @@ export const yesNoField = (index) => (
 
 const addressFields = (isRequired) => (
   <div>
-    <label htmlFor="main-address">Address</label>
+    <label htmlFor="main-address">Street</label>
     <input type="text" id="main-address" required={isRequired} maxLength={100} />
+    <br />
     <label htmlFor="city">City</label>
     <input type="text" id="city" required={isRequired} maxLength={50}/>
-    <label htmlFor="states">State/Territory</label>
+    <br />
+    <label htmlFor="states">State/Territory: </label>
     {statesDropdown}
-    <label htmlFor="country">Country</label>
+    <br /> <br />
+    <label htmlFor="country">Country: </label>
     {countryDropDown}
+    <br /> <br />
     <label htmlFor="zip-code">Zip Code</label>
     <input type="text" required={isRequired} maxLength={10} />
   </div>
@@ -81,6 +85,7 @@ const addressFields = (isRequired) => (
 
 const references = (
   <>
+    <br />
     <label htmlFor="refName">Name</label>
     <input type="text" id="refName" maxLength={40} />
 
@@ -90,10 +95,11 @@ const references = (
     <label htmlFor="refComp">Company</label>
     <input type="text" id="refComp" maxLength={50} />
 
-    <input type="email" maxLength={320}/>;
+    <label htmlFor="refEmail">Email Address</label>
+    <input type="email" id="refEmail" maxLength={320}/>
 
     <label htmlFor="refTelNumber">Phone Number</label>
-    <input type="tel" id="refTelNumber" placeholder="123-456-6789" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>;
+    <input type="tel" id="refTelNumber" placeholder="123-456-6789" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
   </>
 )
 
