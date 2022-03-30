@@ -81,11 +81,6 @@
   },
   {
     "required": true,
-    "label": "Previous Experience",
-    "name": "previousExperience"
-  },
-  {
-    "required": true,
     "label": "Permission to contact previous employer",
     "name": "contactPreviousEmployer"
   },

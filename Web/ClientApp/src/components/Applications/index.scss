@@ -194,3 +194,11 @@ input[name="required"] {
         display: inline;
     }
 }
+
+#app-view-form-questions {
+    input[type="text"]{
+        border: 1px solid #a7a7a7;
+        border-radius: 2px;
+    }
+    
+}
