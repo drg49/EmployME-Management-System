@@ -190,6 +190,7 @@ input[name="required"] {
 }
 
 #yesNo-input-field {
+    margin-left: 0px;
     input {
         display: inline;
     }
@@ -200,4 +201,17 @@ input[name="required"] {
         border: 1px solid #a7a7a7;
         border-radius: 2px;
     }
+}
+
+.job-app-question {
+    margin: 12px 0px;
+
+    div {
+        margin-left: 10px;
+    }
+}
+
+#modal-application-action {
+    display: flex;
+    gap: 7px;
 }

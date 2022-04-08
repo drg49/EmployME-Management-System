@@ -36,7 +36,7 @@ export const parseInputField = (name, isRequired) => {
     case 'telephoneNumber': return <input type="tel" required={isRequired} placeholder="123-456-6789" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>;
     case 'addressOne': return addressFields(isRequired);
     case 'addressTwo': return <input type="text" required={isRequired} />;
-    case 'age': return <input type="number" max="150" required={isRequired} />;
+    case 'age': return <input type="number" min={0} max="150" required={isRequired} />;
     case 'ssn': return <input type="text" maxLength={9} required={isRequired} />;
     case 'usCitizenship': return yesNoField('usCitizenship');
     case 'driversLicense': return yesNoField('driversLicense');
@@ -72,10 +72,10 @@ const addressFields = (isRequired) => (
     <label htmlFor="city">City</label>
     <input type="text" id="city" required={isRequired} maxLength={50}/>
     <br />
-    <label htmlFor="states">State/Territory: </label>
+    <label htmlFor="states">State/Territory</label><br />
     {statesDropdown}
     <br /> <br />
-    <label htmlFor="country">Country: </label>
+    <label htmlFor="country">Country</label><br />
     {countryDropDown}
     <br /> <br />
     <label htmlFor="zip-code">Zip Code</label>
@@ -84,8 +84,7 @@ const addressFields = (isRequired) => (
 )
 
 const references = (
-  <>
-    <br />
+  <div>
     <label htmlFor="refName">Name</label>
     <input type="text" id="refName" maxLength={40} />
 
@@ -100,7 +99,7 @@ const references = (
 
     <label htmlFor="refTelNumber">Phone Number</label>
     <input type="tel" id="refTelNumber" placeholder="123-456-6789" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
-  </>
+  </div>
 )
 
 const statesDropdown = (

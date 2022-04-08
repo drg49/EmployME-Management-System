@@ -12,6 +12,7 @@ namespace Web.Models.ApplicationModels
         public string CompanyName { get; set; }
         public int UserId { get; set; }
         public string DefaultQuestions { get; set; }
+        public string Status { get; set; }
         public DateTime? UploadDate { get; set; }
     }
 }

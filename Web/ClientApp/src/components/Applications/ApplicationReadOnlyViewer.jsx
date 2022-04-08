@@ -8,7 +8,7 @@ export default function ApplicationReadOnlyViewer({ jobAppData }) {
   React.useEffect(() => {
     setDefaultQuestions(JSON.parse(jobAppData.jobData.defaultQuestions).map((item, index) => {
       return (
-        <div key={index}>
+        <div key={index} className="job-app-question">
           <strong>{parser.parseQuestionText(item.name)}</strong>
           {parser.parseInputField(item.name, item.checked)}
         </div>
@@ -19,8 +19,8 @@ export default function ApplicationReadOnlyViewer({ jobAppData }) {
   React.useEffect(() => {
     setCustomQuestions(jobAppData.customAppQuestions.map((item, index) => {
       return (
-        <div key={index}>
-          <p>{item.question}</p>
+        <div key={index} className="job-app-question">
+          <strong>{item.question}</strong>
           {parseCustomQuestion(item.inputFieldType, item.required, index)}
         </div>
       )

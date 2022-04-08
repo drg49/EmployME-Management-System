@@ -38,6 +38,15 @@ export default function ModalApplicationViewer({ jobAppModal, setJobAppModal, st
                 <p>Status: <span style={{color: setStatusTextColor(statusText)}}>{statusText}</span></p>
                 <p>Posted: {moment(jobAppModal.jobData.uploadDate).format('L')}</p>
             </section>
+            <div id="modal-application-action">
+                <button>Pause Application</button>
+                <button
+                  className="employMe-delete-btn"
+                  onClick={() => {}}
+                >
+                  Delete Application
+                </button>
+            </div>
             <br />
             <ApplicationReadOnlyViewer jobAppData={jobAppModal} />
         </div>

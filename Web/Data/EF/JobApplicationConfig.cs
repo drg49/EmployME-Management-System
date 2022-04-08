@@ -29,6 +29,10 @@ namespace Web.Data.EF
             this.Property(e => e.UserId)
                     .HasColumnName("UserId");
 
+            this.Property(e => e.Status)
+                    .HasColumnName("Status")
+                    .HasMaxLength(10);
+
             this.Property(e => e.UploadDate)
                 .HasColumnType("datetime");
         }

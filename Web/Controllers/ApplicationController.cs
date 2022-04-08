@@ -25,6 +25,7 @@ namespace Web.Controllers
                 User user = jwtService.Verify(jwt);
                 var results = from jobApps in context.JobApplications
                               where jobApps.CompanyName == user.CompanyName
+                              && jobApps.Status == "Open"
                               select jobApps;
 
                 return Ok(results.ToList());
@@ -61,6 +62,7 @@ namespace Web.Controllers
                     JobLocation = request.JobLocation,
                     DefaultQuestions = request.DefaultQuestions,
                     UploadDate = DateTime.Now,
+                    Status = "Open",
                     AppId = appId,
                 };
 
@@ -102,5 +104,18 @@ namespace Web.Controllers
                 return BadRequest("Could not retrieve custom job questions");
             }
         }
+
+        //[HttpPatch("pause-application")]
+        //public ActionResult PauseApplication([FromBody] )
+        //{
+        //    try
+        //    {
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return BadRequest("There was an error pausing your application");
+        //    }
+        //}
     }
 }
