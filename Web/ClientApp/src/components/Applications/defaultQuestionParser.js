@@ -44,7 +44,7 @@ export const parseInputField = (name, isRequired) => {
     case 'coverLetter': return <input type="file" readOnly/>;
     case 'certifications': return <textarea maxLength={500} required={isRequired}/>;
     case 'militaryVeteranStatus': return yesNoField('military');
-    case 'desiredSalaryRange': return <input type="text" maxlength={50} required={isRequired} />;
+    case 'desiredSalaryRange': return <input type="text" maxLength={50} required={isRequired} />;
     case 'contactPreviousEmployer': return yesNoField('contactEmployer');
     case 'skills': return <textarea required={isRequired} />;
     case 'references': return references;

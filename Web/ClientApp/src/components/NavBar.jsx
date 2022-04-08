@@ -91,7 +91,6 @@ export default function NavBar({ validateUser, setPageTitle, pageTitle }) {
             </nav>
             <Drawer
                 open={openRightDrawer}
-                width="50vw"
                 handler={false}
                 level={null}
                 autoFocus={false}
@@ -121,7 +120,6 @@ export default function NavBar({ validateUser, setPageTitle, pageTitle }) {
             </Drawer>
             <Drawer
                 open={openLeftDrawer}
-                width="50vw"
                 handler={false}
                 level={null}
                 autoFocus={false}

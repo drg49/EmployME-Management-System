@@ -44,7 +44,7 @@ export default function CustomQuestionForm({ setCustomQuestions, customQuestions
               id="custom-question"
               maxLength="200"
               ref={questionRef}
-              placeholder={defaultValues ? "" : "ex. Can you commute to work?"}
+              placeholder={defaultValues ? "" : "ex. Are you willing to travel?"}
               defaultValue={defaultValues ? defaultValues.question : ""}
             />
             <br />
