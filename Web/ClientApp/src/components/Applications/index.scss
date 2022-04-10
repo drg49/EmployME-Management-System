@@ -128,8 +128,8 @@ tr:nth-child(even) {
     }
 }
 
-#live-application-wrapper {
-    max-height: 336px;
+.application-wrapper-scroll {
+    max-height: 378px;
     overflow: auto;
 }
 

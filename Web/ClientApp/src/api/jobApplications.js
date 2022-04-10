@@ -1,5 +1,5 @@
-export function getCompanyJobApps() {
-    return fetch("app/applications/get-by-company", {
+export function getCompanyJobApps(status) {
+    return fetch(`app/applications/get-by-company/${status}`, {
         method: "GET",
         headers: {
             Accept: "application/json",

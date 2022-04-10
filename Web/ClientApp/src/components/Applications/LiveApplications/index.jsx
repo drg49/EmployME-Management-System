@@ -4,7 +4,7 @@ import CreateApplication from '../CreateApplication';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import * as jobApi from '../../../api/jobApplications';
-import JobAppCards from './JobAppCards';
+import JobAppCards from '../JobAppCards';
 import Toast from '../../toasts';
 import * as toastMethods from '../../toastMethods';
 import ErrorComponent from '../../ErrorComponent';
@@ -30,7 +30,7 @@ export default function LiveApplications() {
     React.useEffect(() => {
         setTriggerRefresh(false);
         setLoadState("Start")
-        jobApi.getCompanyJobApps()
+        jobApi.getCompanyJobApps("Live")
             .then((data) => {
                 setLoadState("Success")
                 setJobAppData(data)
@@ -38,7 +38,7 @@ export default function LiveApplications() {
             .catch((e) => {
                 setLoadState("Failed")
                 setSpinner(<></>)
-                toastMethods.notifyError("Failed to load job applications");
+                toastMethods.notifyError("Failed to load open applications");
             })
     }, [triggerRefresh]) /* Remember, this useEffect block will be called every time the value in the array changes. 
     Therefore, this code will be called everytime the state changes for triggerRefresh */
@@ -85,8 +85,8 @@ export default function LiveApplications() {
                       Create
                     </button>
                 </div>
-                  {loadState === 'Success' ? <div id="live-application-wrapper">{mapper}</div> : spinner}
-                  {loadState === 'Failed' && <ErrorComponent message="Failed to load reminders"/>}
+                  {loadState === 'Success' ? <div className="application-wrapper-scroll">{mapper}</div> : spinner}
+                  {loadState === 'Failed' && <ErrorComponent message="Failed to load"/>}
             </div>
             <Drawer
                 open={isOpen}

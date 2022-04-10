@@ -14,7 +14,7 @@ const spinnerIcon = <FontAwesomeIcon icon ={faSpinner} size='sm' spin />;
 export default function ModalApplicationViewer({ jobAppModal, setJobAppModal, setTriggerRefresh }) {
     const [isLoading, setIsLoading] = React.useState(false);
 
-    const setStatusTextColor = (statusText) => statusText === 'Open' ? 'green' : 'gray';
+    const setStatusTextColor = (statusText) => statusText === 'Live' ? 'green' : 'gray';
 
     const pauseApplication = (appId) => {
         setIsLoading(true)

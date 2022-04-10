@@ -16,9 +16,9 @@ namespace Web.Controllers
         private readonly EmployMeDBContext context = new EmployMeDBContext();
         private readonly Jwtservice jwtService = new Jwtservice();
 
-        // Retrieve job applications by company name
-        [HttpGet("get-by-company")]
-        public ActionResult<IEnumerable<JobApplication>> GetApplications()
+        // Retrieve job applications by company name & status
+        [HttpGet("get-by-company/{status}")]
+        public ActionResult<IEnumerable<JobApplication>> GetApplications([FromRoute] string status)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace Web.Controllers
                 User user = jwtService.Verify(jwt);
                 var results = from jobApps in context.JobApplications
                               where jobApps.CompanyName == user.CompanyName
-                              && jobApps.Status == "Open"
+                              && jobApps.Status == status
                               select jobApps;
 
                 return Ok(results.ToList());
@@ -63,7 +63,7 @@ namespace Web.Controllers
                     JobLocation = request.JobLocation,
                     DefaultQuestions = request.DefaultQuestions,
                     UploadDate = DateTime.Now,
-                    Status = "Open",
+                    Status = "Live",
                     AppId = appId,
                 };
 
