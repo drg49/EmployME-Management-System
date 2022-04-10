@@ -16,6 +16,7 @@ namespace Web.Controllers
         private readonly EmployMeDBContext context = new EmployMeDBContext();
         private readonly Jwtservice jwtService = new Jwtservice();
 
+        // Retrieve job applications by company name
         [HttpGet("get-by-company")]
         public ActionResult<IEnumerable<JobApplication>> GetApplications()
         {
@@ -105,17 +106,23 @@ namespace Web.Controllers
             }
         }
 
-        //[HttpPatch("pause-application")]
-        //public ActionResult PauseApplication([FromBody] )
-        //{
-        //    try
-        //    {
+        [HttpPatch("pause-application/{appId}")]
+        public ActionResult PauseApplication([FromRoute] string appId)
+        {
+            try
+            {
+                string jwt = Request.Cookies["jwt"];
+                User user = jwtService.Verify(jwt);
+                JobApplication jobAppToPause = context.JobApplications.FirstOrDefault(row => row.AppId == appId);
+                jobAppToPause.Status = "Paused";
+                context.SaveChanges();
+                return Ok("Successfully paused application");
 
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return BadRequest("There was an error pausing your application");
-        //    }
-        //}
+            }
+            catch (Exception e)
+            {
+                return BadRequest("There was an error pausing your application");
+            }
+        }
     }
 }

@@ -124,7 +124,7 @@ export default function LiveApplications() {
                 <ModalApplicationViewer
                     jobAppModal={jobAppModal}
                     setJobAppModal={setJobAppModal}
-                    statusText="Live"
+                    setTriggerRefresh={setTriggerRefresh}
                 />}
             </Modal>
             <Toast/>

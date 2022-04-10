@@ -26,3 +26,13 @@ export function getCustomJobAppQuestions(appId) {
         },
     }).then((response) => response.ok ? response.json() : Promise.reject(response))
 }
+
+export function pauseApplication(appId) {
+    return fetch(`app/applications/pause-application/${appId}`, {
+        method: "PATCH",
+        headers: {
+            Accept: "application/json",
+            'Content-Type': "application/json"
+        }
+    }).then((response) => response.ok ? response.json() : Promise.reject(response))
+}
