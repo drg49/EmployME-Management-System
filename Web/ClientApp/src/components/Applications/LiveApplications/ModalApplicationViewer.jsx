@@ -2,8 +2,8 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner, faWindowClose } from '@fortawesome/free-solid-svg-icons'
 import ApplicationReadOnlyViewer from '../ApplicationReadOnlyViewer';
-import Toast from '../components/toasts'
-import * as toastMethods from '../components/toastMethods'
+import Toast from '../../../components/toasts'
+import * as toastMethods from '../../../components/toastMethods'
 import * as api from '../../../api/jobApplications';
 
 const moment = require('moment')
