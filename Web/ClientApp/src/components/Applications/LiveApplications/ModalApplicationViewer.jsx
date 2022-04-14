@@ -5,10 +5,10 @@ import ApplicationReadOnlyViewer from '../ApplicationReadOnlyViewer';
 import Toast from '../../../components/toasts'
 import * as toastMethods from '../../../components/toastMethods'
 import * as api from '../../../api/jobApplications';
+import ModalActionHeader from '../../ModalActionHeader';
 
 const moment = require('moment')
 
-const closeIcon = <FontAwesomeIcon icon ={faWindowClose} color="gray" size="lg" />;
 const spinnerIcon = <FontAwesomeIcon icon ={faSpinner} size='sm' spin />;
 
 export default function ModalApplicationViewer({ jobAppModal, setJobAppModal, setTriggerRefresh }) {
@@ -31,26 +31,21 @@ export default function ModalApplicationViewer({ jobAppModal, setJobAppModal, se
                 setTriggerRefresh(true);
                 toastMethods.notifyError('There was an error pausing your job application')
             })
-    };
+    }
 
     return (
         <>
             <div id="modal-application-viewer">
-                <div className="modal-action-header">
-                    <div>
-                        <h2>{jobAppModal.jobData.jobTitle}</h2>
-                        <span>{jobAppModal.jobData.jobLocation}</span>
-                    </div>
-                    <button
-                        onClick={() => setJobAppModal({
-                            isOpen: false,
-                            jobData: {}
-                        })}
-                        className="strip-btn close-btn"
-                    >
-                        {closeIcon}
-                    </button>
-                </div>
+                <ModalActionHeader
+                    title={<>
+                             {jobAppModal.jobData.jobTitle}<br/>
+                             <span style={{fontSize: '16px', color: 'black', fontWeight: 'lighter'}}>
+                                {jobAppModal.jobData.jobLocation}
+                             </span>
+                           </>}
+                    onClose={() => setJobAppModal({isOpen: false, jobData: {}})}
+                    closeBtnSize='lg'
+                />
                 <section>
                     <p>Status: <span style={{ color: setStatusTextColor(jobAppModal.jobData.status) }}>{jobAppModal.jobData.status}</span></p>
                     <p>Posted: {moment(jobAppModal.jobData.uploadDate).format('L')}</p>

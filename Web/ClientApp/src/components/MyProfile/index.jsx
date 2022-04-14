@@ -8,9 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencilAlt, faWindowClose, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch } from 'react-redux';
 import { actions } from '../../store/userStore';
-
 import '../../auth/auth.scss'
 import './index.scss'
+import ModalActionHeader from '../ModalActionHeader';
 const moment = require('moment')
 const editIcon = <FontAwesomeIcon icon={faPencilAlt} />
 const closeIcon = <FontAwesomeIcon icon ={faWindowClose} />
@@ -122,15 +122,11 @@ export default function MyProfile () {
           className="mymodal"
           overlayClassName="myoverlay"
         >
-          <div className="modal-action-header" style={{marginBottom: "21px"}}>
-            <h2>{modalState.isUserUpdate ? 'Update User' : 'Change Password'}</h2>
-            <button
-              onClick={() => setModalState({ isOpen: false })}
-              className="strip-btn close-btn"
-            >
-              {closeIcon}
-            </button>
-          </div>
+          <ModalActionHeader
+            title={modalState.isUserUpdate ? 'Update User' : 'Change Password'}
+            onClose={() => setModalState({ isOpen: false })}
+            headerStyling={{marginBottom: "21px"}}
+          />
           {modalState.isUserUpdate ? 
           <form onSubmit={(e) => handleSubmit(e, 'Update')}>
             <div id="name-wrapper" style={{gap: "1rem"}}>

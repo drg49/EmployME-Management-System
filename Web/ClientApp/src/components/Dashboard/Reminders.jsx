@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../store/reminderStore";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faWindowClose, faSpinner, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faSpinner, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import Modal from 'react-modal';
 import Toast from "../toasts";
 import * as toastMethods from "../toastMethods";
@@ -12,9 +12,9 @@ import useReminders from "../../hooks/useReminders";
 import ErrorComponent from "../ErrorComponent";
 
 import './index.scss';
+import ModalActionHeader from "../ModalActionHeader";
 
 const addIcon = <FontAwesomeIcon icon={faPlus} />
-const closeIcon = <FontAwesomeIcon icon ={faWindowClose} />
 const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" />
 const trashIcon = <FontAwesomeIcon icon={faTrashAlt} />
 
@@ -131,15 +131,10 @@ export default function Reminders({ initLoad, setInitLoad }) {
               className="mymodal"
               overlayClassName="myoverlay"
             >
-              <div className="modal-action-header">
-                <h2>{modalState.isUpdate ? 'Update Reminder' : 'New Reminder'}</h2>
-                <button
-                  onClick={resetStates}
-                  className="strip-btn close-btn"
-                >
-                  {closeIcon}
-                </button>
-              </div>
+              <ModalActionHeader
+                title={modalState.isUpdate ? 'Update Reminder' : 'New Reminder'}
+                onClose={resetStates}
+              />
               <textarea 
                 maxLength="500"
                 onChange={(e) => handleChange(e)} 
@@ -167,15 +162,10 @@ export default function Reminders({ initLoad, setInitLoad }) {
               className="mymodal"
               overlayClassName="myoverlay"
             >
-              <div className="modal-action-header">
-                <h2>Delete Reminders</h2>
-                <button
-                  onClick={() => setDeleteModal({ ...deleteModal, isOpen: false })}
-                  className="strip-btn close-btn"
-                >
-                  {closeIcon}
-                </button>
-              </div>
+              <ModalActionHeader
+                title='Delete Reminders'
+                onClose={() => setDeleteModal({ ...deleteModal, isOpen: false })}
+              />
               <p>Are you sure you want to delete all completed reminders?</p>
               <section className="modal-action-btns">
                 {isLoading ? spinner 

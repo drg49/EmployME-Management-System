@@ -215,3 +215,8 @@ input[name="required"] {
     display: flex;
     gap: 7px;
 }
+
+#pause-modal-footer {
+    display: flex;
+    justify-content: space-between;
+}
