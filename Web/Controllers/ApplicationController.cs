@@ -124,5 +124,53 @@ namespace Web.Controllers
                 return BadRequest("There was an error pausing your application");
             }
         }
+
+        [HttpPatch("resume-application/{appId}")]
+        public ActionResult ResumeApplication([FromRoute] string appId)
+        {
+            try
+            {
+                string jwt = Request.Cookies["jwt"];
+                User user = jwtService.Verify(jwt);
+                JobApplication jobAppToResume = context.JobApplications.FirstOrDefault(row => row.AppId == appId);
+                jobAppToResume.Status = "Live";
+                context.SaveChanges();
+                return Ok("Successfully resumed application");
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest("There was an error resuming your application");
+            }
+        }
+
+        [HttpDelete("delete-application/{appId}")]
+        public ActionResult DeleteApplication([FromRoute] string appId)
+        {
+            try
+            {
+                string jwt = Request.Cookies["jwt"];
+                User user = jwtService.Verify(jwt);
+
+                IQueryable<CustomJobAppQuestion> customJobAppQuestions = from customQuestions in context.CustomJobAppQuestions
+                                                                   where customQuestions.AppId == appId
+                                                                   select customQuestions;
+
+                foreach(CustomJobAppQuestion question in customJobAppQuestions)
+                {
+                    context.CustomJobAppQuestions.Remove(question);
+                }
+
+                JobApplication jobAppToDelete = context.JobApplications.FirstOrDefault(row => row.AppId == appId);
+                context.JobApplications.Remove(jobAppToDelete);
+                context.SaveChanges();
+                return Ok("Successfully deleted application");
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest("There was an error deleting your application");
+            }
+        }
     }
 }

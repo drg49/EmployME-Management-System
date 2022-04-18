@@ -6,12 +6,14 @@ import ViewApplicants from './ViewApplicants'
 import './index.scss'
 
 export default function Applications() {
+  const [triggerRefresh, setTriggerRefresh] = React.useState(false);
+
     return (
       <div id="main-page-wrapper">
         <div id="landing-pg-main">
-          <LiveApplications />
+          <LiveApplications triggerRefresh={triggerRefresh} setTriggerRefresh={setTriggerRefresh} />
           <ViewApplicants />
-          <PausedApplications />
+          <PausedApplications triggerRefresh={triggerRefresh} setTriggerRefresh={setTriggerRefresh} />
         </div>
       </div>
     )

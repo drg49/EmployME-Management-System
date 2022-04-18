@@ -14,11 +14,10 @@ import ModalApplicationViewer from './ModalApplicationViewer';
 const closeIcon = <FontAwesomeIcon icon ={faWindowClose} color="gray" size="lg" />;
 const spinnerIcon = (size) => <FontAwesomeIcon icon={faSpinner} spin color="white" size={size} />;
 
-export default function LiveApplications() {
+export default function LiveApplications({ triggerRefresh, setTriggerRefresh }) {
     const [isOpen, setIsOpen] = React.useState(false);
     const [loadState, setLoadState] = React.useState(null);
     const [jobAppData, setJobAppData] = React.useState([]);
-    const [triggerRefresh, setTriggerRefresh] = React.useState(false);
     const [spinner, setSpinner] = React.useState(spinnerIcon("lg"));
     const [jobAppModal, setJobAppModal] = React.useState({
         isOpen: false,
@@ -38,7 +37,7 @@ export default function LiveApplications() {
             .catch((e) => {
                 setLoadState("Failed")
                 setSpinner(<></>)
-                toastMethods.notifyError("Failed to load open applications");
+                toastMethods.notifyError("Failed to load live applications");
             })
     }, [triggerRefresh]) /* Remember, this useEffect block will be called every time the value in the array changes. 
     Therefore, this code will be called everytime the state changes for triggerRefresh */

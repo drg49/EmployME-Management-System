@@ -10,8 +10,7 @@ import ModalActionHeader from '../../ModalActionHeader';
 
 const spinnerIcon = (size) => <FontAwesomeIcon icon={faSpinner} spin color="white" size={size} />;
 
-export default function PausedApplications() {
-    const [triggerRefresh, setTriggerRefresh] = React.useState(false);
+export default function PausedApplications({ triggerRefresh, setTriggerRefresh}) {
     const [loadState, setLoadState] = React.useState(null);
     const [spinner, setSpinner] = React.useState(spinnerIcon("lg"));
     const [pausedJobs, setPausedJobs] = React.useState([]);
@@ -19,6 +18,8 @@ export default function PausedApplications() {
         isOpen: false,
         data: {}
     });
+    const [resumeIsLoading, setResumeIsLoading] = React.useState(false);
+    const [deleteIsLoading, setDeleteIsLoading] = React.useState(false);
     
     React.useEffect(() => {
         setTriggerRefresh(false);
@@ -53,6 +54,40 @@ export default function PausedApplications() {
         )
     });
 
+    const resumeApplication = (appId) => {
+        setResumeIsLoading(true)
+        api.resumeApplication(appId)
+            .then(() => {
+                setResumeIsLoading(false);
+                setModalState({ ...modalState, isOpen: false });
+                setTriggerRefresh(true);
+                toastMethods.notifySuccess('Successfully resumed application')
+            })
+            .catch(() => {
+                setResumeIsLoading(false);
+                setModalState({ ...modalState, isOpen: false });
+                setTriggerRefresh(true);
+                toastMethods.notifyError('There was an error resuming your job application')
+            })
+    }
+
+    const deleteApplication = (appId) => {
+        setDeleteIsLoading(true)
+        api.deleteApplication(appId)
+            .then(() => {
+                setDeleteIsLoading(false);
+                setModalState({ ...modalState, isOpen: false });
+                setTriggerRefresh(true);
+                toastMethods.notifySuccess('Successfully deleted application')
+            })
+            .catch(() => {
+                setDeleteIsLoading(false);
+                setModalState({ ...modalState, isOpen: false });
+                setTriggerRefresh(true);
+                toastMethods.notifyError('There was an error deleting your job application')
+            })
+    }
+
     return (
         <>
             <div className="employMe-div-box">
@@ -80,15 +115,17 @@ export default function PausedApplications() {
                 <div id="pause-modal-footer">
                     <button
                         className='employMe-add-btn'
-                        onClick={() => console.log('Resume application')}
+                        onClick={() => resumeApplication(modalState.data.appId)}
+                        disabled={resumeIsLoading || deleteIsLoading}
                     >
-                        Resume Application
+                        {resumeIsLoading && spinnerIcon('sm')} Resume Application
                     </button>
                     <button
                         className='employMe-delete-btn'
-                        onClick={() => console.log('Delete Application')}
+                        onClick={() => deleteApplication(modalState.data.appId)}
+                        disabled={resumeIsLoading || deleteIsLoading}
                     >
-                        Delete Permanently
+                        {deleteIsLoading && spinnerIcon('sm')} Delete Permanently
                     </button>
                 </div>
             </Modal>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner, faWindowClose } from '@fortawesome/free-solid-svg-icons'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import ApplicationReadOnlyViewer from '../ApplicationReadOnlyViewer';
 import Toast from '../../../components/toasts'
 import * as toastMethods from '../../../components/toastMethods'
@@ -12,24 +12,42 @@ const moment = require('moment')
 const spinnerIcon = <FontAwesomeIcon icon ={faSpinner} size='sm' spin />;
 
 export default function ModalApplicationViewer({ jobAppModal, setJobAppModal, setTriggerRefresh }) {
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [isPauseLoading, setIsPauseLoading] = React.useState(false);
+    const [isDeleteLoading, setIsDeleteLoading] = React.useState(false);
 
     const setStatusTextColor = (statusText) => statusText === 'Live' ? 'green' : 'gray';
 
     const pauseApplication = (appId) => {
-        setIsLoading(true)
+        setIsPauseLoading(true)
         api.pauseApplication(appId)
             .then(() => {
-                setIsLoading(false);
+                setIsPauseLoading(false);
                 setJobAppModal({ ...jobAppModal, isOpen: false });
                 setTriggerRefresh(true);
                 toastMethods.notifySuccess('Successfully paused application')
             })
             .catch(() => {
-                setIsLoading(false);
+                setIsPauseLoading(false);
                 setJobAppModal({ ...jobAppModal, isOpen: false });
                 setTriggerRefresh(true);
                 toastMethods.notifyError('There was an error pausing your job application')
+            })
+    }
+
+    const deleteApplication = (appId) => {
+        setIsDeleteLoading(true);
+        api.deleteApplication(appId)
+            .then(() => {
+                setIsDeleteLoading(false);
+                setJobAppModal({ ...jobAppModal, isOpen: false });
+                setTriggerRefresh(true);
+                toastMethods.notifySuccess('Successfully deleted application')
+            })
+            .catch(() => {
+                setIsDeleteLoading(false);
+                setJobAppModal({ ...jobAppModal, isOpen: false });
+                setTriggerRefresh(true);
+                toastMethods.notifyError('There was an error deleting your job application')
             })
     }
 
@@ -53,15 +71,16 @@ export default function ModalApplicationViewer({ jobAppModal, setJobAppModal, se
                 <div id="modal-application-action">
                     <button
                         onClick={() => pauseApplication(jobAppModal.jobData.appId)}
-                        disabled={isLoading}
+                        disabled={isPauseLoading || isDeleteLoading}
                     >
-                        {isLoading && spinnerIcon} Pause Application
+                        {isPauseLoading && spinnerIcon} Pause Application
                     </button>
                     <button
                         className="employMe-delete-btn"
-                        onClick={() => { } }
+                        onClick={() => deleteApplication(jobAppModal.jobData.appId)}
+                        disabled={isPauseLoading || isDeleteLoading}
                     >
-                        Delete Application
+                        {isDeleteLoading && spinnerIcon} Delete Application
                     </button>
                 </div>
                 <br />
