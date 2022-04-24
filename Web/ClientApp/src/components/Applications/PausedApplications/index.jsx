@@ -98,7 +98,7 @@ export default function PausedApplications({ triggerRefresh, setTriggerRefresh})
 
             <Modal
                 isOpen={modalState.isOpen}
-                className={"mymodal"}
+                className="mymodal"
                 overlayClassName="myoverlay"
             >
                 <ModalActionHeader
