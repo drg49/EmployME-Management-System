@@ -22,6 +22,10 @@ namespace Web.Data.EF
                     .HasColumnName("JobLocation")
                     .HasMaxLength(150);
 
+            this.Property(e => e.Description)
+                    .HasColumnName("Description")
+                    .HasMaxLength(150);
+
             this.Property(e => e.JobTitle)
                     .HasColumnName("JobTitle")
                     .HasMaxLength(150);

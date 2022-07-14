@@ -79,11 +79,13 @@ export default function ModalApplicationViewer({ jobAppModal, setJobAppModal, se
                         className="employMe-delete-btn"
                         onClick={() => deleteApplication(jobAppModal.jobData.appId)}
                         disabled={isPauseLoading || isDeleteLoading}
-                    >
+                        >
                         {isDeleteLoading && spinnerIcon} Delete Application
                     </button>
                 </div>
                 <br />
+                <span id="description">Description:</span>
+                <p>{jobAppModal.jobData.description}</p>
                 <ApplicationReadOnlyViewer jobAppData={jobAppModal} />
             </div>
         

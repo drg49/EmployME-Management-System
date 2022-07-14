@@ -23,8 +23,12 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
         toastMethods.notifyError('Please fill out the job location');
         return false;
       } 
+      if (jobDescription.trim() === "") {
+        toastMethods.notifyError('Please fill out the job description');
+        return false;
+      }
       setButtonText(spinner);
-      api.createJobApplication(jobTitleVal, jobLocationVal, defaultQuestionString, customQuestions.questions)
+      api.createJobApplication(jobTitleVal, jobLocationVal, defaultQuestionString, customQuestions.questions, jobDescription)
         .then(() => {
           setButtonText("Post Application");
           closeFunc();
@@ -54,6 +58,14 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
 
     const jobTitle = React.useRef();
     const jobLocation = React.useRef();
+    const [jobDescription, setJobDescription] = React.useState('');
+    const descriptionMaxLength = 1024;
+    const [charCount, setCharCount] = React.useState(descriptionMaxLength);
+
+    const handleJobDescription = (e) => {
+      setJobDescription(e.target.value);
+      setCharCount(descriptionMaxLength - e.target.value.length);
+    }
 
     const handleChange = (e) => {
       if(e.target.checked) {
@@ -65,6 +77,8 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
     const refresh = () => {
       jobTitle.current.value = "";
       jobLocation.current.value = "";
+      setJobDescription('');
+      setCharCount(descriptionMaxLength);
       setDefaultQuestions(dataset);
       setQuestions(dataset.map(i => {
         return {name: i.name, checked: i.required}
@@ -189,6 +203,11 @@ export default function CreateApplication({ close, closeFunc, setTriggerRefresh 
               <span>
                 <label htmlFor="job-location">Location</label>
                 <input type="text" id="job-location" ref={jobLocation} maxLength="150" />
+              </span>
+              <span>
+                <label htmlFor="job-description">Description</label>
+                <textarea id="job-description" value={jobDescription} maxLength={descriptionMaxLength} onChange={handleJobDescription} />
+                <p>Characters left: {charCount}</p>
               </span>
             </div>
             <table>

@@ -31,6 +31,11 @@ input:focus {
     }
 }
 
+#job-description {
+    width: 80%;
+    height: 10rem;
+}
+
 #create-app-main {
     padding: 0px 12px;
 
@@ -82,7 +87,7 @@ tr:nth-child(even) {
 
 
 
-#create-app-form span:first-of-type{
+#create-app-form span {
     display: block;
     margin-bottom: 10px;
 }
@@ -186,6 +191,14 @@ input[name="required"] {
         display: flex;
         align-items: center;
         gap: 21px;
+    }
+
+    p {
+        margin-top: 0px;
+    }
+
+    #description {
+        font-weight: bold;
     }
 }
 

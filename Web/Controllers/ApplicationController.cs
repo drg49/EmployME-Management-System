@@ -61,6 +61,7 @@ namespace Web.Controllers
                     CompanyName = user.CompanyName,
                     JobTitle = request.JobTitle,
                     JobLocation = request.JobLocation,
+                    Description = request.Description,
                     DefaultQuestions = request.DefaultQuestions,
                     UploadDate = DateTime.Now,
                     Status = "Live",

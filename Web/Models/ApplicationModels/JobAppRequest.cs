@@ -6,6 +6,7 @@ namespace Web.Models.ApplicationModels
     {
         public string JobTitle { get; set; }
         public string JobLocation { get; set; }
+        public string Description { get; set; }
         public string DefaultQuestions { get; set; }
         public List<CustomJobAppQuestion> CustomJobAppQuestions { get; set; }
     }

@@ -9,6 +9,7 @@ namespace Web.Models.ApplicationModels
         public string AppId { get; set; }
         public string JobTitle { get; set; }
         public string JobLocation { get; set; }
+        public string Description { get; set; }
         public string CompanyName { get; set; }
         public int UserId { get; set; }
         public string DefaultQuestions { get; set; }
