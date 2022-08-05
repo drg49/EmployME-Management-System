@@ -6,7 +6,7 @@ export const parseQuestionText = (name) => {
     case 'middleName': return 'Middle Name';
     case 'lastName': return 'Last Name';
     case 'emailAddress': return 'Email Address';
-    case 'telephoneNumber': return 'Telephone Name';
+    case 'telephoneNumber': return 'Telephone Number';
     case 'addressOne': return 'Address';
     case 'addressTwo': return 'Second Address';
     case 'age': return 'Age';
