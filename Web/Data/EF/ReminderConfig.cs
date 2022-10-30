@@ -7,7 +7,7 @@ namespace Web.Data.EF
     {
         public ReminderConfig()
         {
-            this.ToTable("Notifications");
+            this.ToTable("Notifications", "dbo");
 
             this.HasKey<int>(e => e.ReminderKey);
 

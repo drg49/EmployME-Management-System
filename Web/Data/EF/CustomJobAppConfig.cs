@@ -7,7 +7,7 @@ namespace Web.Data.EF
     {
         public CustomJobAppConfig()
         {
-            this.ToTable("CustomJobAppQuestions");
+            this.ToTable("CustomJobAppQuestions", "dbo");
 
             this.HasKey<int>(e => e.Id);
 

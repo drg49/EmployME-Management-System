@@ -7,7 +7,7 @@ namespace Web.Data.EF
     {
         public UserConfig()
         {
-            this.ToTable("Users");
+            this.ToTable("Users", "dbo");
 
             this.HasKey<int>(e => e.UserId);
 
